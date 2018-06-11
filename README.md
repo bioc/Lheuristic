@@ -1,5 +1,4 @@
 # lpattern
-# lpattern
 ## Introduction
 
 This vignette gives information on how to use the 'lpattern' package functions to select genes with an expression vs methylation scatterplot that have an L-shaped pattern. 
