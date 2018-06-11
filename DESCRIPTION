@@ -1,0 +1,40 @@
+Package: lpattern
+Title: Detection of scatterplots with L-shaped pattern
+Version: 0.0.0.9000
+Authors@R: c(
+    person("Sanchez Pla", "Alex", email ="sanplaale@gmail.com",
+    role = c("aut", "cre")),
+    person("Miro Cau", "Berta", email =
+    "berta.mirocau@gmail.com", role = "aut"))
+Description: The lpattern package identifies scatterpots that
+    follow and L-shaped, negative distribution. It can be used
+    to identify genes regulated by methylation by integration of
+    an expression and a methylation array. The package uses four
+    different methods to detect expression and methyaltion L-
+    shapped scatterplots. The parameters can be changed to
+    detect other scatterplot patterns. 
+Depends: R (>= 3.0.0)
+Imports:
+    Hmisc,
+    energy,
+    FactoMineR,
+    made4,
+    stats,
+    Homo.sapiens,
+    Gviz,
+    gtools,
+    GenomicRanges,
+    TxDb.Hsapiens.UCSC.hg19.knownGene,
+    utils,
+    grDevices,
+    ensembldb,
+    kableExtra,
+    scagnostics
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1
