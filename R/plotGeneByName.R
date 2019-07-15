@@ -5,6 +5,9 @@
 #' @param mets matrix containing the methylation data of the named gene.
 #' @param expresmatrix containing the expression data of the named gene.
 #' @param filename NULL, name of the file to store the results as pdf if a name is passed.
+#' @keywords plot gene name
+#' @export plotGeneByName
+#'
 #' @examples
 #' \dontrun{
 #' plotGeneByName (gene="HOOK1", mets=falseLMet, expres=falseLExpr, fileName=NULL)

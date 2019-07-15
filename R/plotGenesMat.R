@@ -9,7 +9,8 @@
 #' @param percY1, percY2 Values used to act as default for `y1`and `y2` when these are set to `NULL`.
 #' @param plotGrid logical; default set to TRUE will plot gridlines on the graph.
 #' @param logicSc NULL, numeric score representing the L-shape score.
-#' @keywords scatterplot
+#' @keywords scatterplot gene plot matrix
+#' @export plotGenesMat
 #' @examples
 #' \dontrun{
 #' plotGenesMat (mets=myMet, expres=myExpr, fileName="GenesPlots.pdf")

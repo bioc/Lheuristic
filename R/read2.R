@@ -5,7 +5,9 @@
 #' @param dataDirectory Name of directory where the files are staore. Defaults to ".".
 #' @param sepChar Name of character used to separate matrix columns. Defaults to ";".
 #' @param decChar Name of character used as decimal point. Defaults to ".".
+#' @export read2
 #' @examples
+#'
 #' \dontrun{
 #' (myData <- read2(myExpr, myMet))
 #' }

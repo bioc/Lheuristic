@@ -7,6 +7,9 @@
 #' @param y1, y2, Coordinates of vertical points in the Y axis. Leaving them as NULL assigns them the percentiles of yVec defined by `percY1` and `percY2`.
 #' @param percY1, percY2 Values used to act as default for `y1`and `y2` when these are set to `NULL`
 #' @param plotGrid logical. Defautl to TRUE will plot gridlines over the scatterplot.
+#' @keywords plot gene selection
+#' @export plotGeneSel
+#'
 #' @examples
 #' \dontrun{
 #' myGene1 <-rownames(myGenes)[1]

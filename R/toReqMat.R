@@ -3,6 +3,8 @@
 #' a matrix of required counts to facilitate its scoring
 #' @param numPoints Number of points in a scatterplot. Used to turn the required percentages into required counts.
 #' @param aReqPercentMat Matrix of required percentages
+#' @export toReqMat
+#'
 #' @examples
 #' \dontrun{
 #'

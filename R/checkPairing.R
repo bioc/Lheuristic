@@ -3,6 +3,9 @@
 #' @param X matrix
 #' @param Y matrix
 #' @keywords matrix
+#'
+#' @export checkPairing
+#'
 #' @examples
 #' \dontrun{
 #' (X <- round(matrix (rnorm(30)*10, ncol=6),1)) + 1:10

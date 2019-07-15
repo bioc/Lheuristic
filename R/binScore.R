@@ -6,6 +6,10 @@
 #' @param aGrid A matrix of counts as computed by `calcFreqs` function
 #' @param aReq A matrix of minimum or maximum counts to be found in each cell
 #' if L-shape is TRUE
+#'
+#' @keywords binary scoring
+#' @export binScore
+#'
 #' @examples
 #' \dontrun{
 #' reqPercentages <- matrix (c(15, 5, 0, 0, 5, 5, 10, 10, 15), nrow=3, byrow=TRUE)

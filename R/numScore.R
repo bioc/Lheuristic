@@ -6,6 +6,7 @@
 #' @param aWeightMifL A matrix of weights to score the previous counts if the scatterplot has been classified as L.
 #' @param aWeightMifNonL A matrix of weights to score the previous counts if the scatterplot has been classified as non-L
 #' @keywords scatterplot weights
+#' @export numScore
 #' @examples
 #' # xVecT <- as.numeric(trueLMet[1,]); yVecT<- as.numeric(trueLExpr[1,])
 #' # xVecF <- as.numeric(falseLMet[1,]); yVecF <- as.numeric(falseLExpr[1,])
