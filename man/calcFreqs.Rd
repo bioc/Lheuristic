@@ -46,3 +46,5 @@ calcFreqs(xMet=xVec, yExp=yVec, x1=1/3, x2=2/3, y1=NULL, y2=NULL, percY1=1/3, pe
 }
 
 }
+\keyword{calculation}
+\keyword{frequencies}

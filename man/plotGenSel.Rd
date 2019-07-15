@@ -37,3 +37,6 @@ plotGenSel(xMet=xVec, yExp=yVec, titleText=titleT, x1=1/3, x2=2/3)
 }
 
 }
+\keyword{gene}
+\keyword{plot}
+\keyword{selection}

@@ -4,7 +4,8 @@
 \alias{getGenesLocations}
 \title{A transcript coordinate annotation tool}
 \usage{
-getGenesLocations(geneSymbolsSEL, sortByChrom = TRUE, csvFileName = NULL)
+getGenesLocations(geneSymbolsSEL, sortByChrom = TRUE,
+  csvFileName = NULL)
 }
 \arguments{
 \item{geneSymbolsSEL}{vector containing Gene Symbols (unique abbreviation for the gene name) to be annotated}

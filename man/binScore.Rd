@@ -35,3 +35,5 @@ binScore(countsTrueL1, reqTrueL)
 }
 
 }
+\keyword{binary}
+\keyword{scoring}

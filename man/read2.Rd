@@ -24,6 +24,7 @@ read2
 \code{read2} Wrapper to read 2 files with the same format, dimensions and row and column names.
 }
 \examples{
+
 \dontrun{
 (myData <- read2(myExpr, myMet))
 }

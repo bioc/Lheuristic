@@ -4,8 +4,8 @@
 \alias{naiveSelection}
 \title{A vector correlation function calculator}
 \usage{
-naiveSelection(X, Y, type = "Spearman", adj = TRUE, pValCutoff = 0.05,
-  rCutoff = 0, sortByCorrs = FALSE)
+naiveSelection(X, Y, type = "Spearman", adj = TRUE,
+  pValCutoff = 0.05, rCutoff = 0, sortByCorrs = FALSE)
 }
 \arguments{
 \item{X}{First matrix}

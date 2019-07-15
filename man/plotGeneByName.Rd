@@ -29,3 +29,6 @@ plotGeneByName (gene="HOOK1", mets=falseLMet, expres=falseLExpr, fileName=NULL)
 }
 
 }
+\keyword{gene}
+\keyword{name}
+\keyword{plot}

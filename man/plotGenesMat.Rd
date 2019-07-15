@@ -38,4 +38,7 @@ plotGenesMat (mets=myMet, expres=myExpr, fileName="GenesPlots.pdf")
 }
 
 }
+\keyword{gene}
+\keyword{matrix}
+\keyword{plot}
 \keyword{scatterplot}

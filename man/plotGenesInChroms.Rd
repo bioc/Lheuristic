@@ -4,8 +4,8 @@
 \alias{plotGenesInChroms}
 \title{A function to plot specific genes onto the corresponding chromosomes}
 \usage{
-plotGenesInChroms(transcriptCoords, plotsFilename, minbase, maxbase, islandData,
-  dnaseData)
+plotGenesInChroms(transcriptCoords, plotsFilename, minbase, maxbase,
+  islandData, dnaseData)
 }
 \arguments{
 \item{transcriptCoords}{object of class containing a list of genes annotated with the getGenesLocations}

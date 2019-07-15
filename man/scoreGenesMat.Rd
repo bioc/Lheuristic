@@ -5,8 +5,9 @@
 \title{scoreGenesMat
 \code{scoreGenesMat} scores scatterplots using a binary and a numeric schemes on a row-wise basis.}
 \usage{
-scoreGenesMat(mets, expres, x1 = 1/3, x2 = 2/3, y1 = NULL, y2 = NULL,
-  percY1 = 1/3, percY2 = 2/3, aReqPercentsMat, aWeightMifL, aWeightMifNonL)
+scoreGenesMat(mets, expres, x1 = 1/3, x2 = 2/3, y1 = NULL,
+  y2 = NULL, percY1 = 1/3, percY2 = 2/3, aReqPercentsMat,
+  aWeightMifL, aWeightMifNonL)
 }
 \arguments{
 \item{mets}{Matrix of methylation values}
