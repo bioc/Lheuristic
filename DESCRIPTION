@@ -14,6 +14,7 @@ Description: The lpattern package identifies scatterpots that
     shapped scatterplots. The parameters can be changed to
     detect other scatterplot patterns. 
 Depends: R (>= 3.0.0)
+biocViews:
 Imports:
     Hmisc,
     energy,
