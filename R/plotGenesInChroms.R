@@ -1,5 +1,5 @@
 
-#' A function to plot specific genes onto the corresponding chromosomes
+#' ploGenesInChromosomes: A function to plot specific genes onto the corresponding chromosomes
 #'
 #' \code{ploGenesInChromosomes} Given a list of genes with their transcript coordenates, the function will plot the genes
 #' on their specific locations on each corresponding chromosme. It can also collocate the genes with CpG islands information and

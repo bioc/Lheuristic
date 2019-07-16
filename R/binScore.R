@@ -1,11 +1,9 @@
 #' binScore
 #'
-#'
 #' \code{binScore} can be used to score scatterplots by directly comparing
 #' the sample counts with a matrix of minimal or maximal percentages/counts
 #' to be found in each cell. It implements the three bands rule implicitly
-#' by setting threshold values
-#'
+#' by setting threshold values.
 #'
 #' @param aGrid A matrix of counts as computed by `calcFreqs` function
 #' @param aReq A matrix of minimum or maximum counts to be found in each cell
@@ -13,7 +11,6 @@
 #'
 #' @keywords binary scoring
 #' @export binScore
-#'
 #' @examples
 #' \dontrun{
 #' reqPercentages <- matrix (c(15, 5, 0, 0, 5, 5, 10, 10, 15), nrow=3, byrow=TRUE)

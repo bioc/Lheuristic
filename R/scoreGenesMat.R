@@ -1,14 +1,17 @@
 #' scoreGenesMat
+#'
 #' \code{scoreGenesMat} scores scatterplots using a binary and a numeric schemes on a row-wise basis.
+#'
 #' @param mets Matrix of methylation values
 #' @param expres Matrix of expression values
 #' @param aReqPercentsMat Matrix of minimum maximum percentage of counts to have in a given cell
 #' @param aWeightMifL A matrix of weights to score the previous counts if the scatterplot has been classified as L.
 #' @param aWeightMifNonL A matrix of weights to score the previous counts if the scatterplot has been classified as non-L
-#' @param x1, x2, Coordinates of vertical points in the X axis. Because it is expected to contain methylation values that vary between 0 and 1 the default values are 1/3 and 2/3.
-#' @param y1, y2, Coordinates of vertical points in the Y axis. Leaving them as NULL assigns them the percentiles of yVec defined by `percY1` and `percY2`.
-#' @param percY1, percY2 Values used to act as default for `y1`and `y2` when these are set to `NULL`
+#' @param x1,x2 Coordinates of vertical points in the X axis. Because it is expected to contain methylation values that vary between 0 and 1 the default values are 1/3 and 2/3.
+#' @param y1,y2 Coordinates of vertical points in the Y axis. Leaving them as NULL assigns them the percentiles of yVec defined by `percY1` and `percY2`.
+#' @param percY1,percY2 Values used to act as default for `y1`and `y2` when these are set to `NULL`
 #' @param trace logical. Set to TRUE to print count matrices as they are computed
+#'
 #' @export scoreGenesMat
 #' @examples
 #' \dontrun{

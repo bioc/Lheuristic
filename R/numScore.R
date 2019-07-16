@@ -1,5 +1,7 @@
 #' numScore
+#'
 #' \code{numScore} A function to score scatterplot using a weight matrix.
+#'
 #' The scoring does not incorporate logical conditions such as "if xij < C ..."
 #' @param aGrid A matrix of counts as computed by `calcFreqs` function
 #' @param LShaped A boolean value indicating if this scatterplot can be seen as LShaped.

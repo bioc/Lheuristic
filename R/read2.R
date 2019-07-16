@@ -1,10 +1,13 @@
 #' read2
+#'
 #' \code{read2} Wrapper to read 2 files with the same format, dimensions and row and column names.
+#'
 #' @param expresFName Name of first file, expected to contain expression values.
 #' @param metFName Name of second file, expected to contain methylation values.
 #' @param dataDirectory Name of directory where the files are staore. Defaults to ".".
 #' @param sepChar Name of character used to separate matrix columns. Defaults to ";".
 #' @param decChar Name of character used as decimal point. Defaults to ".".
+#'
 #' @export read2
 #' @examples
 #'

@@ -1,5 +1,7 @@
 #' plotGeneSel
-#' \code{PlotGene} plots points on a scatterplot with a 3x3 grid overimposed.
+#'
+#' \code{plotGeneSel} plots points on a scatterplot with a 3x3 grid overimposed.
+#'
 #' @param  xMet vector with methylation data.
 #' @param xExp vector for expression data.
 #' @param titleText plot title.

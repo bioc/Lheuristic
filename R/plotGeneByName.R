@@ -1,6 +1,8 @@
 #' plotGeneByName
+#'
 #' \code{plotGeneByName} plots points on a scatterplot with a 3x3 grid superimposed.
 #' The name of a the gene is provided jointly with the matrix and used to select the row to be plotted.
+#'
 #' @param geneName name of the gene to be plotted.
 #' @param mets matrix containing the methylation data of the named gene.
 #' @param expresmatrix containing the expression data of the named gene.

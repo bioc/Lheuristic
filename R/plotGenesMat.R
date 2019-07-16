@@ -1,5 +1,7 @@
 #' plotGenesMat
+#'
 #' \code{plotGenesMat} wrapper function for plotting the scatterplots associated with two matrices.
+#'
 #' @param mets matrix with methylation data.
 #' @param expres matrix with expression data.
 #' @param fileName name of the file used to save the results as pdf.
@@ -9,6 +11,7 @@
 #' @param percY1, percY2 Values used to act as default for `y1`and `y2` when these are set to `NULL`.
 #' @param plotGrid logical; default set to TRUE will plot gridlines on the graph.
 #' @param logicSc NULL, numeric score representing the L-shape score.
+#'
 #' @keywords scatterplot gene plot matrix
 #' @export plotGenesMat
 #' @examples

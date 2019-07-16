@@ -1,5 +1,7 @@
 #' checkPairing
+#'
 #' \code{checkPairing} is a  function to check if two matrices have the same dimensions (same rows and columns) and same row and column names.
+#'
 #' @param X matrix
 #' @param Y matrix
 #' @keywords matrix

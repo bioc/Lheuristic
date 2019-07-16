@@ -3,14 +3,16 @@
 # on a scatterplot with a 3x3 grid overimposed.
 
 #' calcFreqs
+#'
 #' \code{calcFreqs} Given two numeric vectors this function overimposes a grid on the scatterplot defined by YMet~Xmet
 #' #' and returns a 3X3 matrix of counts with the number of points in each cell of the grid
 #' #' for given vertical and horizontal lines.
-#' @param xMet, First numeric vector which, in principle, contains the methylation values.
-#' @param yExp, Second numeric vector which, in principle, contains the expression values.
-#' @param x1, x2, Coordinates of vertical points in the X axis. Because it is expected to contain methylation values that vary between 0 and 1 the default values are 1/3 and 2/3.
-#' @param y1, y2, Coordinates of vertical points in the Y axis. Leaving them as NULL assigns them the percentiles of yVec defined by `percY1` and `percY2`.
-#' @param percY1, percY2 Values used to act as default for `y1`and `y2` when these are set to `NULL`
+#'
+#' @param xMet First numeric vector which, in principle, contains the methylation values.
+#' @param yExp Second numeric vector which, in principle, contains the expression values.
+#' @param x1,x2 Coordinates of vertical points in the X axis. Because it is expected to contain methylation values that vary between 0 and 1 the default values are 1/3 and 2/3.
+#' @param y1,y2 Coordinates of vertical points in the Y axis. Leaving them as NULL assigns them the percentiles of yVec defined by `percY1` and `percY2`.
+#' @param percY1,percY2 Values used to act as default for `y1`and `y2` when these are set to `NULL`
 #'
 #' @keywords calculation frequencies
 #' @export calcFreqs

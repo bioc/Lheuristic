@@ -1,4 +1,4 @@
-#' A vector correlation function calculator
+#' naiveSelection: A vector correlation function calculator
 #'
 #' \code{naiveSelection} Uses the function matCorrs; given two matrices X (m,n) , Y (m,n) this function computes Pearson and Spearman correlation coefficients
 #' and their significance p-values  for every pair of row vectors.
@@ -11,7 +11,7 @@
 #' @param rCutoff the upper limit to be used for the correlation coefficient. Default is 0, no cut off.
 #' @param sortByCorrs logical; if TRUE, results will be ordered in ascending order by p-value. Default set to FALSE.
 #'
-#' @keywords Correlation Selection
+#' @keywords Correlation Selection Calculator
 #' @export naiveSelection
 #' @import energy FactoMineR made4 stats
 #' @examples
