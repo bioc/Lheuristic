@@ -1,3 +1,2 @@
-setRepositories(ind=c(1,2))
 install.packages("devtools")
-devtools::install_github("bertamiro/LHeuristic")
+devtools::install_github("bertamiro/Lheuristic")

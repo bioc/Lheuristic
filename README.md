@@ -1,7 +1,7 @@
-# LHeuristic
+# Lheuristic
 ## Introduction
 
-This vignette gives information on how to use the 'LHeuristic' package functions to select genes with an expression vs methylation scatterplot that have an L-shaped pattern. 
+This vignette gives information on how to use the 'Lheuristic' package functions to select genes with an expression vs methylation scatterplot that have an L-shaped pattern. 
 
 ### Input data
 The data provided is a subset of the methylation array and the expression array from the colon adenocarcinoma (COAD) from The Cancer Genome Atlas (TCGA). The full dataset is available from the TCGA website (https://tcga-data.nci.nih.gov/docs/publications/tcga/?).

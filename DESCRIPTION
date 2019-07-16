@@ -1,4 +1,4 @@
-Package: lpattern
+Package: Lheuristic
 Title: Detection of scatterplots with L-shaped pattern
 Version: 0.0.0.9000
 Authors@R: c(
@@ -6,7 +6,7 @@ Authors@R: c(
     role = c("aut", "cre")),
     person("Miro Cau", "Berta", email =
     "berta.mirocau@gmail.com", role = "aut"))
-Description: The lpattern package identifies scatterpots that
+Description: The Lheuristic package identifies scatterpots that
     follow and L-shaped, negative distribution. It can be used
     to identify genes regulated by methylation by integration of
     an expression and a methylation array. The package uses two
@@ -14,7 +14,7 @@ Description: The lpattern package identifies scatterpots that
     shapped scatterplots. The parameters can be changed to
     detect other scatterplot patterns. 
 Depends: R (>= 3.0.0)
-biocViews: Gviz, IRanges, GenomicRanges
+biocViews: Gviz, GenomicRanges, IRanges
 Imports:
     Hmisc,
     energy,
