@@ -1,7 +1,7 @@
-# lpattern
+# LHeuristic
 ## Introduction
 
-This vignette gives information on how to use the 'lpattern' package functions to select genes with an expression vs methylation scatterplot that have an L-shaped pattern. 
+This vignette gives information on how to use the 'LHeuristic' package functions to select genes with an expression vs methylation scatterplot that have an L-shaped pattern. 
 
 ### Input data
 The data provided is a subset of the methylation array and the expression array from the colon adenocarcinoma (COAD) from The Cancer Genome Atlas (TCGA). The full dataset is available from the TCGA website (https://tcga-data.nci.nih.gov/docs/publications/tcga/?).
@@ -17,74 +17,50 @@ checkPairing(TCGAexp, TCGAmet)
 
 ## Data analysis
 
-There are four methods implemented in the package set for the selection of L-shaped genes: naive, CMI, heuristic and scagnostics. Each methods has various parameters which are optimized to select for the L-shape in scatterplot data, and with a negative correlation.
-The functions allow for parameter tunning, in which case, any other selection is possible.
+There are two methods implemented in the package set for the selection of L-shaped genes: correlation and heuristic. Each method has various parameters which are optimized to select for L-shaped scatterplot representations from methylation and expression data, and with a negative correlation.
+The various functions allow for parameter tunning and flexibility of scatterplot distributions; even though the methods have been optimized to select for L-shaped scatterplot distributions, the selection of any  distribution of choice is possible. 
 
-### Naive method
+### Correlation method
 
-The naive method is based on the selection of genes by significant negative correlation.
+The correlation method is based on the selection of genes by significant negative correlation coeficient.
 
 ```{r}
-naive <- naiveSelection (TCGAexp, TCGAmet, pValCutoff=0.25,  rCutoff=-0.5, type="Spearman",adj=TRUE)
-naiveL <-naive[naive$SigNegCorr,] 
-naiveNoL <-naive[!naive$SigNegCorr,] 
+correlation <- correlationSelection (TCGAexp, TCGAmet, pValCutoff=0.25,  rCutoff=-0.5, type="Spearman",adj=TRUE)
+correlationL <-correlation[correlation$SigNegCorr,] 
+correlationNoL <-correlation[!correlation$SigNegCorr,] 
 
-cat("The number of genes selected with the naive method is: ", sum(naiveL$SigNegCorr),"\n")
+cat("The number of genes selected with the correlation method is: ", sum(correlationL$SigNegCorr),"\n")
 ```
 
 We can observe the distribution of the correlation coeficients:
+
 ```{r}
-hist(naiveL[,1], xlim=c(-1,0), main="Significant correlations in TCGA dataset")
+hist(correlationL[,1], xlim=c(-1,0), main="Significant correlations in TCGA dataset")
 ```
 
-Depending on the *pvalue* and the *r* cutoff more or less genes will be retained.
-The result is a list with the genes slected and not selected in a table format with columns *r coefficient* and the *p-value* for the chosen correlation, the *adjusted p value*, the *distance correlation* and a logical wheter the gene was classified as L-shaped or not according to the parameters set.
+Depending on the *pvalue* and the *r* cutoff selected, a different number of genes will be retained.
+The resulting output is a list with the genes lassified as selected and not selected, in table format with the following columns: *r coefficient* and the *p-value* for the chosen correlation, the *adjusted p value*, the *distance correlation* and a logical wheter the gene was classified as L-shaped or not according to the set parameters.
 
 ```{r}
-kable(naiveL, caption = "Genes selected with L-shape with the naive method")
+kable(correlationL, caption = "Genes selected with L-shape with the correlation method")
 ```
 
 The resulting genes can also be plotted and saved in a PDF file.
 
 ```{r}
-plotGenesMat (mets=TCGAmet[rownames(naiveL),], 
-              expres=TCGAexp[rownames(naiveL),], 
-              fileName ="naiveLgenes.pdf",
-              text4Title = naiveL[rownames(naiveL),""]) 
+plotGenesMat (mets=TCGAmet[rownames(correlationL),], 
+              expres=TCGAexp[rownames(correlationL),], 
+              fileName ="correlationLgenes.pdf",
+              text4Title = correlationL[rownames(correlationL),""]) 
 ```
 
-### CMI method
 
-The Conditional Mutual Information method was based on the expression and methylation values computed at different points between 0 and 1 reached a minimum. This minimum should be small enough according predefined thresholds. This minimum was considered to be the cutoff point for methylation. 
-
-The cMI function computes cMI values for different t values, from 0 to 1 and a step of 0.01. The output is stored in a data frame. For each gene, the optimal threshold is the t-value that results the minimum CMI. We can run the CMI function with the default parameters, were $h=0.2$, $smallR=0.25$ and $minCMI=0.1$.
-
-```{r}
-cm <- cmiSelection (methData = TCGAmet, exprData = TCGAexp )
-cmiL <- cm[cm[,"meth_regulated"],]
-cmiNotL <- cm[!cm[,"meth_regulated"],]
-cat("The number of genes selected with the CMI method is: ", sum(cmiL$meth_regulated),"\n")
-```
-
-The results are presented in a table format as follows, were there is the *minimum CMI*, the optimal *t*, and a logical describing if the gene has or not an L-shape based on our criteria:
-
-```{r}
-kable(cmiL, caption = "Genes selected with L-shape with the CMI method")
-```
-
-Next, we can visualize the scatterplots of the selected genes with the \text{plotGenesMat} function and save them on a PDF file.
-```{r}
-plotGenesMat (mets=TCGAmet[rownames(cmiL),], 
-              expres=TCGAexp[rownames(cmiL),], 
-              fileName ="cmiLgenes.pdf",
-              text4Title = cmiL[rownames(cmiL),""]) 
-```
 
 ### Heuristic method
 
-The heuristic method intends to select L-shaped scatterplots by superimposing a grid on the graph and defining cells which have to (or don't have to) contain a minimum (or maximum) percentage of points if the scatterplot is to be called L-shaped.
+The heuristic method intends to select L-shaped scatterplots by superimposing a grid on the graph and defining cells which have to (or do not have to) contain a minimum (or maximum) percentage of points if the scatterplot is to be called L-shaped.
 
-The method also computes a score in such a way that scores in selected regions (L region) score positively and points off the region of interest score negatively. An appropriate setting of scores and weights should yield positive scores for L-shaped scatterplots and negative scores for those that are not. 
+The method also computes a score in such a way that scores in selected regions (L region) score positively and points off the L region score negatively. An appropriate setting of scores and weights should yield positive scores for L-shaped scatterplots and negative scores for those that are not L-shaped. 
 
 ```{r}
 sampleSize <- dim(TCGAmet)[2]
@@ -111,13 +87,14 @@ heurL <- heur[heur$logicSc,]
 heurNoL <- heur[!heur$logicSc,]
 ```
 
-We can check the results in the following table, were there is a logical value describing if the gene has or not an L-shape based on our criteria and the *numerSc* score:
+Results can be checked in the following table, were there is a logical value describing if the gene has or not an L-shape based on our criteria and the *numerSc* score:
 
 ```{r}
 kable((heurL), caption = "Genes selected with L-shape with the heuristic method")
 ```
 
-Next, we can visualize the scatterplots of the selected genes and save them on a PDF file.
+Next, the scatterplots of the selected genes can be visualized and saved  on a PDF file.
+
 ```{r}
 plotGenesMat (mets=TCGAmet[rownames(heurL),], 
               expres=TCGAexp[rownames(heurL),], 
@@ -125,63 +102,31 @@ plotGenesMat (mets=TCGAmet[rownames(heurL),],
               text4Title = heurL[rownames(heurL),"numeriSc"]) 
 ```
 
-
-### Scagnostics method
-
-The scagnostics provides seven coeficients for each gene that describe the scatterplot. These are: outlying, skewed, clumpy, sparse, striated, convex, skinny, stringy and monotonic. After a fine-tunning exercise, the parameters that we select from the DA dataset are: Monotonic, Convex, Striated and Clumpy. The parameters that we select from the TCGA dataset are: Monotonic, Convex, Skinnyand Clumpy. For the GEO dataset, none the parameters seems to be able to discriminate between TRUE and FALSE. That is also why we did a visual selection of L-shaped genes, however the results did not improve.
-
-```{r}
-###need to change that for the functions
-
-si <- c()
-for (i in 1:nrow(TCGAexp)){
-  si <- cbind(si, scagnostics(TCGAmet[i,], TCGAexp[i,] ))
-
-}
-
-colnames(si) <- rownames(TCGAexp)
-
-
-si_t <- as.data.frame(t(si))
-dim(si_t)
-
-scagL <- si_t[which( (si_t$Outlying < 0.06 ) & (si_t$Convex <  0.09) & (si_t$Sparse > 0.20) & (si_t$Clumpy > 0.17)), ]
-
-plotGenesMat (mets=TCGAmet[rownames(scagL),], 
-              expres=TCGAexp[rownames(scagL),], 
-              fileName ="scagLgenes.pdf",
-              text4Title = rownames(scagL)) 
-```
-
 ## Comparison of selected L-shaped genes
 
 We have for lists of genes that we have identified with the 4 different methods. We can create the intersection of all lists and then visualize the results with a Venn Diagram.
 
 ```{r}
-myVenn<- venn.diagram(x=list(naive=rownames(naiveL), 
-                                CMI = rownames(cmiL), 
+myVenn<- venn.diagram(x=list(correlation=rownames(correlationL), 
                                 heuristic = rownames(heurL),
-                                scagnostics = rownames(scagL)), 
                                 filename=NULL, lty = "blank",  
-                                fill=c("pink1", "skyblue", "mediumorchid", "lightgoldenrod"),
+                                fill=c("pink1", "skyblue"),
                        main="Genes in common between the 4 methods")
 grid.newpage()
 grid.draw(myVenn)
 ```
 
-We can decide to choose the genes that have been selected by 2 or more methods, for example, to have higher consistancy in the selection. 
+We can decide to choose the genes that have been selected by 2 or more selection criteria or methods, to have higher consistancy in the selection. 
 
 ```{r}
-inCommonL1 <- intersect(rownames(heurL), rownames(cmiL))
-inCommonL2 <- intersect(rownames(naiveL), rownames(heurL))
-inCommonL3 <- intersect(rownames(heurL), rownames(scagL))
+inCommonL <- intersect(rownames(correlationL), rownames(heurL))
 
-commonAll <- c(inCommonL1, inCommonL2, inCommonL3)
-commonL <- unique(commonAll)
-allL <- commonAll[duplicated(commonAll)]
+commonL <- unique(inCommonL)
+allL <- inCommonL[duplicated(inCommonL)]
 ```
 
 We can also plot selected genes.
+
 ```{r}
 par(mfrow=c(2,2))
 myGene1 <-allL[1]
@@ -220,29 +165,24 @@ To annotate genes on the corresponding chromosomes, we will get the transcript c
 ```{r}
 recalc<- TRUE
 if (recalc) {
-tcNaive <- getGenesLocations(unique(rownames(naiveL)),
-                              csvFileName="coordsLnaive.csv")
-tcCMI <- getGenesLocations(unique(rownames(cmiL)),
-                              csvFileName="coordsLcmi.csv")
+tccorrelation <- getGenesLocations(unique(rownames(correlationL)),
+                              csvFileName="coordsLcorrelation.csv")
 tcHeur <- getGenesLocations(unique(rownames(heurL)),
                               csvFileName="coordsLheur.csv")
-tcScag <- getGenesLocations(rownames(rownames(scagL)),
-                              csvFileName="coordsLscag.csv")
 
   transcriptCoordsList <- 
-     list(tcNaive = tcNaive, tcCMI=tcCMI, 
-          tcHeuristic=tcHeur,tcScagnostics=tcScag)
+     list(tccorrelation = tccorrelation, tcHeuristic=tcHeur)
   save(transcriptCoordsList, file="transcriptCoordsLgenes.Rda")
 }else{
   load(file="transcriptCoordsLgenes.Rda")
 }
 ```
 
-For example the table of annotations corresponding to the \texttt{selectedNaiveDA} gene list has the following aspect:
+For example the table of annotations corresponding to the \texttt{selectedcorrelationDA} gene list has the following aspect:
 
 ```{r}
 
-kable(head(transcriptCoordsList[["tcNaive"]]))
+kable(head(transcriptCoordsList[["tccorrelation"]]))
 
 ```
 
