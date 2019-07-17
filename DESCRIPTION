@@ -30,7 +30,8 @@ Imports:
     ensembldb,
     kableExtra,
     XVector,
-    FactoMiner
+    FactoMiner,
+    BiocManager
 Suggests: 
     knitr,
     rmarkdown
