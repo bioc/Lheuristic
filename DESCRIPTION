@@ -30,7 +30,7 @@ Imports:
     ensembldb,
     kableExtra,
     XVector,
-    FactoMiner,
+    FactoMineR,
     BiocManager
 Suggests: 
     knitr,
