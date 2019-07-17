@@ -29,7 +29,8 @@ Imports:
     grDevices,
     ensembldb,
     kableExtra,
-    XVector
+    XVector,
+    FactoMiner
 Suggests: 
     knitr,
     rmarkdown
