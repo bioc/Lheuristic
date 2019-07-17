@@ -39,7 +39,7 @@ plotGenesMat <- function(mets, expres, fileName, text4Title=NULL,
   for (gene in 1:nrow(expres)){
     xVec<- as.numeric(mets[gene,])
     yVec<- as.numeric(expres[gene,])
-    plotGenSel(xMet=xVec, yExp=yVec, titleText=text4Title[gene],
+    plotGeneSel(xMet=xVec, yExp=yVec, titleText=text4Title[gene],
                x1=x1, x2=x2, percY1=percY1, percY2=percY2, plotGrid=plotGrid) #x1=1/3, x2=2/3, plotGrid=plotGrid)
   }
   #  par(opt)

@@ -32,7 +32,7 @@ plotGeneByName <- function(geneName, mets, expres, fileName, text4Title=NULL,
   if(!(is.null(genePos))){
     xVec<- as.numeric(mets[genePos,])
     yVec<- as.numeric(expres[genePos,])
-    plotGenSel(xMet=xVec, yExp=yVec, titleText=text4Title,
+    plotGeneSel(xMet=xVec, yExp=yVec, titleText=text4Title,
                x1=1/3, x2=2/3, plotGrid=plotGrid)
   }
   if (!is.null(fileName))

@@ -23,7 +23,7 @@
 #' xVec<- as.numeric(myMetilData[trueGene1,])
 #' yVec<-as.numeric(myExprData[trueGene1,])
 #' titolT <- trueGene1
-#' plotGenSel(xMet=xVec, yExp=yVec, titleText=titolT, x1=1/3, x2=2/3)
+#' plotGeneSel(xMet=xVec, yExp=yVec, titleText=titolT, x1=1/3, x2=2/3)
 #' messageTitle(paste("Cell counts for gene",trueGene1))
 #' calcFreqs(xMet=xVec, yExp=yVec, x1=1/3, x2=2/3, y1=NULL, y2=NULL, percY1=1/3, percY2=2/3)
 #'
@@ -31,7 +31,7 @@
 #' yVec<-as.numeric(myExprData[falseGene1,])
 #' titolF <- falseGene1
 #' messageTitle(paste("Cell counts for gene",falseGene1))
-#' plotGenSel(xMet=xVec, yExp=yVec, titleText=titolF, x1=1/3, x2=2/3)
+#' plotGeneSel(xMet=xVec, yExp=yVec, titleText=titolF, x1=1/3, x2=2/3)
 #' calcFreqs(xMet=xVec, yExp=yVec, x1=1/3, x2=2/3, y1=NULL, y2=NULL, percY1=1/3, percY2=2/3)
 #' }
 #'

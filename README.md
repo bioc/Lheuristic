@@ -133,28 +133,28 @@ myGene1 <-allL[1]
 xVec<- as.numeric(TCGAmet[myGene1,])
 yVec<-as.numeric(TCGAexp[myGene1,])
 titleT <- paste (myGene1, "(May be GRM)")
-plotGenSel(xMet=xVec, yExp=yVec, titleText=titleT, x1=1/3, x2=2/3)
+plotGeneSel(xMet=xVec, yExp=yVec, titleText=titleT, x1=1/3, x2=2/3)
 
 
 myGene2 <-allL[2]
 xVec<- as.numeric(TCGAmet[myGene2,])
 yVec<-as.numeric(TCGAexp[myGene2,])
 titleT <- paste (myGene2, "(May be GRM)")
-plotGenSel(xMet=xVec, yExp=yVec, titleText=titleT, x1=1/3, x2=2/3)
+plotGeneSel(xMet=xVec, yExp=yVec, titleText=titleT, x1=1/3, x2=2/3)
 
 
 myGene3 <-allL[3]
 xVec<- as.numeric(TCGAmet[myGene3,])
 yVec<-as.numeric(TCGAexp[myGene3,])
 titleT <- paste (myGene3, "(May be GRM)")
-plotGenSel(xMet=xVec, yExp=yVec, titleText=titleT, x1=1/3, x2=2/3)
+plotGeneSel(xMet=xVec, yExp=yVec, titleText=titleT, x1=1/3, x2=2/3)
 
 
 myGene5 <-allL[5]
 xVec<- as.numeric(TCGAmet[myGene5,])
 yVec<-as.numeric(TCGAexp[myGene5,])
 titleT <- paste (myGene5, "(May be GRM)")
-plotGenSel(xMet=xVec, yExp=yVec, titleText=titleT, x1=1/3, x2=2/3)
+plotGeneSel(xMet=xVec, yExp=yVec, titleText=titleT, x1=1/3, x2=2/3)
 
 ```
 
