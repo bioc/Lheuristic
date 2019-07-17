@@ -31,7 +31,7 @@ myGene1 <-rownames(myGenes)[1]
 xVec<- as.numeric(myMet[myGene1,])
 yVec<-as.numeric(myExpr[myGene1,])
 titleT <- paste (myGene1, "(May be GRM)")
-plotGenSel(xMet=xVec, yExp=yVec, titleText=titleT, x1=1/3, x2=2/3)
+plotGeneSel(xMet=xVec, yExp=yVec, titleText=titleT, x1=1/3, x2=2/3)
 }
 
 }
