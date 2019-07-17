@@ -25,13 +25,16 @@ Imports:
     gtools,
     GenomicRanges,
     TxDb.Hsapiens.UCSC.hg19.knownGene,
+    org.Hs.eg.db,
+    GO.db,
     utils,
     grDevices,
     ensembldb,
     kableExtra,
     XVector,
     FactoMineR,
-    BiocManager
+    BiocManager,
+    VennDiagram
 Suggests: 
     knitr,
     rmarkdown

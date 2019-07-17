@@ -29,6 +29,10 @@ The methylation and expression data are in 2 different files,  the columns are t
 library(Lheuristic)
 library(kableExtra)
 library(VennDiagram)
+require(GO.db)
+require(org.Hs.eg.db)
+require(TxDb.Hsapiens.UCSC.hg19.knownGene)
+
 data("TCGAexp")
 data("TCGAmet")
 
