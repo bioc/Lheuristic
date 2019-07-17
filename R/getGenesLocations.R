@@ -18,7 +18,8 @@
 
 getGenesLocations <- function (geneSymbolsSEL, sortByChrom=TRUE, csvFileName=NULL){
   if (length(geneSymbolsSEL)>0){
-    anotacs<- select(Homo.sapiens,
+    anotacs<- select(
+      ,
                      keys=geneSymbolsSEL, columns="ENTREZID", keytype="SYMBOL")
     transcriptCoords2 <- select(TxDb.Hsapiens.UCSC.hg19.knownGene,
                                 keys = anotacs$ENTREZID,

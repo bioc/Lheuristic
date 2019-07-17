@@ -13,7 +13,7 @@ Description: The Lheuristic package identifies scatterpots that
     different methods to detect expression and methyaltion L-
     shapped scatterplots. The parameters can be changed to
     detect other scatterplot patterns. 
-Depends: R (>= 3.0.0)
+Depends: R (>= 3.5.0)
 biocViews: Gviz, GenomicRanges, IRanges
 Imports:
     Hmisc,

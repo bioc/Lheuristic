@@ -26,6 +26,9 @@ The data provided is a subset of the methylation array and the expression array 
 The methylation and expression data are in 2 different files,  the columns are the samples (patients) and the rows are the genes. We have to check that the matrices  have matching rows and columns, and in the same order.
 
 ```{r}
+library(Lheuristic)
+library(kableExtra)
+library(VennDiagram)
 data("TCGAexp")
 data("TCGAmet")
 
@@ -62,10 +65,10 @@ kable(correlationL, caption = "Genes selected with L-shape with the correlation 
 The resulting genes can also be plotted and saved in a PDF file.
 
 ```{r}
-plotGenesMat (mets=TCGAmet[rownames(correlationL),], 
-              expres=TCGAexp[rownames(correlationL),], 
-              fileName ="correlationLgenes.pdf",
-              text4Title = correlationL[rownames(correlationL),""]) 
+# plotGenesMat (mets=TCGAmet[rownames(correlationL),], 
+#               expres=TCGAexp[rownames(correlationL),], 
+#               fileName ="correlationLgenes.pdf",
+#               text4Title = correlationL[rownames(correlationL),""]) 
 ```
 
 
@@ -106,11 +109,12 @@ kable((heurL), caption = "Genes selected with L-shape with the heuristic method"
 ```
 
 Next, we can visualize the scatterplots of the selected genes and save them on a PDF file.
+
 ```{r}
-plotGenesMat (mets=TCGAmet[rownames(heurL),], 
-              expres=TCGAexp[rownames(heurL),], 
-              fileName ="heurLgenes.pdf",
-              text4Title = heurL[rownames(heurL),"numeriSc"]) 
+# plotGenesMat (mets=TCGAmet[rownames(heurL),], 
+#               expres=TCGAexp[rownames(heurL),], 
+#               fileName ="heurLgenes.pdf",
+#               text4Title = heurL[rownames(heurL),"numeriSc"]) 
 ```
 
 
@@ -134,42 +138,36 @@ We can decide to choose the genes that have been selected by 2 or more methods, 
 ```{r}
 
 inCommonL <- intersect(rownames(correlationL), rownames(heurL))
-
-commonL <- unique(inCommon)
-allL <- inCommonL[duplicated(inCommonL)]
-
 ```
 
 We can also plot selected genes.
-```{r}
+```{r, fig.height=17, fig.width=12}
 par(mfrow=c(2,2))
-myGene1 <-allL[1]
+myGene1 <-inCommonL[1]
 xVec<- as.numeric(TCGAmet[myGene1,])
 yVec<-as.numeric(TCGAexp[myGene1,])
 titleT <- paste (myGene1, "(May be GRM)")
-plotGenSel(xMet=xVec, yExp=yVec, titleText=titleT, x1=1/3, x2=2/3)
-#'}
+plotGeneSel(xMet=xVec, yExp=yVec, titleText=titleT, x1=1/3, x2=2/3)
 
-myGene2 <-allL[2]
+
+myGene2 <-inCommonL[2]
 xVec<- as.numeric(TCGAmet[myGene2,])
 yVec<-as.numeric(TCGAexp[myGene2,])
 titleT <- paste (myGene2, "(May be GRM)")
-plotGenSel(xMet=xVec, yExp=yVec, titleText=titleT, x1=1/3, x2=2/3)
-#'}
+plotGeneSel(xMet=xVec, yExp=yVec, titleText=titleT, x1=1/3, x2=2/3)
 
-myGene3 <-allL[3]
+
+myGene3 <-inCommonL[3]
 xVec<- as.numeric(TCGAmet[myGene3,])
 yVec<-as.numeric(TCGAexp[myGene3,])
 titleT <- paste (myGene3, "(May be GRM)")
-plotGenSel(xMet=xVec, yExp=yVec, titleText=titleT, x1=1/3, x2=2/3)
-#'}
+plotGeneSel(xMet=xVec, yExp=yVec, titleText=titleT, x1=1/3, x2=2/3)
 
-myGene5 <-allL[5]
-xVec<- as.numeric(TCGAmet[myGene5,])
-yVec<-as.numeric(TCGAexp[myGene5,])
-titleT <- paste (myGene5, "(May be GRM)")
-plotGenSel(xMet=xVec, yExp=yVec, titleText=titleT, x1=1/3, x2=2/3)
-#'}
+myGene5 <-inCommonL[5]
+xVec<- as.numeric(TCGAmet[myGene3,])
+yVec<-as.numeric(TCGAexp[myGene3,])
+titleT <- paste (myGene3, "(May be GRM)")
+plotGeneSel(xMet=xVec, yExp=yVec, titleText=titleT, x1=1/3, x2=2/3)
 ```
 
 ##Annotate selected genes on the chromosome
