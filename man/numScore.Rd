@@ -2,9 +2,7 @@
 % Please edit documentation in R/numScore.R
 \name{numScore}
 \alias{numScore}
-\title{numScore
-\code{numScore} A function to score scatterplot using a weight matrix.
-The scoring does not incorporate logical conditions such as "if xij < C ..."}
+\title{numScore}
 \usage{
 numScore(aGrid, LShaped, aWeightMifL, aWeightMifNonL)
 }
@@ -18,8 +16,9 @@ numScore(aGrid, LShaped, aWeightMifL, aWeightMifNonL)
 \item{aWeightMifNonL}{A matrix of weights to score the previous counts if the scatterplot has been classified as non-L}
 }
 \description{
-numScore
 \code{numScore} A function to score scatterplot using a weight matrix.
+}
+\details{
 The scoring does not incorporate logical conditions such as "if xij < C ..."
 }
 \examples{

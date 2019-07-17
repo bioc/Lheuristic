@@ -2,8 +2,7 @@
 % Please edit documentation in R/plotGenesMat.R
 \name{plotGenesMat}
 \alias{plotGenesMat}
-\title{plotGenesMat
-\code{plotGenesMat} wrapper function for plotting the scatterplots associated with two matrices.}
+\title{plotGenesMat}
 \usage{
 plotGenesMat(mets, expres, fileName, text4Title = NULL, x1 = 1/3,
   x2 = 2/3, y1 = NULL, y2 = NULL, percY1 = 1/3, percY2 = 2/3,
@@ -29,7 +28,6 @@ plotGenesMat(mets, expres, fileName, text4Title = NULL, x1 = 1/3,
 \item{logicSc}{NULL, numeric score representing the L-shape score.}
 }
 \description{
-plotGenesMat
 \code{plotGenesMat} wrapper function for plotting the scatterplots associated with two matrices.
 }
 \examples{

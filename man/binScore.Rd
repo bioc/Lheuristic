@@ -2,11 +2,7 @@
 % Please edit documentation in R/binScore.R
 \name{binScore}
 \alias{binScore}
-\title{binScore
-\code{binScore} can be used to score scatterplots by directly comparing
-the sample counts with a matrix of minimal or maximal percentages/counts
-to be found in each cell. It implements the three bands rule implicitly
-by setting threshold values}
+\title{binScore}
 \usage{
 binScore(aGrid, aReq)
 }
@@ -17,11 +13,10 @@ binScore(aGrid, aReq)
 if L-shape is TRUE}
 }
 \description{
-binScore
 \code{binScore} can be used to score scatterplots by directly comparing
 the sample counts with a matrix of minimal or maximal percentages/counts
 to be found in each cell. It implements the three bands rule implicitly
-by setting threshold values
+by setting threshold values.
 }
 \examples{
 \dontrun{

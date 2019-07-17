@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotGenesInChroms.R
 \name{plotGenesInChroms}
 \alias{plotGenesInChroms}
-\title{A function to plot specific genes onto the corresponding chromosomes}
+\title{ploGenesInChromosomes: A function to plot specific genes onto the corresponding chromosomes}
 \usage{
 plotGenesInChroms(transcriptCoords, plotsFilename, minbase, maxbase,
   islandData, dnaseData)

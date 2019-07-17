@@ -2,8 +2,7 @@
 % Please edit documentation in R/read2.R
 \name{read2}
 \alias{read2}
-\title{read2
-\code{read2} Wrapper to read 2 files with the same format, dimensions and row and column names.}
+\title{read2}
 \usage{
 read2(expresFName, metFName, dataDirectory = ".", sepChar = ";",
   decChar = ".")
@@ -20,7 +19,6 @@ read2(expresFName, metFName, dataDirectory = ".", sepChar = ";",
 \item{decChar}{Name of character used as decimal point. Defaults to ".".}
 }
 \description{
-read2
 \code{read2} Wrapper to read 2 files with the same format, dimensions and row and column names.
 }
 \examples{

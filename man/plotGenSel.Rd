@@ -2,8 +2,7 @@
 % Please edit documentation in R/plotGeneSel.R
 \name{plotGenSel}
 \alias{plotGenSel}
-\title{plotGeneSel
-\code{PlotGene} plots points on a scatterplot with a 3x3 grid overimposed.}
+\title{plotGeneSel}
 \usage{
 plotGenSel(xMet, yExp, titleText, x1 = 1/3, x2 = 2/3, y1 = NULL,
   y2 = NULL, percY1 = 1/3, percY2 = 2/3, plotGrid = TRUE)
@@ -24,8 +23,7 @@ plotGenSel(xMet, yExp, titleText, x1 = 1/3, x2 = 2/3, y1 = NULL,
 \item{xExp}{vector for expression data.}
 }
 \description{
-plotGeneSel
-\code{PlotGene} plots points on a scatterplot with a 3x3 grid overimposed.
+\code{plotGeneSel} plots points on a scatterplot with a 3x3 grid overimposed.
 }
 \examples{
 \dontrun{

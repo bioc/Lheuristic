@@ -2,8 +2,7 @@
 % Please edit documentation in R/checkPairing.R
 \name{checkPairing}
 \alias{checkPairing}
-\title{checkPairing
-\code{checkPairing} is a  function to check if two matrices have the same dimensions (same rows and columns) and same row and column names.}
+\title{checkPairing}
 \usage{
 checkPairing(X, Y)
 }
@@ -13,7 +12,6 @@ checkPairing(X, Y)
 \item{Y}{matrix}
 }
 \description{
-checkPairing
 \code{checkPairing} is a  function to check if two matrices have the same dimensions (same rows and columns) and same row and column names.
 }
 \examples{

@@ -2,7 +2,7 @@
 % Please edit documentation in R/naiveSelection.R
 \name{naiveSelection}
 \alias{naiveSelection}
-\title{A vector correlation function calculator}
+\title{naiveSelection: A vector correlation function calculator}
 \usage{
 naiveSelection(X, Y, type = "Spearman", adj = TRUE,
   pValCutoff = 0.05, rCutoff = 0, sortByCorrs = FALSE)
@@ -49,5 +49,6 @@ and their significance p-values  for every pair of row vectors.
 # (m12<- matAllCorrs (X, Y))
 # sort1(m12,4, DEC=FALSE)
 }
+\keyword{Calculator}
 \keyword{Correlation}
 \keyword{Selection}

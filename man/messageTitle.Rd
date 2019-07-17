@@ -2,8 +2,7 @@
 % Please edit documentation in R/messageTitle.R
 \name{messageTitle}
 \alias{messageTitle}
-\title{messageTitle
-\code{messageTitle} A  wrapper function for sending messages to console.}
+\title{messageTitle}
 \usage{
 messageTitle(aMessage, underChar = "-")
 }
@@ -13,7 +12,6 @@ messageTitle(aMessage, underChar = "-")
 \item{underChar}{character to use for underlining the message.}
 }
 \description{
-messageTitle
 \code{messageTitle} A  wrapper function for sending messages to console.
 }
 \examples{

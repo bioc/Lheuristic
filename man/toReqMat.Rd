@@ -2,9 +2,7 @@
 % Please edit documentation in R/toReqMat.R
 \name{toReqMat}
 \alias{toReqMat}
-\title{toReqMat
-\code{toReqMat} can be used to turn a matrix of required percentages into
-a matrix of required counts to facilitate its scoring}
+\title{toReqMat}
 \usage{
 toReqMat(numPoints, aReqPercentMat)
 }
@@ -14,9 +12,8 @@ toReqMat(numPoints, aReqPercentMat)
 \item{aReqPercentMat}{Matrix of required percentages}
 }
 \description{
-toReqMat
 \code{toReqMat} can be used to turn a matrix of required percentages into
-a matrix of required counts to facilitate its scoring
+a matrix of required counts to facilitate its scoring.
 }
 \examples{
 \dontrun{

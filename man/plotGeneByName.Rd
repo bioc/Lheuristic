@@ -2,9 +2,7 @@
 % Please edit documentation in R/plotGeneByName.R
 \name{plotGeneByName}
 \alias{plotGeneByName}
-\title{plotGeneByName
-\code{plotGeneByName} plots points on a scatterplot with a 3x3 grid superimposed.
-The name of a the gene is provided jointly with the matrix and used to select the row to be plotted.}
+\title{plotGeneByName}
 \usage{
 plotGeneByName(geneName, mets, expres, fileName, text4Title = NULL,
   plotGrid = TRUE, figs = c(2, 2))
@@ -19,7 +17,6 @@ plotGeneByName(geneName, mets, expres, fileName, text4Title = NULL,
 \item{filename}{NULL, name of the file to store the results as pdf if a name is passed.}
 }
 \description{
-plotGeneByName
 \code{plotGeneByName} plots points on a scatterplot with a 3x3 grid superimposed.
 The name of a the gene is provided jointly with the matrix and used to select the row to be plotted.
 }

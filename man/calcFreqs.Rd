@@ -2,27 +2,23 @@
 % Please edit documentation in R/calcFreqs.R
 \name{calcFreqs}
 \alias{calcFreqs}
-\title{calcFreqs
-\code{calcFreqs} Given two numeric vectors this function overimposes a grid on the scatterplot defined by YMet~Xmet
-#' and returns a 3X3 matrix of counts with the number of points in each cell of the grid
-#' for given vertical and horizontal lines.}
+\title{calcFreqs}
 \usage{
 calcFreqs(xMet, yExp, x1, x2, y1 = NULL, y2 = NULL, percY1 = 1/3,
   percY2 = 2/3)
 }
 \arguments{
-\item{xMet, }{First numeric vector which, in principle, contains the methylation values.}
+\item{xMet}{First numeric vector which, in principle, contains the methylation values.}
 
-\item{yExp, }{Second numeric vector which, in principle, contains the expression values.}
+\item{yExp}{Second numeric vector which, in principle, contains the expression values.}
 
-\item{x1, }{x2, Coordinates of vertical points in the X axis. Because it is expected to contain methylation values that vary between 0 and 1 the default values are 1/3 and 2/3.}
+\item{x1, x2}{Coordinates of vertical points in the X axis. Because it is expected to contain methylation values that vary between 0 and 1 the default values are 1/3 and 2/3.}
 
-\item{y1, }{y2, Coordinates of vertical points in the Y axis. Leaving them as NULL assigns them the percentiles of yVec defined by `percY1` and `percY2`.}
+\item{y1, y2}{Coordinates of vertical points in the Y axis. Leaving them as NULL assigns them the percentiles of yVec defined by `percY1` and `percY2`.}
 
-\item{percY1, }{percY2 Values used to act as default for `y1`and `y2` when these are set to `NULL`}
+\item{percY1, percY2}{Values used to act as default for `y1`and `y2` when these are set to `NULL`}
 }
 \description{
-calcFreqs
 \code{calcFreqs} Given two numeric vectors this function overimposes a grid on the scatterplot defined by YMet~Xmet
 #' and returns a 3X3 matrix of counts with the number of points in each cell of the grid
 #' for given vertical and horizontal lines.
