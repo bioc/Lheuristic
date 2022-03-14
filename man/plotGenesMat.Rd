@@ -4,9 +4,20 @@
 \alias{plotGenesMat}
 \title{plotGenesMat}
 \usage{
-plotGenesMat(mets, expres, fileName, text4Title = NULL, x1 = 1/3,
-  x2 = 2/3, y1 = NULL, y2 = NULL, percY1 = 1/3, percY2 = 2/3,
-  plotGrid = TRUE, logicSc = NULL)
+plotGenesMat(
+  mets,
+  expres,
+  fileName,
+  text4Title = NULL,
+  x1 = 1/3,
+  x2 = 2/3,
+  y1 = NULL,
+  y2 = NULL,
+  percY1 = 1/3,
+  percY2 = 2/3,
+  plotGrid = TRUE,
+  logicSc = NULL
+)
 }
 \arguments{
 \item{mets}{matrix with methylation data.}

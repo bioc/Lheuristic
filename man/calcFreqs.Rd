@@ -4,8 +4,7 @@
 \alias{calcFreqs}
 \title{calcFreqs}
 \usage{
-calcFreqs(xMet, yExp, x1, x2, y1 = NULL, y2 = NULL, percY1 = 1/3,
-  percY2 = 2/3)
+calcFreqs(xMet, yExp, x1, x2, y1 = NULL, y2 = NULL, percY1 = 1/3, percY2 = 2/3)
 }
 \arguments{
 \item{xMet}{First numeric vector which, in principle, contains the methylation values.}

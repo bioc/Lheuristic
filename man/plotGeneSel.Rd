@@ -4,8 +4,18 @@
 \alias{plotGeneSel}
 \title{plotGeneSel}
 \usage{
-plotGeneSel(xMet, yExp, titleText, x1 = 1/3, x2 = 2/3, y1 = NULL,
-  y2 = NULL, percY1 = 1/3, percY2 = 2/3, plotGrid = TRUE)
+plotGeneSel(
+  xMet,
+  yExp,
+  titleText,
+  x1 = 1/3,
+  x2 = 2/3,
+  y1 = NULL,
+  y2 = NULL,
+  percY1 = 1/3,
+  percY2 = 2/3,
+  plotGrid = TRUE
+)
 }
 \arguments{
 \item{xMet}{vector with methylation data.}

@@ -4,8 +4,15 @@
 \alias{plotGeneByName}
 \title{plotGeneByName}
 \usage{
-plotGeneByName(geneName, mets, expres, fileName, text4Title = NULL,
-  plotGrid = TRUE, figs = c(2, 2))
+plotGeneByName(
+  geneName,
+  mets,
+  expres,
+  fileName,
+  text4Title = NULL,
+  plotGrid = TRUE,
+  figs = c(2, 2)
+)
 }
 \arguments{
 \item{geneName}{name of the gene to be plotted.}

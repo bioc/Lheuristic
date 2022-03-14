@@ -13,7 +13,7 @@
 #'
 #' @keywords Correlation Selection Calculator
 #' @export correlationSelection
-#' @import energy FactoMineR made4 stats
+#' @import ade4, stats
 #' @examples
 #' # (X <- round(matrix (rnorm(30)*10, ncol=6),1))
 #' # (Y <- round(X + matrix (rnorm(30)*10, ncol=6),1))

@@ -4,8 +4,7 @@
 \alias{read2}
 \title{read2}
 \usage{
-read2(expresFName, metFName, dataDirectory = ".", sepChar = ";",
-  decChar = ".")
+read2(expresFName, metFName, dataDirectory = ".", sepChar = ";", decChar = ".")
 }
 \arguments{
 \item{expresFName}{Name of first file, expected to contain expression values.}
