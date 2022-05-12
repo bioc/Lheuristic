@@ -18,7 +18,10 @@ biocViews: Methylation
 Imports:
     Hmisc,
     stats,
+    energy,
+    made4,
     kableExtra,
+    FactoMineR,
     XVector,
     VennDiagram
 Suggests: 

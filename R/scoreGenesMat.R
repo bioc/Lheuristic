@@ -15,9 +15,11 @@
 #' @export scoreGenesMat
 #' @examples
 #' \dontrun{
+#' mets <- matrix(runif(1000), nrow=100)
+#' expres <- matrix(rnorm(1000), nrow=100)
 #' sampleSize <- dim(mets)[2]
 #' numGenes <-   dim(mets)[1]
-#'reqPercentages <- matrix (c(2, 20, 5, 1, 40, 20, 0, 1, 2), nrow=3, byrow=TRUE)
+#'reqPercentages <- matrix (c(3, 20, 5, 5, 40, 20, 4, 1, 2), nrow=3, byrow=TRUE)
 #'(theWeightMifL=matrix (c(2,-2,-sampleSize/5,1,0,-2,1,1,2), nrow=3, byrow=TRUE))
 #'(theWeightMifNonL=matrix (c(0,-2,-sampleSize/5,0,0,-2,0,0,0), nrow=3, byrow=TRUE))
 #'scoreGenesMat <- function(mets, expres,
@@ -35,6 +37,7 @@ scoreGenesMat <- function(mets, expres,
                           aWeightMifL, # =standardWeightM,
                           aWeightMifNonL) # , trace=FALSE)
 {
+  stopifnot("Percentages must add up to 100"=sum(aReqPercentsMat)==100)
   N <- dim(mets)[2]
   Ngenes <-nrow(mets)
   scores <- data.frame(logicSc=rep(FALSE, Ngenes), numericSc=rep(0,Ngenes))
@@ -57,9 +60,4 @@ scoreGenesMat <- function(mets, expres,
     scores[gene, "numericSc"] <- numSc
   }
   return (scores)
-}
-
-
-toReqMat <- function (numPoints, aReqPercentMat){
-  return(round(aReqPercentMat*numPoints/100,0)) #  return(round(aReqPercentMat*sum(numPoints)/100,0))
 }

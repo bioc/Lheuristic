@@ -85,7 +85,7 @@ genes2plot <- rownames(TCGAmet) %in% rownames(correlationL)[1:4]
 opt <- par(mfrow=c(2,2))
 plotGenesMat (mets=TCGAmet[genes2plot,1:4], 
                expres=TCGAexp[genes2plot,1:4], 
-               fileName =NULL, # "correlationLgenes.pdf",
+               fileName = "correlationLgenes.pdf",
                text4Title = correlationL[rownames(correlationL),""]) 
 par(opt)
 ```
@@ -135,7 +135,7 @@ genes2plot2 <- rownames(TCGAmet) %in% rownames(heurL)[1:4]
 opt <- par(mfrow=c(2,2))
 plotGenesMat (mets=TCGAmet[genes2plot2,], 
                expres=TCGAexp[genes2plot2,], 
-               fileName =NULL,
+               fileName ="selectedGenes.pdf",
                text4Title = heurL[genes2plot2,"numeriSc"]) 
 par(opt)
 ```
