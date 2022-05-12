@@ -1,11 +1,15 @@
 Package: Lheuristic
 Title: Detection of scatterplots with L-shaped pattern
 Version: 0.0.0.9000
-Authors@R: c(
+Author: c(
     person("Sanchez Pla", "Alex", email ="sanplaale@gmail.com",
     role = c("aut", "cre")),
     person("Miro Cau", "Berta", email =
     "berta.mirocau@gmail.com", role = "aut"))
+Maintainer: c(
+    person("Sanchez Pla", "Alex", email ="sanplaale@gmail.com",
+    role = c("aut", "cre")
+    )
 Description: The Lheuristic package identifies scatterpots that
     follow and L-shaped, negative distribution. It can be used
     to identify genes regulated by methylation by integration of
