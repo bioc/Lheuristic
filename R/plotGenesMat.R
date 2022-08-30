@@ -4,15 +4,21 @@
 #'
 #' @param mets matrix with methylation data.
 #' @param expres matrix with expression data.
-#' @param fileName name of the file used to save the results as pdf.
+#' @param fileName name of the file used to save the results as pdf. If NULL, plot goes to screen
 #' @param text4Title NULL, name for the plot title containing the gene name and the L-shape score.
-#' @param x1, x2, Coordinates of vertical points in the X axis. Because it is expected to contain methylation values that vary between 0 and 1 the default values are 1/3 and 2/3.
-#' @param y1, y2, Coordinates of vertical points in the Y axis. Leaving them as NULL assigns them the percentiles of yVec defined by `percY1` and `percY2`.
-#' @param percY1, percY2 Values used to act as default for `y1`and `y2` when these are set to `NULL`.
+#' @param x1, x-Coordinates of vertical points in the X axis. Because it is expected to contain methylation values that vary between 0 and 1 the default values are 1/3 and 2/3.
+#' @param y1, y-Coordinates of vertical points in the Y axis. Leaving them as NULL assigns them the percentiles of yVec defined by `percY1` and `percY2`.
+#' @param percY1, Values used to act as default for `y1` when it is set to `NULL`.
+#' @param x2, x-Coordinates of vertical points in the X axis. Because it is expected to contain methylation values that vary between 0 and 1 the default values are 1/3 and 2/3.
+#' @param y2, y-Coordinates of vertical points in the Y axis. Leaving them as NULL assigns them the percentiles of yVec defined by `percY1` and `percY2`.
+#' @param percY2 Values used to act as default for `y2` when these are set to `NULL`.
+
 #' @param plotGrid logical; default set to TRUE will plot gridlines on the graph.
 #' @param logicSc NULL, numeric score representing the L-shape score.
 #'
 #' @keywords scatterplot gene plot matrix
+#' @importFrom grDevices pdf
+#' @importFrom grDevices dev.off
 #' @export plotGenesMat
 #' @examples
 #' \dontrun{
@@ -25,7 +31,7 @@ plotGenesMat <- function(mets, expres, fileName, text4Title=NULL,
                          percY1=1/3, percY2=2/3,
                          plotGrid=TRUE, logicSc = NULL){
   if (!is.null(fileName))
-    pdf(fileName)
+    grDevices::pdf(fileName)
   if (!is.null(text4Title)){
     text4Title <- paste(rownames(expres),text4Title, sep=", ")
   }else{
@@ -44,6 +50,6 @@ plotGenesMat <- function(mets, expres, fileName, text4Title=NULL,
   }
   #  par(opt)
   if (!is.null(fileName))
-    dev.off()
+    grDevices::dev.off()
 }
 

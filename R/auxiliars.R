@@ -6,7 +6,7 @@ vecCorrs <- function (x, y){
 }
 
 distCorrs <- function (x, y){
-  distCorr <- dcor(x, y, index=1.0)
+  distCorr <- energy::dcor(x, y, index=1.0)
   return(unlist(list(distCorr)))
 }
 
@@ -25,7 +25,7 @@ matDistCorr <- function (X, Y){
 allCorrs  <- function (x, y){
   corrS <- rcorr(x, y, type="spearman")
   corrP <- rcorr(x, y, type="pearson")
-  distCorr <- dcor(x, y, index=1.0)
+  distCorr <- energy::dcor(x, y, index=1.0)
   return(unlist(list(rhoS=corrS$r[1,2],  rhoP=corrP$r[1,2], distCorr,
                      pvalS=corrS$P[1,2], pvalP=corrP$P[1,2])))
 }
@@ -50,11 +50,6 @@ matAllCorrs  <- function (X, Y, sortByCorrs = FALSE){
 }
 
 
-multivCorr <- function(X,Y){
-  coin1 <- cia(X, Y)
-  cat("RV coeff: ", coin1$coinertia$RV,"\n")
-}
-
 zeros <-function(x){which (x==0)}
 discard <- function(x, where, howMany){
   return(length(zeros(x[where])) > howMany)
@@ -71,16 +66,6 @@ countNAs <- function (X){
   # sum(is.na(sumaX))
   xAmbNAs <- X[is.na(sumaX),]
   NAs <- apply(xAmbNAs, 1, function(unVec){sum(is.na(unVec))})
-}
-
-DimMat <- function (y, title="", cols2show=5){
-  show(dim(y))
-  cat("\nFirst rows and columns\n")
-  show(head(y[,1:cols2show]))
-  cat("\nLast rows first columns\n")
-  show(tail(y[,1:cols2show]))
-  #  cat("\nLast rows last columns\n")
-  #  show(tail(y[,(dim(y)[2]-cols2show+1):(dim(y)[2])]))
 }
 
 

@@ -46,8 +46,6 @@ and their significance p-values  for every pair of row vectors.
 # sort1(m12,1)
 # sort1(m12,3)
 # dcor(X,Y,1)
-# coeffRV(X,Y)
-# multivCorr(X,Y)
 
 #Adding an NA to X will make the preceeding fail
 # X[1,1] <-NA

@@ -29,15 +29,15 @@ The methylation and expression data are in 2 different files, the columns are th
 
 ```{r}
 library(Lheuristic)
-library(kableExtra)
-library(VennDiagram)
+# library(kableExtra)
+# library(VennDiagram)
 
 data("TCGAexp")
 data("TCGAmet")
 
 ```
 
-The package contains some utility functions such as ` checkPairing` that can be used to check that both matrices have the same rows and column number and names.
+The package contains some utility functions such as `checkPairing` that can be used to check that both matrices have the same rows and column number and names.
 
 ```{r}
 dim(TCGAexp)
@@ -75,7 +75,7 @@ Depending on the *pvalue* and the *r* cutoff more or less genes will be retained
 The result is a list with the genes slected and not selected in a table format with columns *r coefficient* and the *p-value* for the chosen correlation, the *adjusted p value*, the *distance correlation* and a logical wheter the gene was classified as L-shaped or not according to the parameters set.
 
 ```{r}
-kableExtra::kable(correlationL, caption = "Genes selected with L-shape with the correlation method")
+head(correlationL)
 ```
 
 The resulting genes can also be plotted and saved in a PDF file (leaving the file name empty shows the plot in screen). The figure below shows a picture of the first four selected genes.
@@ -102,14 +102,12 @@ sampleSize <- dim(TCGAmet)[2]
 numGenes <-   dim(TCGAmet)[1]
 
 # 
-reqPercentages <- matrix (c(2, 20, 5, 1, 40, 20, 0, 1, 2), nrow=3, byrow=TRUE)
+reqPercentages <- matrix (c(2, 20, 5, 5, 40, 20, 3, 3, 2), nrow=3, byrow=TRUE)
 (maxminCounts <- toReqMat(sampleSize, reqPercentages))
 
 (theWeightMifL=matrix (c(2,-2,-sampleSize/5,1,0,-2,1,1,2), nrow=3, byrow=TRUE))
 (theWeightMifNonL=matrix (c(0,-2,-sampleSize/5,0,0,-2,0,0,0), nrow=3, byrow=TRUE))
    
-   
-
 heur <- scoreGenesMat (mets=TCGAmet,
 							              expres=TCGAexp,
                             aReqPercentsMat=reqPercentages,
@@ -125,7 +123,7 @@ heurNoL <- heur[!heur$logicSc,]
 We can check the results in the following table, were there is a logical value describing if the gene has or not an L-shape based on our criteria and the *numerSc* score:
 
 ```{r}
-kableExtra::kable((heurL), caption = "Genes selected with L-shape with the heuristic method")
+knitr::kable(heurL)
 ```
 
 Next, we can visualize the scatterplots of the selected genes or save them on a PDF file.
@@ -144,21 +142,15 @@ par(opt)
 
 We have lists of genes that we have identified with the 2 different methods. We can create the intersection of all lists and then visualize the results with a Venn Diagram.
 
-```{r}
-library(VennDiagram)
-myVenn<- venn.diagram(x=list(correlation=rownames(correlationL),
-                                heuristic = rownames(heurL)), 
-                                filename=NULL, lty = "blank",  
-                                fill=c("pink1", "skyblue"),
-                             main="Genes in common between the 2 methods")
-grid.newpage()
-grid.draw(myVenn)
-```
-
-We can decide to choose the genes that have been selected by 2 or more methods, for example, to have higher consistancy in the selection. 
+We may decide to choose the genes that have been selected by 2 or more methods, for example, to have higher consistency in the selection. 
 
 ```{r}
-inCommonL <- intersect(rownames(correlationL), rownames(heurL))
+inCommonL <- intersect(rownames(correlationL),
+                       rownames(heurL))
+inCorrelationLOnly<- setdiff(rownames(correlationL),
+                             inCommonL)
+inheurLLOnly<- setdiff(rownames(heurL),
+                             inCommonL)
 ```
 
 We can also plot selected genes.

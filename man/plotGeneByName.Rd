@@ -7,8 +7,8 @@
 plotGeneByName(
   geneName,
   mets,
-  expres,
-  fileName,
+  expresmatrix,
+  filename,
   text4Title = NULL,
   plotGrid = TRUE,
   figs = c(2, 2)
@@ -22,6 +22,12 @@ plotGeneByName(
 \item{expresmatrix}{containing the expression data of the named gene.}
 
 \item{filename}{NULL, name of the file to store the results as pdf if a name is passed.}
+
+\item{text4Title}{String to be used as main title for the plot. If NULL it is set to geneName}
+
+\item{plotGrid}{boolean parameter to be passed to `plotGeneSel` function}
+
+\item{figs}{2-components vector defining the 2-dimensional structure of the plots that will be drawn}
 }
 \description{
 \code{plotGeneByName} plots points on a scatterplot with a 3x3 grid superimposed.
@@ -29,7 +35,7 @@ The name of a the gene is provided jointly with the matrix and used to select th
 }
 \examples{
 \dontrun{
-plotGeneByName (gene="HOOK1", mets=falseLMet, expres=falseLExpr, fileName=NULL)
+plotGeneByName (gene="HOOK1", mets=falseLMet, expresmatrix=falseLExpr, fileName=NULL)
 }
 
 }

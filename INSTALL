@@ -1,2 +1,2 @@
 install.packages("devtools")
-devtools::install_github("bertamiro/Lheuristic")
+devtools::install_github("alexsanchezpla/Lheuristic")

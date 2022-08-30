@@ -7,7 +7,7 @@
 #' @param dataDirectory Name of directory where the files are staore. Defaults to ".".
 #' @param sepChar Name of character used to separate matrix columns. Defaults to ";".
 #' @param decChar Name of character used as decimal point. Defaults to ".".
-#'
+#' @importFrom utils read.table
 #' @export read2
 #' @examples
 #'
@@ -16,11 +16,11 @@
 #' }
 read2 <- function (expresFName, metFName,
                    dataDirectory=".", sepChar=";", decChar= "."){
-  expres<- read.table(file=file.path(dataDirectory, expresFName), header=TRUE,
+  expres<- utils::read.table(file=file.path(dataDirectory, expresFName), header=TRUE,
                       sep=sepChar,dec=decChar, row.names = 1)
-  mets <-read.table(file=file.path(dataDirectory, metFName), header=TRUE,
+  mets <-utils::read.table(file=file.path(dataDirectory, metFName), header=TRUE,
                     sep=sepChar,dec=decChar, row.names = 1)
-  if (checkData(expres, mets))
+  if (checkPairing(expres, mets))
     result <- list(expres,mets)
   else
     result <- NULL

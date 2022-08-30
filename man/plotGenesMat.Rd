@@ -24,15 +24,21 @@ plotGenesMat(
 
 \item{expres}{matrix with expression data.}
 
-\item{fileName}{name of the file used to save the results as pdf.}
+\item{fileName}{name of the file used to save the results as pdf. If NULL, plot goes to screen}
 
 \item{text4Title}{NULL, name for the plot title containing the gene name and the L-shape score.}
 
-\item{x1, }{x2, Coordinates of vertical points in the X axis. Because it is expected to contain methylation values that vary between 0 and 1 the default values are 1/3 and 2/3.}
+\item{x1, }{x-Coordinates of vertical points in the X axis. Because it is expected to contain methylation values that vary between 0 and 1 the default values are 1/3 and 2/3.}
 
-\item{y1, }{y2, Coordinates of vertical points in the Y axis. Leaving them as NULL assigns them the percentiles of yVec defined by `percY1` and `percY2`.}
+\item{x2, }{x-Coordinates of vertical points in the X axis. Because it is expected to contain methylation values that vary between 0 and 1 the default values are 1/3 and 2/3.}
 
-\item{percY1, }{percY2 Values used to act as default for `y1`and `y2` when these are set to `NULL`.}
+\item{y1, }{y-Coordinates of vertical points in the Y axis. Leaving them as NULL assigns them the percentiles of yVec defined by `percY1` and `percY2`.}
+
+\item{y2, }{y-Coordinates of vertical points in the Y axis. Leaving them as NULL assigns them the percentiles of yVec defined by `percY1` and `percY2`.}
+
+\item{percY1, }{Values used to act as default for `y1` when it is set to `NULL`.}
+
+\item{percY2}{Values used to act as default for `y2` when these are set to `NULL`.}
 
 \item{plotGrid}{logical; default set to TRUE will plot gridlines on the graph.}
 

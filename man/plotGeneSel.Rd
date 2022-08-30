@@ -20,6 +20,8 @@ plotGeneSel(
 \arguments{
 \item{xMet}{vector with methylation data.}
 
+\item{yExp}{vector for expression data.}
+
 \item{titleText}{plot title.}
 
 \item{x1, x2}{Coordinates of vertical points in the X axis. Because it is expected to contain methylation values that vary between 0 and 1 the default values are 1/3 and 2/3.}
@@ -29,8 +31,6 @@ plotGeneSel(
 \item{percY1, percY2}{Values used to act as default for `y1`and `y2` when these are set to `NULL`}
 
 \item{plotGrid}{logical. Defautl to TRUE will plot gridlines over the scatterplot.}
-
-\item{xExp}{vector for expression data.}
 }
 \description{
 \code{plotGeneSel} plots points on a scatterplot with a 3x3 grid overimposed.

@@ -13,7 +13,8 @@
 #'
 #' @keywords Correlation Selection Calculator
 #' @export correlationSelection
-#' @import ade4, stats
+#' @import stats
+#' @importFrom energy dcor
 #' @examples
 #' # (X <- round(matrix (rnorm(30)*10, ncol=6),1))
 #' # (Y <- round(X + matrix (rnorm(30)*10, ncol=6),1))
@@ -27,8 +28,6 @@
 #' # sort1(m12,1)
 #' # sort1(m12,3)
 #' # dcor(X,Y,1)
-#' # coeffRV(X,Y)
-#' # multivCorr(X,Y)
 #'
 #' #Adding an NA to X will make the preceeding fail
 #' # X[1,1] <-NA

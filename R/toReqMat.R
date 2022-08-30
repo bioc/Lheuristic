@@ -10,11 +10,11 @@
 #' @examples
 #' \dontrun{
 #' reqPercentages <- matrix (c(3, 20, 5, 5, 40, 20, 4, 1, 2), nrow=3, byrow=TRUE)
-#' numberOfPoints <- 200
-#' toReqMat <- (numPoints=numberOfPoints, aReqPercentMat=reqPerentages)
+#' numberOfPoints <- 100
+#' reqMat <- toReqMat (numPoints=numberOfPoints, aReqPercentMat=reqPercentages)
 #' }
 #'
 toReqMat <- function (numPoints, aReqPercentMat){
-  return(round(aReqPercentMat*numPoints/100,0)) #  return(round(aReqPercentMat*sum(numPoints)/100,0))
+  return(round(aReqPercentMat*numPoints/100,0)) 
 }
 

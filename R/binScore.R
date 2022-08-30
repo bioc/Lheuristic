@@ -23,12 +23,6 @@
 #' }
 #'
 binScore <- function(aGrid, aReq){
-  # show(aGrid)
-  #   show(aReq)
-  #  cat((aGrid[1,1]>= aReq[1,1]), "\t",(aGrid[1,2]<= aReq[1,2]), "\t",(aGrid[1,3]<= aReq[1,3]), "\n",
-  #      (aGrid[2,1]>=aReq[2,1]), "\t",(aGrid[2,2]<=aReq[2,2]), "\t",(aGrid[2,3]<=aReq[2,3]), "\n",
-  #      (aGrid[3,1]>=aReq[3,1]), "\t",(aGrid[3,2]>=aReq[3,2]), "\t",(aGrid[3,3]>=aReq[3,3]), "\n")
-
   comp <- (aGrid[1,1]>= aReq[1,1])&&(aGrid[1,2]<= aReq[1,2])&&(aGrid[1,3]<= aReq[1,3]) &&
     (aGrid[2,1]>=aReq[2,1]) &&(aGrid[2,2]<=aReq[2,2]) &&(aGrid[2,3]<=aReq[2,3]) &&
     (aGrid[3,1]>=aReq[3,1])&&(aGrid[3,2]>=aReq[3,2])&&(aGrid[3,3]>=aReq[3,3])

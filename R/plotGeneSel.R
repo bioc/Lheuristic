@@ -2,8 +2,8 @@
 #'
 #' \code{plotGeneSel} plots points on a scatterplot with a 3x3 grid overimposed.
 #'
-#' @param  xMet vector with methylation data.
-#' @param xExp vector for expression data.
+#' @param xMet vector with methylation data.
+#' @param yExp vector for expression data.
 #' @param titleText plot title.
 #' @param x1,x2 Coordinates of vertical points in the X axis. Because it is expected to contain methylation values that vary between 0 and 1 the default values are 1/3 and 2/3.
 #' @param y1,y2 Coordinates of vertical points in the Y axis. Leaving them as NULL assigns them the percentiles of yVec defined by `percY1` and `percY2`.
@@ -11,6 +11,7 @@
 #' @param plotGrid logical. Defautl to TRUE will plot gridlines over the scatterplot.
 #' 
 #' @keywords plot gene selection
+#' @importFrom graphics abline
 #' @export plotGeneSel
 #'
 #' @examples
@@ -31,8 +32,8 @@ plotGeneSel <- function(xMet, yExp, titleText,
   if (plotGrid){
     if (is.null(y1)) y1<- minExp + percY1*delta
     if (is.null(y2)) y2<- minExp + percY2*delta
-    abline(v=x1);  abline(v=x2)
-    abline(h=y1);  abline(h=y2)
+    graphics::abline(v=x1);  graphics::abline(v=x2)
+    graphics::abline(h=y1);  graphics::abline(h=y2)
   }
 }
 

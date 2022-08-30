@@ -34,23 +34,23 @@ scoreGenesMat(
 \item{aWeightMifL}{A matrix of weights to score the previous counts if the scatterplot has been classified as L.}
 
 \item{aWeightMifNonL}{A matrix of weights to score the previous counts if the scatterplot has been classified as non-L}
-
-\item{trace}{logical. Set to TRUE to print count matrices as they are computed}
 }
 \description{
 \code{scoreGenesMat} scores scatterplots using a binary and a numeric schemes on a row-wise basis.
 }
 \examples{
 \dontrun{
+mets <- matrix(runif(1000), nrow=100)
+expres <- matrix(rnorm(1000), nrow=100)
 sampleSize <- dim(mets)[2]
 numGenes <-   dim(mets)[1]
-reqPercentages <- matrix (c(2, 20, 5, 1, 40, 20, 0, 1, 2), nrow=3, byrow=TRUE)
+reqPercentages <- matrix (c(3, 20, 5, 5, 40, 20, 4, 1, 2), nrow=3, byrow=TRUE)
 (theWeightMifL=matrix (c(2,-2,-sampleSize/5,1,0,-2,1,1,2), nrow=3, byrow=TRUE))
 (theWeightMifNonL=matrix (c(0,-2,-sampleSize/5,0,0,-2,0,0,0), nrow=3, byrow=TRUE))
-scoreGenesMat <- function(mets, expres,
-                         x1=1/3, x2=2/3,
-                         y1=NULL, y2=NULL, percY1=1/3, percY2=2/3,
-                         aReqPercentsMat = reqPercentages,
-                         aWeightMifL= theWeightMifL,
-                         aWeightMifNonL= theWeightMifNonL) # , trace=FALSE)}
+scoreGenesMat (mets, expres, 
+             x1=1/3, x2=2/3,
+             y1=NULL, y2=NULL, percY1=1/3, percY2=2/3,
+             aReqPercentsMat = reqPercentages,
+             aWeightMifL= theWeightMifL,
+             aWeightMifNonL= theWeightMifNonL)}
 }
