@@ -1,25 +1,27 @@
 ---
 title: "Selecting genes with L-shaped association from expression and methylation arrays"
 author: "Berta Miro Cau and Alex Sánchez-Pla"
-output: rmarkdown::html_vignette
-vignette: >
- %\VignetteIndexEntry{Selecting genes with negative correlation (L-shaped) from expression and methylation arrays}
- \usepackage[utf8]{inputenc} 
- %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
-  chunk_output_type: console
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_vignette: default
+vignette: > 
+  %\VignetteIndexEntry{Selecting genes with L-shaped association from expression and methylation arrays}
+  %\usepackage[utf8]{inputenc}  
+  %\VignetteEngine{knitr::rmarkdown}
 ---
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.width = 6,
+  fig.height=4
 )
 ```
  
 # Introduction
 
-This vignette provides some examples on how to use the 'LHeuristic' package functions to select genes with an expression vs methylation scatterplot that have an L-shaped pattern. 
+This vignette provides some examples on how to use the `LHeuristic` package functions to select genes with an expression vs methylation scatterplot that have an L-shaped pattern. 
 
 # Input data
 
@@ -50,7 +52,7 @@ The Lheuristic package has been created to implement the heuristic algorithm dev
 
 Each methods has various parameters which are optimized to select for the L-shape in scatterplot data, and with a negative correlation.
 
-The functions allow for parameter tunning, in which case, any other selection is possible.
+The functions allow for parameter tunning, in which case, orther forms of correlation selection are possible.
 
 ## Correlation method
 
@@ -72,7 +74,7 @@ plot(density(correlationL[,1]) , main="Significant correlations in TCGA dataset"
 
 Depending on the *pvalue* and the *r* cutoff more or less genes will be retained.
 
-The result is a list with the genes slected and not selected in a table format with columns *r coefficient* and the *p-value* for the chosen correlation, the *adjusted p value*, the *distance correlation* and a logical wheter the gene was classified as L-shaped or not according to the parameters set.
+The result is a list with the genes slected and not selected in a table format with columns *r coefficient* and the *p-value* for the chosen correlation, the *adjusted p value*, the *distance correlation* and a boolean value indicating wheter the gene was selected for having a significantly negative correlation.
 
 ```{r}
 head(correlationL)
@@ -85,7 +87,7 @@ genes2plot <- rownames(TCGAmet) %in% rownames(correlationL)[1:4]
 opt <- par(mfrow=c(2,2))
 plotGenesMat (mets=TCGAmet[genes2plot,1:4], 
                expres=TCGAexp[genes2plot,1:4], 
-               fileName = "correlationLgenes.pdf",
+               fileName = NULL, #"correlationLgenes.pdf",
                text4Title = correlationL[rownames(correlationL),""]) 
 par(opt)
 ```
@@ -103,6 +105,7 @@ numGenes <-   dim(TCGAmet)[1]
 
 # 
 reqPercentages <- matrix (c(2, 20, 5, 5, 40, 20, 3, 3, 2), nrow=3, byrow=TRUE)
+sum(reqPercentages)
 (maxminCounts <- toReqMat(sampleSize, reqPercentages))
 
 (theWeightMifL=matrix (c(2,-2,-sampleSize/5,1,0,-2,1,1,2), nrow=3, byrow=TRUE))
@@ -133,14 +136,14 @@ genes2plot2 <- rownames(TCGAmet) %in% rownames(heurL)[1:4]
 opt <- par(mfrow=c(2,2))
 plotGenesMat (mets=TCGAmet[genes2plot2,], 
                expres=TCGAexp[genes2plot2,], 
-               fileName ="selectedGenes.pdf",
+               fileName =NULL, # "selectedGenes.pdf",
                text4Title = heurL[genes2plot2,"numeriSc"]) 
 par(opt)
 ```
 
 # Comparison of selected L-shaped genes
 
-We have lists of genes that we have identified with the 2 different methods. We can create the intersection of all lists and then visualize the results with a Venn Diagram.
+Once we have lists of genes that we have identified with the 2 different methods we can create the intersection of all lists and then visualize the results with a Venn Diagram.
 
 We may decide to choose the genes that have been selected by 2 or more methods, for example, to have higher consistency in the selection. 
 
@@ -163,7 +166,6 @@ yVec<-as.numeric(TCGAexp[myGene1,])
 titleT <- paste (myGene1, "(May be GRM)")
 plotGeneSel(xMet=xVec, yExp=yVec, titleText=titleT, x1=1/3, x2=2/3)
 
-
 myGene2 <-inCommonL[2]
 xVec<- as.numeric(TCGAmet[myGene2,])
 yVec<-as.numeric(TCGAexp[myGene2,])
@@ -183,4 +185,5 @@ yVec<-as.numeric(TCGAexp[myGene3,])
 titleT <- paste (myGene3, "(May be GRM)")
 plotGeneSel(xMet=xVec, yExp=yVec, titleText=titleT, x1=1/3, x2=2/3)
 ```
+
 
