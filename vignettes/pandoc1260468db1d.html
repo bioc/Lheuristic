@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Berta Miro Cau and Alex Sánchez-Pla" />
+
+<meta name="date" content="2023-02-27" />
+
+<title>Selecting genes with L-shaped association from expression and methylation arrays</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Selecting genes with L-shaped association
+from expression and methylation arrays</h1>
+<h4 class="author">Berta Miro Cau and Alex Sánchez-Pla</h4>
+<h4 class="date">2023-02-27</h4>
+
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>This vignette provides some examples on how to use the
+<code>LHeuristic</code> package functions to select genes with an
+expression vs methylation scatterplot that have an L-shaped pattern.</p>
+<p>Essentially what a user may want to do uysing this package is:</p>
+<ul>
+<li><p>Data input</p>
+<ul>
+<li><p>Select (Load) expression values from a csv file</p></li>
+<li><p>Select (Load) methylation values from a csv file</p></li>
+<li><p>Data preprocessing may need to be done automatically so that its
+results can be used for filtering.</p></li>
+<li><p>Set parameter values</p>
+<ul>
+<li>For data use (all genes or only those that pass certain filters
+(<span class="math inline">\(\mbox{corr}&lt; 0\)</span>))</li>
+<li>For L-shape selection method: Here one may want to select the method
+and its parameters (each method has a different set of parameters)</li>
+</ul></li>
+</ul></li>
+<li><p>Data processing (For each method and set of parameters …)</p>
+<ul>
+<li>Run the computation and “mark” L-shape genes</li>
+<li>Draw the scatterplots of either all genes or only selected
+genes</li>
+</ul></li>
+<li><p>Data output (For each method and set of parameters …)</p>
+<ul>
+<li>Save (Download) the resulting gene list(s)</li>
+<li>Save (Download) the scatterplots</li>
+</ul></li>
+</ul>
+</div>
+<div id="input-data" class="section level1">
+<h1>Input data</h1>
+<p>The data provided is a subset of the methylation array and the
+expression array from the colon adenocarcinoma (COAD) from The Cancer
+Genome Atlas (TCGA). The full dataset is available from the TCGA website
+(<a href="https://tcga-data.nci.nih.gov/docs/publications/tcga/" class="uri">https://tcga-data.nci.nih.gov/docs/publications/tcga/</a>?).</p>
+<p>The methylation and expression data are in 2 different files, the
+columns are the samples (patients) and the rows are the genes.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Lheuristic)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># library(kableExtra)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># library(VennDiagram)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;TCGAexp&quot;</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;TCGAmet&quot;</span>)</span></code></pre></div>
+<p>The package contains some utility functions such as
+<code>checkPairing</code> that can be used to check that both matrices
+have the same rows and column number and names.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(TCGAexp)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1000   30</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ifelse</span>(<span class="fu">checkPairing</span>(TCGAexp, TCGAmet), <span class="st">&quot;Match OK&quot;</span>, <span class="st">&quot;Check matching&quot;</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Match OK&quot;</span></span></code></pre></div>
+</div>
+<div id="data-analysis" class="section level1">
+<h1>Data analysis</h1>
+<p>The Lheuristic package has been created to implement the heuristic
+algorithm developed by Sanchez et alt. (<span class="citation">@cite</span>()) to detect L-shaped scatterplots.
+However many researchers are used to rely on negative correlation to
+call a gene “regulated by methylation”, so for completeness, both
+methods are available in the package.</p>
+<p>Each methods has various parameters which are optimized to select for
+the L-shape in scatterplot data, and with a negative correlation.</p>
+<p>The functions allow for parameter tunning, in which case, orther
+forms of correlation selection are possible.</p>
+<div id="correlation-method" class="section level2">
+<h2>Correlation method</h2>
+<p>The <em>correlation method</em> is a naïve approach consisting of
+calling those genes showing a significant negative correlation between
+their expression and methylation values.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>correlation <span class="ot">&lt;-</span> <span class="fu">correlationSelection</span> (TCGAexp, TCGAmet, <span class="at">pValCutoff=</span><span class="fl">0.25</span>,  <span class="at">rCutoff=</span><span class="sc">-</span><span class="fl">0.5</span>, <span class="at">type=</span><span class="st">&quot;Spearman&quot;</span>,<span class="at">adj=</span><span class="cn">TRUE</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>correlationL <span class="ot">&lt;-</span>correlation[correlation<span class="sc">$</span>SigNegCorr,] </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>correlationNoL <span class="ot">&lt;-</span>correlation[<span class="sc">!</span>correlation<span class="sc">$</span>SigNegCorr,] </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;The number of genes selected with the correlation method is: &quot;</span>, <span class="fu">sum</span>(correlationL<span class="sc">$</span>SigNegCorr),<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The number of genes selected with the correlation method is:  27</span></span></code></pre></div>
+<p>We can observe the distribution of the correlation coeficients:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(correlationL[,<span class="dv">1</span>]) , <span class="at">main=</span><span class="st">&quot;Significant correlations in TCGA dataset&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Depending on the <em>pvalue</em> and the <em>r</em> cutoff more or
+less genes will be retained.</p>
+<p>The result is a list with the genes slected and not selected in a
+table format with columns <em>r coefficient</em> and the
+<em>p-value</em> for the chosen correlation, the <em>adjusted p
+value</em>, the <em>distance correlation</em> and a boolean value
+indicating wheter the gene was selected for having a significantly
+negative correlation.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(correlationL)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;            r (Sp)       p (Sp) adj.Spear.Pval   distCor SigNegCorr</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ABCC2  -0.8754171 2.441980e-10   2.441980e-07 0.8541382       TRUE</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ACOX2  -0.6222469 2.412488e-04   1.855760e-02 0.6833996       TRUE</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ACSL5  -0.5466073 1.776232e-03   8.073781e-02 0.5711910       TRUE</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ADCY7  -0.5808676 7.635690e-04   4.242050e-02 0.6024344       TRUE</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ADGRE3 -0.5675195 1.072547e-03   5.362737e-02 0.5547401       TRUE</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ADH6   -0.6298109 1.919776e-04   1.599813e-02 0.6159664       TRUE</span></span></code></pre></div>
+<p>The resulting genes can also be plotted and saved in a PDF file
+(leaving the file name empty shows the plot in screen). The figure below
+shows a picture of the first four selected genes.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>genes2plot <span class="ot">&lt;-</span> <span class="fu">rownames</span>(TCGAmet) <span class="sc">%in%</span> <span class="fu">rownames</span>(correlationL)[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>opt <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotGenesMat</span> (<span class="at">mets=</span>TCGAmet[genes2plot,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">expres=</span>TCGAexp[genes2plot,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">fileName =</span> <span class="cn">NULL</span>, <span class="co">#&quot;correlationLgenes.pdf&quot;,</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">text4Title =</span> correlationL[<span class="fu">rownames</span>(correlationL),<span class="st">&quot;&quot;</span>]) </span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(opt)</span></code></pre></div>
+<p>To plot the scatterplots depicting the relation between methylation
+and expression for a list of genes is achieved with the function
+<code>plotGenesMat</code>.</p>
+</div>
+<div id="heuristic-method" class="section level2">
+<h2>Heuristic method</h2>
+<p>The heuristic method intends to select L-shaped scatterplots by
+superimposing a grid on the graph and defining cells which have to (or
+don’t have to) contain a minimum (or maximum) percentage of points if
+the scatterplot is to be called L-shaped.</p>
+<p>The method also computes a score in such a way that scores in
+selected regions (L region) score positively and points off the region
+of interest score negatively. An appropriate setting of scores and
+weights should yield positive scores for L-shaped scatterplots and
+negative scores for those that are not.</p>
+<p>This idea can be made more explicit by introducing a “three-band
+rule” as follows:</p>
+<ol style="list-style-type: decimal">
+<li><p>Overimpose a <span class="math inline">\(3\times 3\)</span> grid
+on the scatterplot.</p></li>
+<li><p>Classify the scatterplot as <strong>“L” or “non-L”</strong> based
+on a small set of conditions:</p>
+<p>2.1 There must be a <em>minimum</em> number of points in the
+upper-left (cell (1,1)) and lower right (cell (3,3)) corners of the
+grid.</p>
+<p>2.2 There must be a <em>maximum</em> number of points in the upper
+right (cell (1,3)) because points there mean hypermethylation and
+hyperexpression which is the opposite of what we are looking for.</p>
+<p>2.3 We will usually <em>not require to have a minimum of points in
+cell (3,1)</em> unless we are really willing to have an L-shape (in our
+setting we will also be happy tho recover diagonals, which also reflect
+a negative correlation!).</p></li>
+<li><p>Score points on each subgrid in such a way that</p>
+<p>3.1 Points in permitted regions (left-outer margin, i.e. cells:
+(1,1), (2,2), (3,1), (3,2), (3,3)) score positively if the scatterplot
+has been classified as L or zero if it has been classified as non-L.</p>
+<p>3.2 Points in non-desired regions (outer band. i.e. cells (1,2),
+(1,3), (2,3)) score negatively in all cases.</p>
+<p>3.3 Some regions may be declared neutral and not-score, such as cell
+(2,2).</p></li>
+<li><p><em>Use cross-validation to tune scoring parameters</em>
+(<strong>if a set of positive and negative L-shaped genes is
+available</strong>).</p></li>
+</ol>
+<p>The previous scheme can be summarized using the following equation.
+<span class="math display">\[
+S(X) = W_L \circ X \times \mathbf{1}_L(X) + W_{L^C} \circ X \times
+\mathbf{1}_{L^c}(X),
+\]</span> where</p>
+<ul>
+<li><span class="math inline">\({X}\)</span> is the matrix of
+<em>counts</em>, i.e. the number of counts in each cell of the
+grid,</li>
+<li><span class="math inline">\({W_L}\)</span> is the matrix of scores
+per cell and point <em>if the scatterplot has been classified as</em>
+<span class="math inline">\(L\)</span>,</li>
+<li><span class="math inline">\({W_{L^c}}\)</span> is the matrix of
+scores per cell and point <em>if the scatterplot has been classified as
+non-</em><span class="math inline">\(L\)</span> (<span class="math inline">\(L^c\)</span>), and <span class="math inline">\(\circ\)</span> represents the hadamard product of
+the two matrices <span class="math inline">\(W_{L/L^c}\)</span>
+(i.e. elementwise multiplication of the two matrices) and <span class="math inline">\(\mathbf{1}_{L/L^c}()\)</span> is the indicator
+function for <span class="math inline">\(L\)</span> or <span class="math inline">\(L^c\)</span>.</li>
+</ul>
+<p>The fact that the scatterplot is assigned to <span class="math inline">\(L\)</span> or <span class="math inline">\(L^c\)</span> can also be described as the hadamard
+product of three matrices: <span class="math display">\[
+\mathbf{1}_L(X) = \bigwedge_{i,j} X \circ C \circ \left( mMP \times
+\sum_{i,j}x_{ij}\right),
+\]</span> where - <span class="math inline">\({X}\)</span> is the matrix
+of <em>counts</em>, i.e. the number of counts in each cell of the grid,
+- <span class="math inline">\(C\)</span> is the matrix of conditions to
+be verified <em>if the scatterplot has to be classified as</em> <span class="math inline">\(L\)</span>, - <span class="math inline">\(mMP\)</span> is the matrix of minimum and Maximum
+Percentages of points to have in each cell <em>if the scatterplot has to
+be classified as</em> <span class="math inline">\(L\)</span>, - <span class="math inline">\(\circ\)</span> represents the pointwise logical
+operation which allows that the product of the three cells becomes a
+logical operation and - <span class="math inline">\(\bigwedge_{i,j}\)</span> represents an logical
+“AND” operation of all cells, that is if all cells are TRUE the result
+is assigned to <span class="math inline">\(L\)</span> and if one fails
+it is assigned to <span class="math inline">\(L^c\)</span>.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sampleSize <span class="ot">&lt;-</span> <span class="fu">dim</span>(TCGAmet)[<span class="dv">2</span>]</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>numGenes <span class="ot">&lt;-</span>   <span class="fu">dim</span>(TCGAmet)[<span class="dv">1</span>]</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>reqPercentages <span class="ot">&lt;-</span> <span class="fu">matrix</span> (<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">20</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">40</span>, <span class="dv">20</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">2</span>), <span class="at">nrow=</span><span class="dv">3</span>, <span class="at">byrow=</span><span class="cn">TRUE</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(reqPercentages)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 100</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>(maxminCounts <span class="ot">&lt;-</span> <span class="fu">toReqMat</span>(sampleSize, reqPercentages))</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      [,1] [,2] [,3]</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,]    1    6    2</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,]    2   12    6</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3,]    1    1    1</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>(<span class="at">theWeightMifL=</span><span class="fu">matrix</span> (<span class="fu">c</span>(<span class="dv">2</span>,<span class="sc">-</span><span class="dv">2</span>,<span class="sc">-</span>sampleSize<span class="sc">/</span><span class="dv">5</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">nrow=</span><span class="dv">3</span>, <span class="at">byrow=</span><span class="cn">TRUE</span>))</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      [,1] [,2] [,3]</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,]    2   -2   -6</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,]    1    0   -2</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3,]    1    1    2</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>(<span class="at">theWeightMifNonL=</span><span class="fu">matrix</span> (<span class="fu">c</span>(<span class="dv">0</span>,<span class="sc">-</span><span class="dv">2</span>,<span class="sc">-</span>sampleSize<span class="sc">/</span><span class="dv">5</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">nrow=</span><span class="dv">3</span>, <span class="at">byrow=</span><span class="cn">TRUE</span>))</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      [,1] [,2] [,3]</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,]    0   -2   -6</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,]    0    0   -2</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3,]    0    0    0</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>heur <span class="ot">&lt;-</span> <span class="fu">scoreGenesMat</span> (<span class="at">mets=</span>TCGAmet,</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">expres=</span>TCGAexp,</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>                            <span class="at">aReqPercentsMat=</span>reqPercentages,</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>                            <span class="at">aWeightMifL=</span>theWeightMifL,</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>                            <span class="at">aWeightMifNonL=</span>theWeightMifNonL )</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;Number of scatterplots scored  : &quot;</span>, <span class="fu">dim</span>(heur)[<span class="dv">1</span>],<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Number of scatterplots scored  :  1000</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;Number of L-shape scatterplots : &quot;</span>, <span class="fu">sum</span>(heur[,<span class="dv">1</span>]),<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Number of L-shape scatterplots :  67</span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>heurL <span class="ot">&lt;-</span> heur[heur<span class="sc">$</span>logicSc,]</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>heurNoL <span class="ot">&lt;-</span> heur[<span class="sc">!</span>heur<span class="sc">$</span>logicSc,]</span></code></pre></div>
+<p>We can check the results in the following table, were there is a
+logical value describing if the gene has or not an L-shape based on our
+criteria and the <em>numerSc</em> score:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(heurL)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">logicSc</th>
+<th align="right">numericSc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">A2ML1</td>
+<td align="left">TRUE</td>
+<td align="right">18</td>
+</tr>
+<tr class="even">
+<td align="left">A4GNT</td>
+<td align="left">TRUE</td>
+<td align="right">-4</td>
+</tr>
+<tr class="odd">
+<td align="left">ABCB5</td>
+<td align="left">TRUE</td>
+<td align="right">10</td>
+</tr>
+<tr class="even">
+<td align="left">ACADL</td>
+<td align="left">TRUE</td>
+<td align="right">32</td>
+</tr>
+<tr class="odd">
+<td align="left">ACOT2</td>
+<td align="left">TRUE</td>
+<td align="right">32</td>
+</tr>
+<tr class="even">
+<td align="left">ACOT8</td>
+<td align="left">TRUE</td>
+<td align="right">36</td>
+</tr>
+<tr class="odd">
+<td align="left">ACOX2</td>
+<td align="left">TRUE</td>
+<td align="right">39</td>
+</tr>
+<tr class="even">
+<td align="left">ACRBP</td>
+<td align="left">TRUE</td>
+<td align="right">-6</td>
+</tr>
+<tr class="odd">
+<td align="left">ADAM11</td>
+<td align="left">TRUE</td>
+<td align="right">30</td>
+</tr>
+<tr class="even">
+<td align="left">ADAM19</td>
+<td align="left">TRUE</td>
+<td align="right">33</td>
+</tr>
+<tr class="odd">
+<td align="left">ADAM8</td>
+<td align="left">TRUE</td>
+<td align="right">14</td>
+</tr>
+<tr class="even">
+<td align="left">ADAMTS1</td>
+<td align="left">TRUE</td>
+<td align="right">17</td>
+</tr>
+<tr class="odd">
+<td align="left">ADAMTS14</td>
+<td align="left">TRUE</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">ADAMTS3</td>
+<td align="left">TRUE</td>
+<td align="right">31</td>
+</tr>
+<tr class="odd">
+<td align="left">ADGRL2</td>
+<td align="left">TRUE</td>
+<td align="right">28</td>
+</tr>
+<tr class="even">
+<td align="left">ADH6</td>
+<td align="left">TRUE</td>
+<td align="right">31</td>
+</tr>
+<tr class="odd">
+<td align="left">AEBP1</td>
+<td align="left">TRUE</td>
+<td align="right">8</td>
+</tr>
+<tr class="even">
+<td align="left">AGPAT4</td>
+<td align="left">TRUE</td>
+<td align="right">32</td>
+</tr>
+<tr class="odd">
+<td align="left">AGT</td>
+<td align="left">TRUE</td>
+<td align="right">27</td>
+</tr>
+<tr class="even">
+<td align="left">AGTR1</td>
+<td align="left">TRUE</td>
+<td align="right">26</td>
+</tr>
+<tr class="odd">
+<td align="left">ALDH1A2</td>
+<td align="left">TRUE</td>
+<td align="right">27</td>
+</tr>
+<tr class="even">
+<td align="left">ALDH1A3</td>
+<td align="left">TRUE</td>
+<td align="right">9</td>
+</tr>
+<tr class="odd">
+<td align="left">ALDH1L1</td>
+<td align="left">TRUE</td>
+<td align="right">34</td>
+</tr>
+<tr class="even">
+<td align="left">ALDOB</td>
+<td align="left">TRUE</td>
+<td align="right">32</td>
+</tr>
+<tr class="odd">
+<td align="left">ALOX5AP</td>
+<td align="left">TRUE</td>
+<td align="right">16</td>
+</tr>
+<tr class="even">
+<td align="left">ALX1</td>
+<td align="left">TRUE</td>
+<td align="right">26</td>
+</tr>
+<tr class="odd">
+<td align="left">AMBN</td>
+<td align="left">TRUE</td>
+<td align="right">-4</td>
+</tr>
+<tr class="even">
+<td align="left">AMIGO2</td>
+<td align="left">TRUE</td>
+<td align="right">34</td>
+</tr>
+<tr class="odd">
+<td align="left">AMMECR1L</td>
+<td align="left">TRUE</td>
+<td align="right">10</td>
+</tr>
+<tr class="even">
+<td align="left">ANGPTL5</td>
+<td align="left">TRUE</td>
+<td align="right">34</td>
+</tr>
+<tr class="odd">
+<td align="left">ANK2</td>
+<td align="left">TRUE</td>
+<td align="right">12</td>
+</tr>
+<tr class="even">
+<td align="left">ANKRD53</td>
+<td align="left">TRUE</td>
+<td align="right">12</td>
+</tr>
+<tr class="odd">
+<td align="left">ANTXR1</td>
+<td align="left">TRUE</td>
+<td align="right">18</td>
+</tr>
+<tr class="even">
+<td align="left">ANXA9</td>
+<td align="left">TRUE</td>
+<td align="right">31</td>
+</tr>
+<tr class="odd">
+<td align="left">AOX1</td>
+<td align="left">TRUE</td>
+<td align="right">-2</td>
+</tr>
+<tr class="even">
+<td align="left">AP3B2</td>
+<td align="left">TRUE</td>
+<td align="right">36</td>
+</tr>
+<tr class="odd">
+<td align="left">APH1B</td>
+<td align="left">TRUE</td>
+<td align="right">31</td>
+</tr>
+<tr class="even">
+<td align="left">APOC2</td>
+<td align="left">TRUE</td>
+<td align="right">24</td>
+</tr>
+<tr class="odd">
+<td align="left">APOLD1</td>
+<td align="left">TRUE</td>
+<td align="right">35</td>
+</tr>
+<tr class="even">
+<td align="left">AQP9</td>
+<td align="left">TRUE</td>
+<td align="right">9</td>
+</tr>
+<tr class="odd">
+<td align="left">ARHGDIB</td>
+<td align="left">TRUE</td>
+<td align="right">14</td>
+</tr>
+<tr class="even">
+<td align="left">ARHGDIG</td>
+<td align="left">TRUE</td>
+<td align="right">28</td>
+</tr>
+<tr class="odd">
+<td align="left">ARHGEF10</td>
+<td align="left">TRUE</td>
+<td align="right">36</td>
+</tr>
+<tr class="even">
+<td align="left">ARHGEF25</td>
+<td align="left">TRUE</td>
+<td align="right">12</td>
+</tr>
+<tr class="odd">
+<td align="left">ARHGEF7</td>
+<td align="left">TRUE</td>
+<td align="right">6</td>
+</tr>
+<tr class="even">
+<td align="left">ARL10</td>
+<td align="left">TRUE</td>
+<td align="right">14</td>
+</tr>
+<tr class="odd">
+<td align="left">ARMC4</td>
+<td align="left">TRUE</td>
+<td align="right">26</td>
+</tr>
+<tr class="even">
+<td align="left">ARPP21</td>
+<td align="left">TRUE</td>
+<td align="right">10</td>
+</tr>
+<tr class="odd">
+<td align="left">ASB4</td>
+<td align="left">TRUE</td>
+<td align="right">29</td>
+</tr>
+<tr class="even">
+<td align="left">ASCL1</td>
+<td align="left">TRUE</td>
+<td align="right">29</td>
+</tr>
+<tr class="odd">
+<td align="left">ASIC4</td>
+<td align="left">TRUE</td>
+<td align="right">33</td>
+</tr>
+<tr class="even">
+<td align="left">ATP6V0D2</td>
+<td align="left">TRUE</td>
+<td align="right">9</td>
+</tr>
+<tr class="odd">
+<td align="left">ATP6V1C2</td>
+<td align="left">TRUE</td>
+<td align="right">40</td>
+</tr>
+<tr class="even">
+<td align="left">ATP6V1G3</td>
+<td align="left">TRUE</td>
+<td align="right">18</td>
+</tr>
+<tr class="odd">
+<td align="left">AVIL</td>
+<td align="left">TRUE</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">B3GALNT1</td>
+<td align="left">TRUE</td>
+<td align="right">36</td>
+</tr>
+<tr class="odd">
+<td align="left">B4GALNT1</td>
+<td align="left">TRUE</td>
+<td align="right">29</td>
+</tr>
+<tr class="even">
+<td align="left">B4GALNT4</td>
+<td align="left">TRUE</td>
+<td align="right">31</td>
+</tr>
+<tr class="odd">
+<td align="left">BACE2</td>
+<td align="left">TRUE</td>
+<td align="right">33</td>
+</tr>
+<tr class="even">
+<td align="left">BACH2</td>
+<td align="left">TRUE</td>
+<td align="right">34</td>
+</tr>
+<tr class="odd">
+<td align="left">BAMBI</td>
+<td align="left">TRUE</td>
+<td align="right">24</td>
+</tr>
+<tr class="even">
+<td align="left">BBOX1</td>
+<td align="left">TRUE</td>
+<td align="right">31</td>
+</tr>
+<tr class="odd">
+<td align="left">BCAN</td>
+<td align="left">TRUE</td>
+<td align="right">24</td>
+</tr>
+<tr class="even">
+<td align="left">BCAR1</td>
+<td align="left">TRUE</td>
+<td align="right">9</td>
+</tr>
+<tr class="odd">
+<td align="left">BCHE</td>
+<td align="left">TRUE</td>
+<td align="right">34</td>
+</tr>
+<tr class="even">
+<td align="left">BDKRB1</td>
+<td align="left">TRUE</td>
+<td align="right">20</td>
+</tr>
+<tr class="odd">
+<td align="left">BEST4</td>
+<td align="left">TRUE</td>
+<td align="right">11</td>
+</tr>
+</tbody>
+</table>
+<p>Next, we can visualize the scatterplots of the selected genes or save
+them on a PDF file.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>genes2plot2 <span class="ot">&lt;-</span> <span class="fu">rownames</span>(TCGAmet) <span class="sc">%in%</span> <span class="fu">rownames</span>(heurL)[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>opt <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotGenesMat</span> (<span class="at">mets=</span>TCGAmet[genes2plot2,], </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">expres=</span>TCGAexp[genes2plot2,], </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">fileName =</span><span class="cn">NULL</span>, <span class="co"># &quot;selectedGenes.pdf&quot;,</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">text4Title =</span> heurL[genes2plot2,<span class="st">&quot;numeriSc&quot;</span>]) </span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(opt)</span></code></pre></div>
+</div>
+</div>
+<div id="comparison-of-selected-l-shaped-genes" class="section level1">
+<h1>Comparison of selected L-shaped genes</h1>
+<p>Once we have lists of genes that we have identified with the 2
+different methods we can create the intersection of all lists and then
+visualize the results with a Venn Diagram.</p>
+<p>We may decide to choose the genes that have been selected by 2 or
+more methods, for example, to have higher consistency in the
+selection.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>inCommonL <span class="ot">&lt;-</span> <span class="fu">intersect</span>(<span class="fu">rownames</span>(correlationL),</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">rownames</span>(heurL))</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>inCorrelationLOnly<span class="ot">&lt;-</span> <span class="fu">setdiff</span>(<span class="fu">rownames</span>(correlationL),</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                             inCommonL)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>inheurLLOnly<span class="ot">&lt;-</span> <span class="fu">setdiff</span>(<span class="fu">rownames</span>(heurL),</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>                             inCommonL)</span></code></pre></div>
+<p>We can also plot selected genes. As an example we will plot the genes
+1, 2, 3 and 5 by index.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>myGene1 <span class="ot">&lt;-</span>inCommonL[<span class="dv">1</span>]</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>xVec<span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(TCGAmet[myGene1,])</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>yVec<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(TCGAexp[myGene1,])</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>titleT <span class="ot">&lt;-</span> <span class="fu">paste</span> (myGene1, <span class="st">&quot;(May be GRM)&quot;</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plotGeneSel</span>(<span class="at">xMet=</span>xVec, <span class="at">yExp=</span>yVec, <span class="at">titleText=</span>titleT, <span class="at">x1=</span><span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="at">x2=</span><span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>myGene2 <span class="ot">&lt;-</span>inCommonL[<span class="dv">2</span>]</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>xVec<span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(TCGAmet[myGene2,])</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>yVec<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(TCGAexp[myGene2,])</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>titleT <span class="ot">&lt;-</span> <span class="fu">paste</span> (myGene2, <span class="st">&quot;(May be GRM)&quot;</span>)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plotGeneSel</span>(<span class="at">xMet=</span>xVec, <span class="at">yExp=</span>yVec, <span class="at">titleText=</span>titleT, <span class="at">x1=</span><span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="at">x2=</span><span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>myGene3 <span class="ot">&lt;-</span>inCommonL[<span class="dv">3</span>]</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>xVec<span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(TCGAmet[myGene3,])</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>yVec<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(TCGAexp[myGene3,])</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>titleT <span class="ot">&lt;-</span> <span class="fu">paste</span> (myGene3, <span class="st">&quot;(May be GRM)&quot;</span>)</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="fu">plotGeneSel</span>(<span class="at">xMet=</span>xVec, <span class="at">yExp=</span>yVec, <span class="at">titleText=</span>titleT, <span class="at">x1=</span><span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="at">x2=</span><span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>)</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>myGene5 <span class="ot">&lt;-</span>inCommonL[<span class="dv">5</span>]</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>xVec<span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(TCGAmet[myGene3,])</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>yVec<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(TCGAexp[myGene3,])</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>titleT <span class="ot">&lt;-</span> <span class="fu">paste</span> (myGene3, <span class="st">&quot;(May be GRM)&quot;</span>)</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="fu">plotGeneSel</span>(<span class="at">xMet=</span>xVec, <span class="at">yExp=</span>yVec, <span class="at">titleText=</span>titleT, <span class="at">x1=</span><span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="at">x2=</span><span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Essentially the process of selecting L-shape genes consists of three
+steps:</p>
+<ol style="list-style-type: decimal">
+<li><p>Select datasets (a pair of row-column matched matrices, one for
+expression and one for methylation).</p></li>
+<li><p>Set parameters:</p></li>
+</ol>
+<p>2.1 Grid definition</p>
+<p>2.2 Binary Scoring</p>
+<p>2.3.Numerical Scoring</p>
+<ol start="4" style="list-style-type: decimal">
+<li>Score the selected data and return classification (scores and group)
+and plots for each gene.</li>
+</ol>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

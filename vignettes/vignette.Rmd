@@ -1,5 +1,5 @@
 ---
-title: "Selecting genes with L-shaped association from expression and methylation arrays"
+title: "Selecting genes with L-shaped pattern from expression and methylation arrays"
 author: "Berta Miro Cau and Alex Sánchez-Pla"
 date: "`r Sys.Date()`"
 output:
