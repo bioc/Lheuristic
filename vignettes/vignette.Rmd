@@ -268,7 +268,7 @@ Essentially the process of selecting L-shape genes consists of three steps:
 
 2.3.Numerical Scoring
 
-4.  Score the selected data and return classification (scores and group) and plots for each gene.
+3.  Score the selected data and return classification (scores and group) and plots for each gene.
 
 
 

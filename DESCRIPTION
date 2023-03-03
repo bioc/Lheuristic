@@ -1,10 +1,9 @@
 Package: Lheuristic
 Title: Detection of scatterplots with L-shaped pattern
-Version: 0.0.0.9000
-Author: c(
+Version: 0.99.0
+Authors@R: c(
     person("Sanchez Pla", "Alex", email ="asanchez@ub.edu", role = c("aut", "cre")),
-    person("Miro Cau", "Berta", email = "berta.mirocau@gmail.com", role = "aut"))
-Maintainer: Alex Sanchez <asanchez@ub.edu>
+    person("Miro Cau", "Berta", email = "berta.miro@vhir.org", role = "aut"))
 Description: The Lheuristic package identifies scatterpots that
     follow and L-shaped, negative distribution. It can be used
     to identify genes regulated by methylation by integration of
@@ -12,17 +11,20 @@ Description: The Lheuristic package identifies scatterpots that
     different methods to detect expression and methyaltion L-
     shapped scatterplots. The parameters can be changed to
     detect other scatterplot patterns. 
-Depends: R (>= 3.5.0)
-biocViews: Methylation
+Depends: R (>= 4.2.0)
+biocViews: DNAMethylation, StatisticalMethod
 Imports:
     Hmisc,
     stats,
-    energy
+    energy,
+    grDevices,
+    graphics,
+    utils
 Suggests: 
     knitr,
     rmarkdown
 VignetteBuilder: knitr
 License: Artistic-2.0
 Encoding: UTF-8
-LazyData: true
+LazyData: false
 RoxygenNote: 7.2.0
