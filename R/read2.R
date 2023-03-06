@@ -11,7 +11,7 @@
 #' @export read2
 #' @examples
 #'
-#' \dontest{
+#' \donttest{
 #' (myData <- read2(myExpr, myMet))
 #' }
 read2 <- function (expresFName, metFName,

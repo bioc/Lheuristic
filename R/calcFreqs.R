@@ -18,7 +18,7 @@
 #' @export calcFreqs
 #'
 #' @examples
-#' \dontest{
+#' \donttest{
 #' data(trueGenes)
 #' xVec<- as.numeric(myMetilData[trueGene1,])
 #' yVec<-as.numeric(myExprData[trueGene1,])

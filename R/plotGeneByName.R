@@ -16,7 +16,7 @@
 #' @export plotGeneByName
 #'
 #' @examples
-#' \dontest{
+#' \donttest{
 #' plotGeneByName (gene="HOOK1", mets=falseLMet, expresmatrix=falseLExpr, fileName=NULL)
 #'}
 #'

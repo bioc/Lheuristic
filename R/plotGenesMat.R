@@ -21,7 +21,7 @@
 #' @importFrom grDevices dev.off
 #' @export plotGenesMat
 #' @examples
-#' \dontest{
+#' \donttest{
 #' plotGenesMat (mets=myMet, expres=myExpr, fileName="GenesPlots.pdf")
 #'}
 #'

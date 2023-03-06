@@ -7,7 +7,7 @@
 #' @export messageTitle
 #'
 #' @examples
-#' \dontest{
+#' \donttest{
 #' messageTitle("Hello world", "$")
 #'}
 #'

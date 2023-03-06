@@ -12,7 +12,7 @@
 #' @param percY1,percY2 Values used to act as default for `y1`and `y2` when these are set to `NULL`
 #' @export scoreGenesMat
 #' @examples
-#' \dontest{
+#' \donttest{
 #' mets <- matrix(runif(1000), nrow=100)
 #' expres <- matrix(rnorm(1000), nrow=100)
 #' sampleSize <- dim(mets)[2]

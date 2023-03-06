@@ -12,7 +12,7 @@
 #' @keywords binary scoring
 #' @export binScore
 #' @examples
-#' \dontest{
+#' \donttest{
 #' reqPercentages <- matrix (c(15, 5, 0, 0, 5, 5, 10, 10, 15), nrow=3, byrow=TRUE)
 #' (countsRnd    <- matrix(floor(runif(9)*10)+1, nrow=3, ncol=3
 #' (reqRnd <- toReqMat (sum(countsRnd), reqPercentages))
