@@ -7,13 +7,13 @@
 #' @export messageTitle
 #'
 #' @examples
-#' \dontrun{
+#' \dontest{
 #' messageTitle("Hello world", "$")
 #'}
 #'
 messageTitle <- function(aMessage, underChar="-"){
-  cat (aMessage,"\n")
-  cat(paste(rep(underChar, nchar(aMessage)),collapse=""),"\n")
+  message(aMessage,"\n")
+  message(paste(rep(underChar, nchar(aMessage)),collapse=""),"\n")
 }
 
 

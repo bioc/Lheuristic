@@ -16,7 +16,7 @@
 #' @export plotGeneByName
 #'
 #' @examples
-#' \dontrun{
+#' \dontest{
 #' plotGeneByName (gene="HOOK1", mets=falseLMet, expresmatrix=falseLExpr, fileName=NULL)
 #'}
 #'

@@ -15,7 +15,7 @@
 #' @export plotGeneSel
 #'
 #' @examples
-#' \dontrun{
+#' \dontest{
 #' myGene1 <-rownames(myGenes)[1]
 #' xVec<- as.numeric(myMet[myGene1,])
 #' yVec<-as.numeric(myExpr[myGene1,])

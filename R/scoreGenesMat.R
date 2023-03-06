@@ -12,7 +12,7 @@
 #' @param percY1,percY2 Values used to act as default for `y1`and `y2` when these are set to `NULL`
 #' @export scoreGenesMat
 #' @examples
-#' \dontrun{
+#' \dontest{
 #' mets <- matrix(runif(1000), nrow=100)
 #' expres <- matrix(rnorm(1000), nrow=100)
 #' sampleSize <- dim(mets)[2]
@@ -41,7 +41,7 @@ scoreGenesMat <- function(mets, expres,
   scores <- data.frame(logicSc=rep(FALSE, Ngenes), numericSc=rep(0,Ngenes))
   rownames(scores)<- rownames(mets)
   minmaxCounts <- toReqMat (N, aReqPercentMat=aReqPercentsMat)
-  for (gene in 1:Ngenes){
+  for (gene in seq_along(Ngenes)){
     theGene <- rownames(expres)[gene]
     xVec<- mets[theGene,]
     yVec<- expres[theGene,]

@@ -18,7 +18,7 @@
 #' @export calcFreqs
 #'
 #' @examples
-#' \dontrun{
+#' \dontest{
 #' data(trueGenes)
 #' xVec<- as.numeric(myMetilData[trueGene1,])
 #' yVec<-as.numeric(myExprData[trueGene1,])
@@ -48,8 +48,8 @@ calcFreqs <- function (xMet, yExp, x1, x2, y1=NULL, y2=NULL,
   yVals <- c(y1, y2)
   condX <- c("(xMet<=x1)", "((xMet>x1) & (xMet<=x2))", "(xMet>x2)")
   condY <- c("(yExp>y2)", "((yExp<=y2) & (yExp>y1))", "(yExp<=y1)")
-  for (i in 1:3){
-    for (j in 1:3){
+  for (i in seq_len(3)){
+    for (j in seq_len(3)){
       condij <- paste(condX[j], condY[i], sep="&")
       freqsMat [i,j] <- sum(eval(parse(text=condij)))
     }
