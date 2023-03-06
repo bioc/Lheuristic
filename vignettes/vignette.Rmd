@@ -270,6 +270,10 @@ Essentially the process of selecting L-shape genes consists of three steps:
 
 3.  Score the selected data and return classification (scores and group) and plots for each gene.
 
+#Session info
 
+```{r}
+sessionInfo()
+```
 
 
