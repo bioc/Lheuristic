@@ -41,7 +41,7 @@ scoreGenesMat <- function(mets, expres,
   scores <- data.frame(logicSc=rep(FALSE, Ngenes), numericSc=rep(0,Ngenes))
   rownames(scores)<- rownames(mets)
   minmaxCounts <- toReqMat (N, aReqPercentMat=aReqPercentsMat)
-  for (gene in seq_along(Ngenes)){
+  for (gene in seq_along(1:Ngenes)){
     theGene <- rownames(expres)[gene]
     xVec<- mets[theGene,]
     yVec<- expres[theGene,]

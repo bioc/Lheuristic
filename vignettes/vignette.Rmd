@@ -8,6 +8,8 @@ vignette: >
   %\VignetteIndexEntry{Selecting genes with L-shaped association from expression and methylation arrays}
   %\usepackage[utf8]{inputenc}  
   %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include = FALSE}
@@ -86,7 +88,7 @@ correlation <- correlationSelection (TCGAexp, TCGAmet, pValCutoff=0.25,  rCutoff
 correlationL <-correlation[correlation$SigNegCorr,] 
 correlationNoL <-correlation[!correlation$SigNegCorr,] 
 
-cat("The number of genes selected with the correlation method is: ", sum(correlationL$SigNegCorr),"\n")
+message("The number of genes selected with the correlation method is: ", sum(correlationL$SigNegCorr),"\n")
 ```
 
 We can observe the distribution of the correlation coeficients:
@@ -182,8 +184,8 @@ heur <- scoreGenesMat (mets=TCGAmet,
                             aReqPercentsMat=reqPercentages,
                             aWeightMifL=theWeightMifL,
                             aWeightMifNonL=theWeightMifNonL )
-  cat("Number of scatterplots scored  : ", dim(heur)[1],"\n")
-  cat("Number of L-shape scatterplots : ", sum(heur[,1]),"\n")
+  message("Number of scatterplots scored  : ", dim(heur)[1],"\n")
+  message("Number of L-shape scatterplots : ", sum(heur[,1]),"\n")
   
 heurL <- heur[heur$logicSc,]
 heurNoL <- heur[!heur$logicSc,]
