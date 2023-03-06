@@ -47,7 +47,7 @@ scoreGenesMat <- function(mets, expres,
     yVec<- expres[theGene,]
     geneGrid <- calcFreqs(xMet=xVec, yExp=yVec, x1=x1, x2=x2,
                           y1=y1, y2=y2, percY1=percY1, percY2=percY2)
-    binSc <-  binScore (geneGrid, minmaxCounts)
+    binSc <- binScore(geneGrid, minmaxCounts)
     scores[gene, "logicSc"] <- binSc
     numSc <- numScore (geneGrid, LShaped=binSc,
                        aWeightMifL=aWeightMifL,
