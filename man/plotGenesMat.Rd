@@ -48,7 +48,7 @@ plotGenesMat(
 \code{plotGenesMat} wrapper function for plotting the scatterplots associated with two matrices.
 }
 \examples{
-\dontrun{
+\donttest{
 plotGenesMat (mets=myMet, expres=myExpr, fileName="GenesPlots.pdf")
 }
 

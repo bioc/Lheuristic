@@ -39,7 +39,7 @@ scoreGenesMat(
 \code{scoreGenesMat} scores scatterplots using a binary and a numeric schemes on a row-wise basis.
 }
 \examples{
-\dontrun{
+\donttest{
 mets <- matrix(runif(1000), nrow=100)
 expres <- matrix(rnorm(1000), nrow=100)
 sampleSize <- dim(mets)[2]

@@ -23,7 +23,7 @@ calcFreqs(xMet, yExp, x1, x2, y1 = NULL, y2 = NULL, percY1 = 1/3, percY2 = 2/3)
 #' for given vertical and horizontal lines.
 }
 \examples{
-\dontrun{
+\donttest{
 data(trueGenes)
 xVec<- as.numeric(myMetilData[trueGene1,])
 yVec<-as.numeric(myExprData[trueGene1,])

@@ -19,7 +19,7 @@ to be found in each cell. It implements the three bands rule implicitly
 by setting threshold values.
 }
 \examples{
-\dontrun{
+\donttest{
 reqPercentages <- matrix (c(15, 5, 0, 0, 5, 5, 10, 10, 15), nrow=3, byrow=TRUE)
 (countsRnd    <- matrix(floor(runif(9)*10)+1, nrow=3, ncol=3
 (reqRnd <- toReqMat (sum(countsRnd), reqPercentages))

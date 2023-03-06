@@ -36,7 +36,7 @@ plotGeneSel(
 \code{plotGeneSel} plots points on a scatterplot with a 3x3 grid overimposed.
 }
 \examples{
-\dontrun{
+\donttest{
 myGene1 <-rownames(myGenes)[1]
 xVec<- as.numeric(myMet[myGene1,])
 yVec<-as.numeric(myExpr[myGene1,])

@@ -34,7 +34,7 @@ plotGeneByName(
 The name of a the gene is provided jointly with the matrix and used to select the row to be plotted.
 }
 \examples{
-\dontrun{
+\donttest{
 plotGeneByName (gene="HOOK1", mets=falseLMet, expresmatrix=falseLExpr, fileName=NULL)
 }
 

@@ -22,7 +22,7 @@ read2(expresFName, metFName, dataDirectory = ".", sepChar = ";", decChar = ".")
 }
 \examples{
 
-\dontrun{
+\donttest{
 (myData <- read2(myExpr, myMet))
 }
 }

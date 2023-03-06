@@ -15,7 +15,7 @@ messageTitle(aMessage, underChar = "-")
 \code{messageTitle} A  wrapper function for sending messages to console.
 }
 \examples{
-\dontrun{
+\donttest{
 messageTitle("Hello world", "$")
 }
 
