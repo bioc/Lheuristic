@@ -7,7 +7,7 @@
 plotGenesMat(
   mets,
   expres,
-  fileName,
+  fileName = NULL,
   text4Title = NULL,
   x1 = 1/3,
   x2 = 2/3,
@@ -48,9 +48,11 @@ plotGenesMat(
 \code{plotGenesMat} wrapper function for plotting the scatterplots associated with two matrices.
 }
 \examples{
-\donttest{
-plotGenesMat (mets=myMet, expres=myExpr, fileName="GenesPlots.pdf")
-}
+mets <- matrix(runif(1000), nrow=100)
+expres <- matrix(rnorm(1000), nrow=100)
+rownames(mets) <- paste0("Gene", 1:nrow(mets))
+rownames(expres) <- paste0("Gene", 1:nrow(expres))
+# plotGenesMat (mets=mets, expres=expres, fileName = "PlotAllGenes.pdf")
 
 }
 \keyword{gene}

@@ -16,27 +16,13 @@
 #' @import stats
 #' @importFrom energy dcor
 #' @examples
-#' # (X <- round(matrix (rnorm(30)*10, ncol=6),1))
-#' # (Y <- round(X + matrix (rnorm(30)*10, ncol=6),1))
-#' # (rownames(X)=rownames(Y)=letters[1:nrow(X)])
-#' # (m1<-matCorrs(X,Y))
-#' # (m2<-matDistCorr(X,Y))
-#' # (m12<- matAllCorrs (X, Y))
-#' # correlationSelection(X, Y,pValCutoff=0.25)
-#' # correlationSelection(X, Y, pValCutoff=0.25, type="Pearson")
-#' # correlationSelection(X, Y, pValCutoff=0.25, rCutoff=0.1, type="Spearman", sortByCorrs=TRUE)
-#' # sort1(m12,1)
-#' # sort1(m12,3)
-#' # dcor(X,Y,1)
-#'
-#' #Adding an NA to X will make the preceeding fail
-#' # X[1,1] <-NA
-#' # (m1<-matCorrs(X,Y))
-#' # (m2<-matDistCorr(X,Y))
-#' # (m12<- matAllCorrs (X, Y))
-#' # sort1(m12,4, DEC=FALSE)
-
-
+#' 
+#' (X <- round(matrix (rnorm(30)*10, ncol=6),1))
+#' (Y <- round(X + matrix (rnorm(30)*10, ncol=6),1))
+#' (rownames(X)=rownames(Y)=letters[1:nrow(X)])
+#' correlationSelection(X, Y, pValCutoff=0.25, rCutoff=0.1, type="Spearman", sortByCorrs=TRUE)
+#' 
+#' 
 correlationSelection <- function (X, Y, type="Spearman",
                             adj=TRUE, pValCutoff=0.05, rCutoff=0,
                             sortByCorrs=FALSE){

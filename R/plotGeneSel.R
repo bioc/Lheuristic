@@ -14,18 +14,17 @@
 #' @importFrom graphics abline
 #' @export plotGeneSel
 #'
-#' @examples
-#' \donttest{
-#' myGene1 <-rownames(myGenes)[1]
-#' xVec<- as.numeric(myMet[myGene1,])
-#' yVec<-as.numeric(myExpr[myGene1,])
-#' titleT <- paste (myGene1, "(May be GRM)")
-#' plotGeneSel(xMet=xVec, yExp=yVec, titleText=titleT, x1=1/3, x2=2/3)
-#'}
+#'@examples
+#' xMet <- rnorm(100)
+#' yExp <- rnorm(100)
+#' titleText <- "Methylation-Gene Expression Correlation"
+#' plotGeneSel(xMet, yExp, titleText)
 #'
+
+
 plotGeneSel <- function(xMet, yExp, titleText,
-                       x1=1/3, x2=2/3, y1=NULL, y2=NULL,
-                       percY1=1/3, percY2=2/3, plotGrid=TRUE)
+                        x1=1/3, x2=2/3, y1=NULL, y2=NULL,
+                        percY1=1/3, percY2=2/3, plotGrid=TRUE)
 {
   minExp<-min(yExp); maxExp <- max(yExp); delta<- maxExp-minExp
   plot(xMet,yExp,  xlim=c(0,1), ylim=c(minExp, maxExp), main=titleText)
@@ -36,4 +35,3 @@ plotGeneSel <- function(xMet, yExp, titleText,
     graphics::abline(h=y1);  graphics::abline(h=y2)
   }
 }
-

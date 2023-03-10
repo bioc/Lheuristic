@@ -21,11 +21,14 @@
 #' @importFrom grDevices dev.off
 #' @export plotGenesMat
 #' @examples
-#' \donttest{
-#' plotGenesMat (mets=myMet, expres=myExpr, fileName="GenesPlots.pdf")
-#'}
-#'
-plotGenesMat <- function(mets, expres, fileName, text4Title=NULL,
+#' mets <- matrix(runif(1000), nrow=100)
+#' expres <- matrix(rnorm(1000), nrow=100)
+#' rownames(mets) <- paste0("Gene", 1:nrow(mets))
+#' rownames(expres) <- paste0("Gene", 1:nrow(expres))
+#' # plotGenesMat (mets=mets, expres=expres, fileName = "PlotAllGenes.pdf")
+#' 
+
+plotGenesMat <- function(mets, expres, fileName = NULL, text4Title=NULL,
                          x1=1/3, x2=2/3,
                          y1=NULL, y2=NULL,
                          percY1=1/3, percY2=2/3,

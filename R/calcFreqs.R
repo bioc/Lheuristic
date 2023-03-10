@@ -18,22 +18,15 @@
 #' @export calcFreqs
 #'
 #' @examples
-#' \donttest{
-#' data(trueGenes)
-#' xVec<- as.numeric(myMetilData[trueGene1,])
-#' yVec<-as.numeric(myExprData[trueGene1,])
-#' titolT <- trueGene1
-#' plotGeneSel(xMet=xVec, yExp=yVec, titleText=titolT, x1=1/3, x2=2/3)
-#' messageTitle(paste("Cell counts for gene",trueGene1))
-#' calcFreqs(xMet=xVec, yExp=yVec, x1=1/3, x2=2/3, y1=NULL, y2=NULL, percY1=1/3, percY2=2/3)
-#'
-#' xVec<- as.numeric(myMetilData[falseGene1,])
-#' yVec<-as.numeric(myExprData[falseGene1,])
-#' titolF <- falseGene1
-#' messageTitle(paste("Cell counts for gene",falseGene1))
-#' plotGeneSel(xMet=xVec, yExp=yVec, titleText=titolF, x1=1/3, x2=2/3)
-#' calcFreqs(xMet=xVec, yExp=yVec, x1=1/3, x2=2/3, y1=NULL, y2=NULL, percY1=1/3, percY2=2/3)
-#' }
+#' 
+#' mets <- matrix(runif(1000), nrow=100)
+#' expres <- matrix(rnorm(1000), nrow=100)
+#' xVec <- expres[1,]
+#' yVec <- mets[1,]
+# titolF <- falseGene1
+# messageTitle(paste("Cell counts for gene",falseGene1))
+# calcFreqs(xMet=xVec, yExp=yVec, x1=1/3, x2=2/3, y1=NULL, y2=NULL, percY1=1/3, percY2=2/3)
+
 #'
 calcFreqs <- function (xMet, yExp, x1, x2, y1=NULL, y2=NULL,
                        percY1=1/3, percY2=2/3)

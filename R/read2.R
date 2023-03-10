@@ -11,9 +11,15 @@
 #' @export read2
 #' @examples
 #'
-#' \donttest{
-#' (myData <- read2(myExpr, myMet))
-#' }
+##' \donttest{
+##' # Example usage of the read2 function
+##' # This example assumes that the data files 'expression_data.txt' and 'methylation_data.txt' are
+##' # located in the working directory.
+##' 
+##' #data <- read2(expresFName = "expression_data.txt", 
+##' #             metFName = "methylation_data.txt")
+##' }
+
 read2 <- function (expresFName, metFName,
                    dataDirectory=".", sepChar=";", decChar= "."){
   expres<- utils::read.table(file=file.path(dataDirectory, expresFName), header=TRUE,

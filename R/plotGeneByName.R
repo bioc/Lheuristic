@@ -16,11 +16,15 @@
 #' @export plotGeneByName
 #'
 #' @examples
-#' \donttest{
-#' plotGeneByName (gene="HOOK1", mets=falseLMet, expresmatrix=falseLExpr, fileName=NULL)
-#'}
+#' # Plot gene by name based on example data
+#' mets <- matrix(runif(1000), nrow=100)
+#' expres <- matrix(rnorm(1000), nrow=100)
+#' rownames(mets) <- paste0("Gene", 1:nrow(mets))
+#' rownames(expres) <- paste0("Gene", 1:nrow(expres))
+#' plotGeneByName (gene="Gene40", mets=mets, expresmatrix=expres)
+#' 
 #'
-plotGeneByName <- function(geneName, mets, expresmatrix, filename, text4Title=NULL,
+plotGeneByName <- function(geneName, mets, expresmatrix, filename = NULL, text4Title=NULL,
                            plotGrid=TRUE, figs=c(2,2)){
   if (!is.null(filename))
     grDevices::pdf(filename)

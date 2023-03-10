@@ -11,37 +11,41 @@
 #' @param y1,y2 Coordinates of vertical points in the Y axis. Leaving them as NULL assigns them the percentiles of yVec defined by `percY1` and `percY2`.
 #' @param percY1,percY2 Values used to act as default for `y1`and `y2` when these are set to `NULL`
 #' @export scoreGenesMat
-#' @examples
+#' @return A data frame with two columns: "logicSc" (a logical score indicating whether the gene is considered "active") and "numericSc" (a numerical score).
+#'
+#' @examples 
 #' \donttest{
+#' # Score genes based on example data
 #' mets <- matrix(runif(1000), nrow=100)
 #' expres <- matrix(rnorm(1000), nrow=100)
 #' sampleSize <- dim(mets)[2]
 #' numGenes <-   dim(mets)[1]
-#'reqPercentages <- matrix (c(3, 20, 5, 5, 40, 20, 4, 1, 2), nrow=3, byrow=TRUE)
-#'(theWeightMifL=matrix (c(2,-2,-sampleSize/5,1,0,-2,1,1,2), nrow=3, byrow=TRUE))
-#'(theWeightMifNonL=matrix (c(0,-2,-sampleSize/5,0,0,-2,0,0,0), nrow=3, byrow=TRUE))
-#'scoreGenesMat (mets, expres, 
+#' reqPercentages <- matrix (c(3, 20, 5, 5, 40, 20, 4, 1, 2), nrow=3, byrow=TRUE)
+#' (theWeightMifL=matrix (c(2,-2,-sampleSize/5,1,0,-2,1,1,2), nrow=3, byrow=TRUE))
+#' (theWeightMifNonL=matrix (c(0,-2,-sampleSize/5,0,0,-2,0,0,0), nrow=3, byrow=TRUE))
+#' scoreGenesMat (mets, expres, 
 #'              x1=1/3, x2=2/3,
 #'              y1=NULL, y2=NULL, percY1=1/3, percY2=2/3,
 #'              aReqPercentsMat = reqPercentages,
 #'              aWeightMifL= theWeightMifL,
-#'              aWeightMifNonL= theWeightMifNonL)}
-
+#'              aWeightMifNonL= theWeightMifNonL)
+#'              }
 
 scoreGenesMat <- function(mets, expres,
                           x1=1/3, x2=2/3,
                           y1=NULL, y2=NULL, percY1=1/3, percY2=2/3,
                           aReqPercentsMat, 
-                          aWeightMifL, 
-                          aWeightMifNonL)
+                          aWeightMifL=0.5, 
+                          aWeightMifNonL=0.25)
 {
   stopifnot("Percentages must add up to 100"=sum(aReqPercentsMat)==100)
   N <- dim(mets)[2]
   Ngenes <-nrow(mets)
   scores <- data.frame(logicSc=rep(FALSE, Ngenes), numericSc=rep(0,Ngenes))
   rownames(scores)<- rownames(mets)
-  minmaxCounts <- toReqMat (N, aReqPercentMat=aReqPercentsMat)
-  for (gene in seq_along(1:Ngenes)){
+  minmaxCounts <- toReqMat(N, aReqPercentMat=aReqPercentsMat)
+  indexes <- seq(from=1, to=Ngenes, by=1)
+  for (gene in indexes){
     theGene <- rownames(expres)[gene]
     xVec<- mets[theGene,]
     yVec<- expres[theGene,]
@@ -51,7 +55,7 @@ scoreGenesMat <- function(mets, expres,
     scores[gene, "logicSc"] <- binSc
     numSc <- numScore (geneGrid, LShaped=binSc,
                        aWeightMifL=aWeightMifL,
-                       aWeightMifNonL=aWeightMifNonL )
+                       aWeightMifNonL=aWeightMifNonL)
     scores[gene, "numericSc"] <- numSc
   }
   return (scores)

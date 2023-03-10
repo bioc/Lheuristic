@@ -12,16 +12,15 @@
 #' @keywords binary scoring
 #' @export binScore
 #' @examples
-#' \donttest{
-#' reqPercentages <- matrix (c(15, 5, 0, 0, 5, 5, 10, 10, 15), nrow=3, byrow=TRUE)
-#' (countsRnd    <- matrix(floor(runif(9)*10)+1, nrow=3, ncol=3
-#' (reqRnd <- toReqMat (sum(countsRnd), reqPercentages))
-#' binScore(countsRnd, reqRnd)
-#' (countsTrueL1 <- matrix (c(20, 3, 0, 10, 2, 2, 20, 10, 20), nrow=3, byrow=TRUE))
-#' (reqTrueL <- toReqMat (sum(countsTrueL1), reqPercentages))
-#' binScore(countsTrueL1, reqTrueL)
-#' }
+#' # Generate some example data
+#' aGrid <- matrix(c(20, 3, 0, 10, 2, 2, 20, 10, 20), nrow = 3, ncol = 3, byrow = TRUE)
+#' aReq <- matrix(c(15, 5, 0, 0, 5, 5, 10, 10, 15), nrow = 3, ncol = 3, byrow = TRUE)
+#' 
+#' # Calculate the bin score
+#' binScore(aGrid, aReq)
 #'
+
+
 binScore <- function(aGrid, aReq){
   comp <- (aGrid[1,1]>= aReq[1,1])&&(aGrid[1,2]<= aReq[1,2])&&(aGrid[1,3]<= aReq[1,3]) &&
     (aGrid[2,1]>=aReq[2,1]) &&(aGrid[2,2]<=aReq[2,2]) &&(aGrid[2,3]<=aReq[2,3]) &&

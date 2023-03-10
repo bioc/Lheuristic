@@ -14,8 +14,8 @@ scoreGenesMat(
   percY1 = 1/3,
   percY2 = 2/3,
   aReqPercentsMat,
-  aWeightMifL,
-  aWeightMifNonL
+  aWeightMifL = 0.5,
+  aWeightMifNonL = 0.25
 )
 }
 \arguments{
@@ -35,11 +35,15 @@ scoreGenesMat(
 
 \item{aWeightMifNonL}{A matrix of weights to score the previous counts if the scatterplot has been classified as non-L}
 }
+\value{
+A data frame with two columns: "logicSc" (a logical score indicating whether the gene is considered "active") and "numericSc" (a numerical score).
+}
 \description{
 \code{scoreGenesMat} scores scatterplots using a binary and a numeric schemes on a row-wise basis.
 }
 \examples{
 \donttest{
+# Score genes based on example data
 mets <- matrix(runif(1000), nrow=100)
 expres <- matrix(rnorm(1000), nrow=100)
 sampleSize <- dim(mets)[2]
@@ -52,5 +56,6 @@ scoreGenesMat (mets, expres,
              y1=NULL, y2=NULL, percY1=1/3, percY2=2/3,
              aReqPercentsMat = reqPercentages,
              aWeightMifL= theWeightMifL,
-             aWeightMifNonL= theWeightMifNonL)}
+             aWeightMifNonL= theWeightMifNonL)
+             }
 }

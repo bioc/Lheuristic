@@ -7,9 +7,7 @@
 #' @export messageTitle
 #'
 #' @examples
-#' \donttest{
 #' messageTitle("Hello world", "$")
-#'}
 #'
 messageTitle <- function(aMessage, underChar="-"){
   message(aMessage,"\n")

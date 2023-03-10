@@ -36,13 +36,10 @@ plotGeneSel(
 \code{plotGeneSel} plots points on a scatterplot with a 3x3 grid overimposed.
 }
 \examples{
-\donttest{
-myGene1 <-rownames(myGenes)[1]
-xVec<- as.numeric(myMet[myGene1,])
-yVec<-as.numeric(myExpr[myGene1,])
-titleT <- paste (myGene1, "(May be GRM)")
-plotGeneSel(xMet=xVec, yExp=yVec, titleText=titleT, x1=1/3, x2=2/3)
-}
+xMet <- rnorm(100)
+yExp <- rnorm(100)
+titleText <- "Methylation-Gene Expression Correlation"
+plotGeneSel(xMet, yExp, titleText)
 
 }
 \keyword{gene}
