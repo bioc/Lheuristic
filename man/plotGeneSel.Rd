@@ -38,6 +38,8 @@ plotGeneSel(
 \examples{
 xMet <- rnorm(100)
 yExp <- rnorm(100)
+# data("TCGAexp")
+# data("TCGAmet")
 titleText <- "Methylation-Gene Expression Correlation"
 plotGeneSel(xMet, yExp, titleText)
 

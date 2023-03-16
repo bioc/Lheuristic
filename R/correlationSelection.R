@@ -30,9 +30,9 @@ correlationSelection <- function (X, Y, type="Spearman",
   if (type=="Spearman"){
     selected <- corsMat[,c("r (Sp)", "p (Sp)", "adj.Spear.Pval", "distCor")]
     if(adj){
-      lShaped <-(selected[,"r (Sp)"]<rCutoff) & (selected[,"adj.Spear.Pval"] < pValCutoff)
+      lShaped <-(selected[,"r (Sp)"]< rCutoff) & (selected[,"adj.Spear.Pval"] < pValCutoff)
     }else{
-      lShaped <-(selected[,"r (Sp)"]<rCutoff) & (selected[,"p (Sp)"] < pValCutoff)
+      lShaped <-(selected[,"r (Sp)"]< rCutoff) & (selected[,"p (Sp)"] < pValCutoff)
     }
   }else{
     selected <- corsMat[,c("r (Pear)", "p (Pear)", "adj.Pear.Pval", "distCor")]

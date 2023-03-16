@@ -38,7 +38,9 @@ scoreGenesMat <- function(mets, expres,
                           aWeightMifL=0.5, 
                           aWeightMifNonL=0.25)
 {
-  stopifnot("Percentages must add up to 100"=sum(aReqPercentsMat)==100)
+  if(sum(aReqPercentsMat)!=100) 
+    stop("Error: Percentages must add up to 100")
+  #stopifnot("Percentages must add up to 100"=sum(aReqPercentsMat)==100)
   N <- dim(mets)[2]
   Ngenes <-nrow(mets)
   scores <- data.frame(logicSc=rep(FALSE, Ngenes), numericSc=rep(0,Ngenes))
