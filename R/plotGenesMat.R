@@ -45,7 +45,7 @@ plotGenesMat <- function(mets, expres, fileName = NULL, text4Title=NULL,
     }
   }
   #  opt<-par(mfrow=c(2,2))
-  for (gene in seq_along(nrow(expres))){
+  for (gene in seq_len(nrow(expres))){
     xVec<- as.numeric(mets[gene,])
     yVec<- as.numeric(expres[gene,])
     plotGeneSel(xMet=xVec, yExp=yVec, titleText=text4Title[gene],

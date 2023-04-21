@@ -21,7 +21,7 @@ matCorrs <- function (X, Y){
   if ((nrow(X)!=nrow(Y))||(ncol(X)!=ncol(Y))) stop('matrices dimensions do not match')
   corrsList<- matrix(NA, nrow=nrow(X), ncol=4)
   colnames(corrsList) <- c("r (Sp)", "r (Pear)",  "p (Sp)","p (Pear)")
-  for (i in seq_along(nrow(X))){
+  for (i in seq_len(nrow(X))){
     corrs<- vecCorrs(X[i,],Y[i,])
     corrsList[i,] <- corrs
   }
