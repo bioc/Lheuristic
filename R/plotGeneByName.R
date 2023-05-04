@@ -10,6 +10,9 @@
 #' @param text4Title String to be used as main title for the plot. If NULL it is set to geneName
 #' @param plotGrid boolean parameter to be passed to `plotGeneSel` function
 #' @param figs 2-components vector defining the 2-dimensional structure of the plots that will be drawn
+#' 
+#' @return a pdf with scatterplots of selected by gene name
+#' 
 #' @keywords plot gene name
 #' @importFrom grDevices pdf
 #' @importFrom grDevices dev.off

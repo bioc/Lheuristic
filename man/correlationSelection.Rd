@@ -29,6 +29,9 @@ correlationSelection(
 
 \item{sortByCorrs}{logical; if TRUE, results will be ordered in ascending order by p-value. Default set to FALSE.}
 }
+\value{
+dataframe with correlations selected
+}
 \description{
 \code{correlationSelection} Uses the function matCorrs; given two matrices X (m,n) , Y (m,n) this function computes Pearson and Spearman correlation coefficients
 and their significance p-values  for every pair of row vectors.

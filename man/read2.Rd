@@ -17,17 +17,20 @@ read2(expresFName, metFName, dataDirectory = ".", sepChar = ";", decChar = ".")
 
 \item{decChar}{Name of character used as decimal point. Defaults to ".".}
 }
+\value{
+a list with a methylation and an expression matrix
+}
 \description{
 \code{read2} Wrapper to read 2 files with the same format, dimensions and row and column names.
 }
 \examples{
 
-\donttest{
+
 # Example usage of the read2 function
 # This example assumes that the data files 'expression_data.txt' and 'methylation_data.txt' are
 # located in the working directory.
 
 #data <- read2(expresFName = "expression_data.txt", 
 #             metFName = "methylation_data.txt")
-}
+
 }

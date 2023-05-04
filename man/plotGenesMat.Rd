@@ -44,6 +44,9 @@ plotGenesMat(
 
 \item{logicSc}{NULL, numeric score representing the L-shape score.}
 }
+\value{
+a pdf with scatterplots for all genes
+}
 \description{
 \code{plotGenesMat} wrapper function for plotting the scatterplots associated with two matrices.
 }

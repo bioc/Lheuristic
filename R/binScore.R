@@ -9,6 +9,8 @@
 #' @param aReq A matrix of minimum or maximum counts to be found in each cell
 #' if L-shape is TRUE
 #'
+#' @return a score value for each scatterplot
+#'
 #' @keywords binary scoring
 #' @export binScore
 #' @examples

@@ -14,7 +14,7 @@ matDistCorr <- function (X, Y){
   if ((nrow(X)!=nrow(Y))||(ncol(X)!=ncol(Y))) stop('matrices dimensions do not match')
   distCorrsList<- matrix(NA, nrow=nrow(X), ncol=1)
   colnames(distCorrsList) <- c("DistCor")
-  for (i in 1:nrow(X)){
+  for (i in seq_len(nrow(X))){
     DistCorr<- distCorrs(X[i,],Y[i,])
     distCorrsList[i,] <- DistCorr
   }
@@ -38,7 +38,7 @@ matAllCorrs  <- function (X, Y, sortByCorrs = FALSE){
   if ((nrow(X)!=nrow(Y))||(ncol(X)!=ncol(Y))) stop('matrices dimensions do not match')
   corrsList<- matrix(NA, nrow=nrow(X), ncol=5)
   colnames(corrsList) <- c("r (Sp)", "r (Pear)", "distCor", "p (Sp)",  "p (Pear)")
-  for (i in 1:nrow(X)){
+  for (i in seq_len(nrow(X))){
     corrs<- allCorrs(X[i,],Y[i,])
     corrsList[i,] <- corrs
   }
@@ -57,7 +57,7 @@ discard <- function(x, where, howMany){
 
 discardA <- function(x, percentage){
   maxZeros <- ceiling (length(x)*percentage)
-  return (discard(x,1:length(x),maxZeros))
+  return (discard(x,seq_len(length(x)),maxZeros))
 }
 
 

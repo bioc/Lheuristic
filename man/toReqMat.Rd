@@ -11,6 +11,9 @@ toReqMat(numPoints, aReqPercentMat)
 
 \item{aReqPercentMat}{Matrix of required percentages}
 }
+\value{
+a counts matrix
+}
 \description{
 \code{toReqMat} can be used to turn a matrix of required percentages into
 a matrix of required counts to facilitate its scoring.

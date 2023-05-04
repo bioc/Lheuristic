@@ -12,6 +12,9 @@ binScore(aGrid, aReq)
 \item{aReq}{A matrix of minimum or maximum counts to be found in each cell
 if L-shape is TRUE}
 }
+\value{
+a score value for each scatterplot
+}
 \description{
 \code{binScore} can be used to score scatterplots by directly comparing
 the sample counts with a matrix of minimal or maximal percentages/counts

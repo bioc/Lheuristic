@@ -17,6 +17,9 @@ calcFreqs(xMet, yExp, x1, x2, y1 = NULL, y2 = NULL, percY1 = 1/3, percY2 = 2/3)
 
 \item{percY1, percY2}{Values used to act as default for `y1`and `y2` when these are set to `NULL`}
 }
+\value{
+a matrix with calculated frequencies
+}
 \description{
 \code{calcFreqs} Given two numeric vectors this function overimposes a grid on the scatterplot defined by YMet~Xmet
 #' and returns a 3X3 matrix of counts with the number of points in each cell of the grid

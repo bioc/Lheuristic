@@ -4,6 +4,9 @@
 #'
 #' @param X matrix
 #' @param Y matrix
+#' 
+#' @return a message indicating if 2 matrices have the same dimensions
+#' 
 #' @keywords matrix
 #'
 #' @export checkPairing

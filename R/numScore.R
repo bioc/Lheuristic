@@ -7,7 +7,11 @@
 #' @param LShaped A boolean value indicating if this scatterplot can be seen as LShaped.
 #' @param aWeightMifL A matrix of weights to score the previous counts if the scatterplot has been classified as L.
 #' @param aWeightMifNonL A matrix of weights to score the previous counts if the scatterplot has been classified as non-L
+#' 
+#' @return a numeric score for each scatterplot
+#' 
 #' @keywords scatterplot weights
+#' 
 #' @export numScore
 #' @examples
 #' xVecT <- matrix(runif(1000), nrow=100)[1,]

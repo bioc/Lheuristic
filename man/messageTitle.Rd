@@ -11,6 +11,9 @@ messageTitle(aMessage, underChar = "-")
 
 \item{underChar}{character to use for underlining the message.}
 }
+\value{
+a message to console
+}
 \description{
 \code{messageTitle} A  wrapper function for sending messages to console.
 }

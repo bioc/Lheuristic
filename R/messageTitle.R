@@ -4,6 +4,7 @@
 #' @param aMessage text of the message.
 #' @param underChar character to use for underlining the message.
 #'
+#' @return a message to console
 #' @export messageTitle
 #'
 #' @examples

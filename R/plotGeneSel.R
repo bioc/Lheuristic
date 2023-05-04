@@ -10,6 +10,8 @@
 #' @param percY1,percY2 Values used to act as default for `y1`and `y2` when these are set to `NULL`
 #' @param plotGrid logical. Defautl to TRUE will plot gridlines over the scatterplot.
 #' 
+#' @return a pdf with scatterplots for selected genes
+#' 
 #' @keywords plot gene selection
 #' @importFrom graphics abline
 #' @export plotGeneSel

@@ -15,6 +15,9 @@ numScore(aGrid, LShaped, aWeightMifL, aWeightMifNonL)
 
 \item{aWeightMifNonL}{A matrix of weights to score the previous counts if the scatterplot has been classified as non-L}
 }
+\value{
+a numeric score for each scatterplot
+}
 \description{
 \code{numScore} A function to score scatterplot using a weight matrix.
 }

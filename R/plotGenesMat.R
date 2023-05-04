@@ -16,6 +16,8 @@
 #' @param plotGrid logical; default set to TRUE will plot gridlines on the graph.
 #' @param logicSc NULL, numeric score representing the L-shape score.
 #'
+#'@return a pdf with scatterplots for all genes
+#'
 #' @keywords scatterplot gene plot matrix
 #' @importFrom grDevices pdf
 #' @importFrom grDevices dev.off

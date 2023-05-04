@@ -29,6 +29,9 @@ plotGeneByName(
 
 \item{figs}{2-components vector defining the 2-dimensional structure of the plots that will be drawn}
 }
+\value{
+a pdf with scatterplots of selected by gene name
+}
 \description{
 \code{plotGeneByName} plots points on a scatterplot with a 3x3 grid superimposed.
 The name of a the gene is provided jointly with the matrix and used to select the row to be plotted.

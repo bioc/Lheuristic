@@ -32,6 +32,9 @@ plotGeneSel(
 
 \item{plotGrid}{logical. Defautl to TRUE will plot gridlines over the scatterplot.}
 }
+\value{
+a pdf with scatterplots for selected genes
+}
 \description{
 \code{plotGeneSel} plots points on a scatterplot with a 3x3 grid overimposed.
 }

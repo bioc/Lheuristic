@@ -11,6 +11,9 @@ checkPairing(X, Y)
 
 \item{Y}{matrix}
 }
+\value{
+a message indicating if 2 matrices have the same dimensions
+}
 \description{
 \code{checkPairing} is a  function to check if two matrices have the same dimensions (same rows and columns) and same row and column names.
 }

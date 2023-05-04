@@ -5,7 +5,11 @@
 #'
 #' @param X First matrix
 #' @param Y Second matrix. Must have the same dimensions as X
+#' 
+#' @return matrix with a correlation value for each gene
+#' 
 #' @keywords correlation
+#' 
 #' @import Hmisc
 #' @export matCorrs
 #' @examples

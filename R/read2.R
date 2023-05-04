@@ -7,18 +7,21 @@
 #' @param dataDirectory Name of directory where the files are staore. Defaults to ".".
 #' @param sepChar Name of character used to separate matrix columns. Defaults to ";".
 #' @param decChar Name of character used as decimal point. Defaults to ".".
+#' 
+#' @return a list with a methylation and an expression matrix
+#' 
 #' @importFrom utils read.table
 #' @export read2
 #' @examples
 #'
-##' \donttest{
+##'
 ##' # Example usage of the read2 function
 ##' # This example assumes that the data files 'expression_data.txt' and 'methylation_data.txt' are
 ##' # located in the working directory.
 ##' 
 ##' #data <- read2(expresFName = "expression_data.txt", 
 ##' #             metFName = "methylation_data.txt")
-##' }
+##' 
 
 read2 <- function (expresFName, metFName,
                    dataDirectory=".", sepChar=";", decChar= "."){

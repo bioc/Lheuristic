@@ -11,6 +11,8 @@
 #' @param rCutoff the upper limit to be used for the correlation coefficient. Default is 0, no cut off.
 #' @param sortByCorrs logical; if TRUE, results will be ordered in ascending order by p-value. Default set to FALSE.
 #'
+#' @return dataframe with correlations selected
+#'
 #' @keywords Correlation Selection Calculator
 #' @export correlationSelection
 #' @import stats

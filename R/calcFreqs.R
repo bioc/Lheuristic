@@ -14,6 +14,8 @@
 #' @param y1,y2 Coordinates of vertical points in the Y axis. Leaving them as NULL assigns them the percentiles of yVec defined by `percY1` and `percY2`.
 #' @param percY1,percY2 Values used to act as default for `y1`and `y2` when these are set to `NULL`
 #'
+#' @return a matrix with calculated frequencies
+#'
 #' @keywords calculation frequencies
 #' @export calcFreqs
 #'

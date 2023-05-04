@@ -5,6 +5,9 @@
 #'
 #' @param numPoints Number of points in a scatterplot. Used to turn the required percentages into required counts.
 #' @param aReqPercentMat Matrix of required percentages
+#' 
+#' @return a counts matrix
+#' 
 #' @export toReqMat
 #'
 #' @examples
