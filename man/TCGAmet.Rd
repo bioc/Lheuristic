@@ -13,6 +13,9 @@ An object of class \code{matrix} (inherits from \code{array}) with 1000 rows and
 \usage{
 data(TCGAmet)
 }
+\value{
+data matrix with gene methylation data
+}
 \description{
 A mxn matrix containing normalized methylation values from TCGA
 }

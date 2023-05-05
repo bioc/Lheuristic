@@ -13,6 +13,9 @@ An object of class \code{matrix} (inherits from \code{array}) with 1000 rows and
 \usage{
 data(TCGAexp)
 }
+\value{
+data matrix with gene expression data
+}
 \description{
 A mxn matrix containing normalized gene expressions from TCGA
 }
