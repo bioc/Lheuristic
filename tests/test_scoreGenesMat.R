@@ -1,4 +1,5 @@
-library(testthat)# Define the test data
+# Define the test data
+library(testthat)
 set.seed(123)
 mets <- matrix(runif(100), nrow = 10)
 expres <- matrix(rnorm(100), nrow = 10)

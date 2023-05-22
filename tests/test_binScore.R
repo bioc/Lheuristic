@@ -1,4 +1,5 @@
 # Test that binScore returns the expected output for a given input
+library(testthat)
 test_that("binScore returns the expected output for a given input", {
   # Generate example data
   aGrid <- matrix(c(20, 3, 0, 10, 2, 2, 20, 10, 20), nrow = 3, ncol = 3, byrow = TRUE)
