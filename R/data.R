@@ -5,7 +5,7 @@
 #' @docType data
 #'
 #' @usage data(TCGAexp)
-#' 
+#'
 #' @return data matrix with gene expression data
 #'
 #' @source \url{TCGA.org}
@@ -18,7 +18,7 @@
 #' @docType data
 #'
 #' @usage data(TCGAmet)
-#' 
+#'
 #' @return data matrix with gene methylation data
 #'
 #' @source \url{TCGA.org}

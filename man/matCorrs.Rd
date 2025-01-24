@@ -4,27 +4,44 @@
 \alias{matCorrs}
 \title{A row-wise correlation function calculator}
 \usage{
-matCorrs(X, Y)
+matCorrs(mae)
 }
 \arguments{
-\item{X}{First matrix}
-
-\item{Y}{Second matrix. Must have the same dimensions as X}
+\item{mae}{A MultiAssayExperiment object containing the methylation
+and expression data.}
 }
 \value{
 matrix with a correlation value for each gene
 }
 \description{
-\code{matCorrs} Given two matrices X (m,n), Y(m,n) this function computes (m) Pearson and Spearman correlation coefficients
+\code{matCorrs} Given a MultiAssayExperiment object, the function
+computes Pearson and Spearman correlation coefficients
 and their significance p-values for every pair of row vectors.
 }
 \examples{
-(X <- round(matrix (rnorm(30)*10, ncol=6),1)) + 1:10
-(Y <- round(X + matrix (rnorm(30)*10, ncol=6),1)) - 10:1
-(rownames(X)=rownames(Y)=letters[1:nrow(X)])
-(m1<-matCorrs(X,Y))
-matCorrs
+# Methylation data
+methylData <- matrix(runif(50), nrow = 10)
+colnames(methylData) <- paste0("samp", 1:ncol(methylData))
+rownames(methylData) <- paste0("gene", 1:nrow(methylData))
+# Expression data
+expresData <- matrix(rnorm(50), nrow = 10)
+colnames(expresData) <- paste0("samp", 1:ncol(methylData))
+rownames(expresData) <- paste0("gene", 1:nrow(methylData))
+# ColData
+colDat <- data.frame(
+    sampleID = colnames(methylData),
+    name = letters[1:ncol(methylData)]
+)
 
+rownames(colDat) <- colDat$sampleID
+mae <- MultiAssayExperiment::MultiAssayExperiment(
+    experiments = list(
+        methylation = methylData,
+        expression = expresData
+    ),
+    colData = colDat
+)
+matCorrs(mae)
 
 }
 \keyword{correlation}

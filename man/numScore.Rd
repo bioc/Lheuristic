@@ -7,31 +7,59 @@
 numScore(aGrid, LShaped, aWeightMifL, aWeightMifNonL)
 }
 \arguments{
-\item{aGrid}{A matrix of counts as computed by `calcFreqs` function}
+\item{aGrid}{A matrix of counts computed by the `calcFreqs` function.}
 
-\item{LShaped}{A boolean value indicating if this scatterplot can be seen as LShaped.}
+\item{LShaped}{A boolean indicating whether the scatterplot can be
+classified as "L-shaped".}
 
-\item{aWeightMifL}{A matrix of weights to score the previous counts if the scatterplot has been classified as L.}
+\item{aWeightMifL}{A matrix of weights applied to score counts if
+the scatterplot is classified as "L".}
 
-\item{aWeightMifNonL}{A matrix of weights to score the previous counts if the scatterplot has been classified as non-L}
+\item{aWeightMifNonL}{A matrix of weights applied to score counts if
+the scatterplot is classified as "non-L".}
 }
 \value{
 a numeric score for each scatterplot
 }
 \description{
 \code{numScore} A function to score scatterplot using a weight matrix.
-}
-\details{
-The scoring does not incorporate logical conditions such as "if xij < C ..."
+The scoring does not incorporate logical conditions such as 'if xij < C ...'
 }
 \examples{
-xVecT <- matrix(runif(1000), nrow=100)[1,]
-yVecT<- matrix(rnorm(1000), nrow=100)[1,]
-trueFreq <- calcFreqs(xMet=xVecT, yExp=yVecT, x1=1/3, x2=2/3)
+# Methylation data
+methylData <- matrix(runif(50), nrow = 10)
+colnames(methylData) <- paste0("samp", 1:ncol(methylData))
+rownames(methylData) <- paste0("gene", 1:nrow(methylData))
+# Expression data
+expresData <- matrix(rnorm(50), nrow = 10)
+colnames(expresData) <- paste0("samp", 1:ncol(methylData))
+rownames(expresData) <- paste0("gene", 1:nrow(methylData))
+# ColData
+colDat <- data.frame(
+    sampleID = colnames(methylData),
+    name = letters[1:ncol(methylData)]
+)
+
+rownames(colDat) <- colDat$sampleID
+mae <- MultiAssayExperiment::MultiAssayExperiment(
+    experiments = list(
+        methylation = methylData,
+        expression = expresData
+    ),
+    colData = colDat
+)
+trueFreq <- calcFreqs(mae, x1 = 1 / 3, x2 = 2 / 3)
 LShaped <- FALSE
-weightsIfL    <- matrix (c(2,-1,-99,1,0,-1,1,1,2), nrow=3, byrow=TRUE)
-weightsIfNonL <- matrix (c(0,-1,-99,0,0,-1,0,0,0), nrow=3, byrow=TRUE)
-numScore (trueFreq, LShaped, weightsIfL, weightsIfNonL)
+weightsIfL <- matrix(c(2, -1, -99, 1, 0, -1, 1, 1, 2),
+    nrow = 3, byrow = TRUE
+)
+weightsIfNonL <- matrix(c(0, -1, -99, 0, 0, -1, 0, 0, 0),
+    nrow = 3, byrow = TRUE
+)
+numScore(
+    trueFreq, LShaped,
+    weightsIfL, weightsIfNonL
+)
 
 }
 \keyword{scatterplot}

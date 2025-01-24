@@ -5,8 +5,7 @@
 \title{scoreGenesMat}
 \usage{
 scoreGenesMat(
-  mets,
-  expres,
+  mae,
   x1 = 1/3,
   x2 = 2/3,
   y1 = NULL,
@@ -19,43 +18,76 @@ scoreGenesMat(
 )
 }
 \arguments{
-\item{mets}{Matrix of methylation values}
+\item{mae}{MultiAssayExperiment object containing methylation and expression 
+matrices.}
 
-\item{expres}{Matrix of expression values}
+\item{x1, x2}{Coordinates of vertical points on the X-axis. 
+Expected to contain methylation values ranging between 0 and 1,
+with default values set to 1/3 and 2/3.}
 
-\item{x1, x2}{Coordinates of vertical points in the X axis. Because it is expected to contain methylation values that vary between 0 and 1 the default values are 1/3 and 2/3.}
+\item{y1, y2}{Coordinates of vertical points on the Y-axis. If set to NULL,
+they default to the percentiles of yVec as defined by `percY1` and `percY2`.}
 
-\item{y1, y2}{Coordinates of vertical points in the Y axis. Leaving them as NULL assigns them the percentiles of yVec defined by `percY1` and `percY2`.}
+\item{percY1, percY2}{Values used to act as default for `y1`and `y2` when
+these are set to `NULL`.}
 
-\item{percY1, percY2}{Values used to act as default for `y1`and `y2` when these are set to `NULL`}
+\item{aReqPercentsMat}{A matrix specifying the minimum and maximum percentage
+counts required in each cell.}
 
-\item{aReqPercentsMat}{Matrix of minimum maximum percentage of counts to have in a given cell}
+\item{aWeightMifL}{A matrix of weights applied to score counts when the
+scatterplot is classified as "L".}
 
-\item{aWeightMifL}{A matrix of weights to score the previous counts if the scatterplot has been classified as L.}
-
-\item{aWeightMifNonL}{A matrix of weights to score the previous counts if the scatterplot has been classified as non-L}
+\item{aWeightMifNonL}{A matrix of weights applied to score counts when the
+scatterplot is classified as "non-L".}
 }
 \value{
-A data frame with two columns: "logicSc" (a logical score indicating whether the gene is considered "active") and "numericSc" (a numerical score).
+A data frame with two columns: 'logicSc' (logical score indicating if
+the gene is 'active') and 'numericSc' (a numerical score).
 }
 \description{
-\code{scoreGenesMat} scores scatterplots using a binary and a numeric schemes on a row-wise basis.
+\code{scoreGenesMat} scores scatterplots using a binary and a numeric
+schemes row-wise.
 }
 \examples{
-\donttest{
 # Score genes based on example data
-mets <- matrix(runif(1000), nrow=100)
-expres <- matrix(rnorm(1000), nrow=100)
-sampleSize <- dim(mets)[2]
-numGenes <-   dim(mets)[1]
-reqPercentages <- matrix (c(3, 20, 5, 5, 40, 20, 4, 1, 2), nrow=3, byrow=TRUE)
-(theWeightMifL=matrix (c(2,-2,-sampleSize/5,1,0,-2,1,1,2), nrow=3, byrow=TRUE))
-(theWeightMifNonL=matrix (c(0,-2,-sampleSize/5,0,0,-2,0,0,0), nrow=3, byrow=TRUE))
-scoreGenesMat (mets, expres, 
-             x1=1/3, x2=2/3,
-             y1=NULL, y2=NULL, percY1=1/3, percY2=2/3,
-             aReqPercentsMat = reqPercentages,
-             aWeightMifL= theWeightMifL,
-             aWeightMifNonL= theWeightMifNonL)
-             }
+
+# Methylation data
+methylData <- matrix(runif(50), nrow = 10)
+colnames(methylData) <- paste0("samp", 1:ncol(methylData))
+rownames(methylData) <- paste0("gene", 1:nrow(methylData))
+# Expression data
+expresData <- matrix(rnorm(50), nrow = 10)
+colnames(expresData) <- paste0("samp", 1:ncol(methylData))
+rownames(expresData) <- paste0("gene", 1:nrow(methylData))
+# ColData
+colDat <- data.frame(
+    sampleID = colnames(methylData),
+    name = letters[1:ncol(methylData)]
+)
+
+rownames(colDat) <- colDat$sampleID
+mae <- MultiAssayExperiment::MultiAssayExperiment(
+    experiments = list(
+        methylation = methylData,
+        expression = expresData
+    ),
+    colData = colDat
+)
+sampleSize <- ncol(MultiAssayExperiment::experiments(mae)[[1]])
+reqPercentages <- matrix(c(3, 20, 5, 5, 40, 20, 4, 1, 2),
+    nrow = 3, byrow = TRUE
+)
+(theWeightMifL <- matrix(c(2, -2, -sampleSize / 5, 1, 0, -2, 1, 1, 2),
+    nrow = 3, byrow = TRUE
+))
+(theWeightMifNonL <- matrix(c(0, -2, -sampleSize / 5, 0, 0, -2, 0, 0, 0),
+    nrow = 3, byrow = TRUE
+))
+scoreGenesMat(mae,
+    x1 = 1 / 3, x2 = 2 / 3,
+    y1 = NULL, y2 = NULL, percY1 = 1 / 3, percY2 = 2 / 3,
+    aReqPercentsMat = reqPercentages,
+    aWeightMifL = theWeightMifL,
+    aWeightMifNonL = theWeightMifNonL
+)
 }

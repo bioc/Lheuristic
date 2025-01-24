@@ -5,8 +5,8 @@
 \title{plotGenesMat}
 \usage{
 plotGenesMat(
-  mets,
-  expres,
+  mae,
+  geneNames = NULL,
   fileName = NULL,
   text4Title = NULL,
   x1 = 1/3,
@@ -16,46 +16,85 @@ plotGenesMat(
   percY1 = 1/3,
   percY2 = 2/3,
   plotGrid = TRUE,
-  logicSc = NULL
+  logicSc = NULL,
+  saveToPDF = FALSE
 )
 }
 \arguments{
-\item{mets}{matrix with methylation data.}
+\item{mae}{A MultiAssayExperiment object containing the methylation
+and expression data.}
 
-\item{expres}{matrix with expression data.}
+\item{geneNames}{A character vector of gene names to plot. 
+If NULL, all genes are plotted.}
 
-\item{fileName}{name of the file used to save the results as pdf. If NULL, plot goes to screen}
+\item{fileName}{The name of the file used to save the results as a PDF.
+If NULL, the plot is displayed on the screen.}
 
-\item{text4Title}{NULL, name for the plot title containing the gene name and the L-shape score.}
+\item{text4Title}{An optional title for the plot, incorporating the gene name
+and L-shape score. Defaults to NULL.}
 
-\item{x1, }{x-Coordinates of vertical points in the X axis. Because it is expected to contain methylation values that vary between 0 and 1 the default values are 1/3 and 2/3.}
+\item{x1}{The x-coordinate of vertical points on the X-axis. 
+Expected to contain methylation values ranging between 0 and 1,
+with default values set to 1/3 and 2/3.}
 
-\item{x2, }{x-Coordinates of vertical points in the X axis. Because it is expected to contain methylation values that vary between 0 and 1 the default values are 1/3 and 2/3.}
+\item{x2}{The x-coordinate of vertical points on the X-axis.
+Expected to contain methylation values ranging between 0 and 1,
+with default values set to 1/3 and 2/3.}
 
-\item{y1, }{y-Coordinates of vertical points in the Y axis. Leaving them as NULL assigns them the percentiles of yVec defined by `percY1` and `percY2`.}
+\item{y1}{The y-coordinate of vertical points on the Y-axis.
+If NULL, these are set to the percentiles of yVec 
+defined by percY1 and percY2.}
 
-\item{y2, }{y-Coordinates of vertical points in the Y axis. Leaving them as NULL assigns them the percentiles of yVec defined by `percY1` and `percY2`.}
+\item{y2}{The y-coordinate of vertical points on the Y-axis.
+If NULL, these are set to the percentiles of yVec 
+defined by percY1 and percY2.}
 
-\item{percY1, }{Values used to act as default for `y1` when it is set to `NULL`.}
+\item{percY1}{Values used as defaults for y1 when it is set to NULL.}
 
-\item{percY2}{Values used to act as default for `y2` when these are set to `NULL`.}
+\item{percY2}{Values used as defaults for y2 when it is set to NULL.}
 
-\item{plotGrid}{logical; default set to TRUE will plot gridlines on the graph.}
+\item{plotGrid}{A logical value; defaults to TRUE, indicating 
+whether to plot gridlines on the graph.}
 
-\item{logicSc}{NULL, numeric score representing the L-shape score.}
+\item{logicSc}{A numeric score representing the L-shape score. 
+Defaults to NULL.}
+
+\item{saveToPDF}{Logical, if TRUE, saves the plots to a PDF file 
+specified by fileName. If FALSE (default), plots are displayed 
+interactively without saving.}
 }
 \value{
 a pdf with scatterplots for all genes
 }
 \description{
-\code{plotGenesMat} wrapper function for plotting the scatterplots associated with two matrices.
+\code{plotGenesMat} wrapper function for plotting the scatterplots associated
+with two matrices.
 }
 \examples{
-mets <- matrix(runif(1000), nrow=100)
-expres <- matrix(rnorm(1000), nrow=100)
-rownames(mets) <- paste0("Gene", 1:nrow(mets))
-rownames(expres) <- paste0("Gene", 1:nrow(expres))
-# plotGenesMat (mets=mets, expres=expres, fileName = "PlotAllGenes.pdf")
+# Methylation data
+methylData <- matrix(runif(50), nrow = 10)
+colnames(methylData) <- paste0("samp", 1:ncol(methylData))
+rownames(methylData) <- paste0("gene", 1:nrow(methylData))
+# Expression data
+expresData <- matrix(rnorm(50), nrow = 10)
+colnames(expresData) <- paste0("samp", 1:ncol(methylData))
+rownames(expresData) <- paste0("gene", 1:nrow(methylData))
+# ColData
+colDat <- data.frame(
+    sampleID = colnames(methylData),
+    name = letters[1:ncol(methylData)]
+)
+
+rownames(colDat) <- colDat$sampleID
+mae <- MultiAssayExperiment::MultiAssayExperiment(
+    experiments = list(
+        methylation = methylData,
+        expression = expresData
+    ),
+    colData = colDat
+) 
+selectedGenes <- c("gene1", "gene5")
+plotGenesMat(mae, geneNames = selectedGenes, saveToPDF = FALSE)
 
 }
 \keyword{gene}

@@ -7,9 +7,10 @@
 toReqMat(numPoints, aReqPercentMat)
 }
 \arguments{
-\item{numPoints}{Number of points in a scatterplot. Used to turn the required percentages into required counts.}
+\item{numPoints}{Number of points in a scatterplot. Used to turn the required
+percentages into required counts.}
 
-\item{aReqPercentMat}{Matrix of required percentages}
+\item{aReqPercentMat}{Matrix of required percentages.}
 }
 \value{
 a counts matrix
@@ -19,8 +20,18 @@ a counts matrix
 a matrix of required counts to facilitate its scoring.
 }
 \examples{
-reqPercentages <- matrix (c(3, 20, 5, 5, 40, 20, 4, 1, 2), nrow=3, byrow=TRUE)
+reqPercentages <- matrix(
+    c(
+        3, 20, 5,
+        5, 40, 20,
+        4, 1, 2
+    ),
+    nrow = 3, byrow = TRUE
+)
 numberOfPoints <- 100
-reqMat <- toReqMat (numPoints=numberOfPoints, aReqPercentMat=reqPercentages)
+reqMat <- toReqMat(
+    numPoints = numberOfPoints,
+    aReqPercentMat = reqPercentages
+)
 
 }

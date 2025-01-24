@@ -10,9 +10,7 @@
 #' @examples
 #' messageTitle("Hello world", "$")
 #'
-messageTitle <- function(aMessage, underChar="-"){
-  message(aMessage,"\n")
-  message(paste(rep(underChar, nchar(aMessage)),collapse=""),"\n")
+messageTitle <- function(aMessage, underChar = "-") {
+    message(aMessage, "\n")
+    message(paste(rep(underChar, nchar(aMessage)), collapse = ""), "\n")
 }
-
-

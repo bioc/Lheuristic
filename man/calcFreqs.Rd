@@ -4,34 +4,91 @@
 \alias{calcFreqs}
 \title{calcFreqs}
 \usage{
-calcFreqs(xMet, yExp, x1, x2, y1 = NULL, y2 = NULL, percY1 = 1/3, percY2 = 2/3)
+calcFreqs(
+  mae,
+  geneNum,
+  x1,
+  x2,
+  y1 = NULL,
+  y2 = NULL,
+  percY1 = 1/3,
+  percY2 = 2/3
+)
 }
 \arguments{
-\item{xMet}{First numeric vector which, in principle, contains the methylation values.}
+\item{mae}{MultiAssayExperiment object containing methylation and expression
+matrices.}
 
-\item{yExp}{Second numeric vector which, in principle, contains the expression values.}
+\item{geneNum}{row of expression/methylation matrix for which the frequencies
+will be computed.}
 
-\item{x1, x2}{Coordinates of vertical points in the X axis. Because it is expected to contain methylation values that vary between 0 and 1 the default values are 1/3 and 2/3.}
+\item{x1, x2}{Coordinates of vertical points in the X axis. Because it is
+expected to contain.
+methylation values that vary between 0 and 1, default values are 1/3 and 2/3.}
 
-\item{y1, y2}{Coordinates of vertical points in the Y axis. Leaving them as NULL assigns them the percentiles of yVec defined by `percY1` and `percY2`.}
+\item{y1, y2}{Coordinates of vertical points on the Y-axis. If set to NULL,
+they will be automatically assigned as the percentiles of `y` defined 
+by `percY1` and `percY2`.}
 
-\item{percY1, percY2}{Values used to act as default for `y1`and `y2` when these are set to `NULL`}
+\item{percY1, percY2}{Default values for `y1` and `y2` when set to `NULL`}
 }
 \value{
 a matrix with calculated frequencies
 }
 \description{
-\code{calcFreqs} Given two numeric vectors this function overimposes a grid on the scatterplot defined by YMet~Xmet
-#' and returns a 3X3 matrix of counts with the number of points in each cell of the grid
-#' for given vertical and horizontal lines.
+\code{calcFreqs} Given a MultiAssayExperiment with methylation and
+expression data, the function overlays a grid on a YMet ~ Xmet scatterplot
+and returns a 3x3 matrix with point counts per grid cell based on  the
+vertical and horizontal lines.
 }
 \examples{
 
-mets <- matrix(runif(1000), nrow=100)
-expres <- matrix(rnorm(1000), nrow=100)
-xVec <- expres[1,]
-yVec <- mets[1,]
+# Methylation data
+methylData <- matrix(runif(50), nrow = 10)
+colnames(methylData) <- paste0(
+    "samp",
+    1:ncol(methylData)
+)
+rownames(methylData) <- paste0(
+    "gene",
+    1:nrow(methylData)
+)
+# Expression data
+expresData <- matrix(rnorm(50), nrow = 10)
+colnames(expresData) <- paste0(
+    "samp",
+    1:ncol(methylData)
+)
+rownames(expresData) <- paste0(
+    "gene",
+    1:nrow(methylData)
+)
+# ColData
+colDat <- data.frame(
+    sampleID = colnames(methylData),
+    name = letters[1:ncol(methylData)]
+)
 
+rownames(colDat) <- colDat$sampleID
+mae <- MultiAssayExperiment::MultiAssayExperiment(
+    experiments = list(
+        methylation = methylData,
+        expression = expresData
+    ),
+    colData = colDat
+)
+geneRow <- 1
+x1 <- 1 / 3
+x2 <- 2 / 3
+y1 <- NULL
+y2 <- NULL
+percY1 <- 1 / 3
+percY2 <- 2 / 3
+
+calcFreqs(
+    mae = mae, geneNum = geneRow,
+    x1, x2, y1, y2, percY1, percY2
+)
 }
 \keyword{calculation}
 \keyword{frequencies}
