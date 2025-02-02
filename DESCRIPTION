@@ -1,6 +1,6 @@
 Package: Lheuristic
 Title: Detection of scatterplots with L-shaped pattern
-Version: 0.99.01
+Version: 0.99.02
 Authors@R: c(
     person("Sanchez Pla", "Alex", email ="asanchez@ub.edu", role = c("aut", "cre"),
   comment = c(ORCID = "0000-0002-8673-7737")),
@@ -14,7 +14,7 @@ Description: The Lheuristic package identifies scatterpots that
     shapped scatterplots. The parameters can be changed to
     detect other scatterplot patterns.
 License: MIT + file LICENSE
-Depends: R (>= 4.4.0)
+Depends: R (>= 4.5.0)
 biocViews: DNAMethylation, StatisticalMethod, MethylationArray
 Imports:
     Hmisc,
