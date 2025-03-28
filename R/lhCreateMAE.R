@@ -27,7 +27,10 @@
 #'
 #' @keywords MultiAssayExperiment, Data Integration, Omics Data
 #' @export lhCreateMAE
-#' @import MultiAssayExperiment
+#' @importFrom MultiAssayExperiment MultiAssayExperiment
+#' @importFrom MultiAssayExperiment experiments
+#' @importFrom MultiAssayExperiment ExperimentList
+#' @importFrom MultiAssayExperiment assay
 #' @examples
 #' 
 #' library(MultiAssayExperiment)
