@@ -56,43 +56,56 @@ The full dataset is available on the TCGA website.
 Methylation and expression data are in two separate files. 
 Columns represent patient samples, and rows represent genes.
 
-```{r}
+```{r loadLibs}
 library(Lheuristic)
 
 # library(kableExtra)
 # library(VennDiagram)
 
-data("TCGAexp")
-data("TCGAmet")
+data("TCGAexpression")
+data("TCGAmethylation")
 ```
 
-The package includes utility functions like `checkPairing`,  which verifies 
-that both matrices have matching row and column numbers and names.
+## Using `lhCreateMAE` based on `MultiAssayExperiment` as data container
 
-```{r}
-dim(TCGAexp)
-ifelse(checkPairing(TCGAexp, TCGAmet),
-    "Match OK", "Check matching"
-)
-```
+To effectively integrate and manage omics data,
+we utilize the `MultiAssayExperiment` data structure.
+This approach ensures consistency between datasets and 
+facilitates downstream analysis.
 
-## Using `MultiAssayExperiment` as data container
+The `lhCreateMAE` function constructs a MultiAssayExperiment
+object using two datasets—typically methylation and
+expression data—while enforcing consistency in sample
+and feature names. It ensures:
 
-We have two aligned datasets, therefore using an appropriate 
-data structure like `MultiAssayExperiment` is recommended, 
-as outlined in this tutorial.
+The datasets have matching row and column names.
 
-It is essential to label the experiments as "methylation" and 
-"expression" in this specific order for the `Lheuristic` package functions 
-to work correctly.
+Experiments are labeled appropriately
+(e.g., "methylation" and "expression").
 
-```{r, warning=FALSE, message=FALSE}
+Sample metadata can be incorporated
+via the colData argument.
+
+The function includes an internal validation step,
+which verifies that both datasets are aligned correctly.
+If discrepancies exist in row or column names, the
+function will return an error, prompting users to
+correct inconsistencies before proceeding.
+
+
+```{r createMAE, warning=FALSE, message=FALSE}
 library(MultiAssayExperiment)
-doubleExp <- list(
-    "methylation" = TCGAmet,
-    "expression" = TCGAexp
-)
-mae1 <- MultiAssayExperiment(experiments = doubleExp)
+
+colDat <- DataFrame(sampleID = colnames(TCGAmethylation))
+rownames(colDat) <- colDat$sampleID
+
+
+# Construct MultiAssayExperiment
+mae1 <- lhCreateMAE(xDat = TCGAmethylation, yDat = TCGAexpression,
+    xName = "methylation", yName = "expression", colData = colDat)
+
+# Display dataset names
+print(names(experiments(mae1)))
 ```
 
 # Data analysis
@@ -114,7 +127,7 @@ The *correlation method* is a simple approach that identifies genes with a
 significant negative correlation between their expression and methylation 
 values.
 
-```{r}
+```{r corMethod}
 cl <- correlationSelection(mae1, type = "Spearman",
     pValCutoff = 0.25, rCutoff = -0.5, adj = TRUE)
 
@@ -132,7 +145,7 @@ message(
 
 We can observe the distribution of the correlation coefficients:
 
-```{r,fig.width = 6, fig.height=4}
+```{r corrDistri,fig.width = 6, fig.height=4}
 d <- density(correlationL[, 1])
 x2 <- data.frame(x = d$x, y = d$y)
 
@@ -154,7 +167,7 @@ for the *r coefficient*, *p-value*, *adjusted p-value*,
 *distance correlation*, and a Boolean indicating whether the gene was selected
 based on a significantly negative correlation.
 
-```{r}
+```{r showCorrs}
 head(correlationL)
 ```
 
@@ -162,11 +175,12 @@ The selected genes can be plotted and saved as a PDF (leaving the file name
 empty displays the plot on screen). The figure below shows the first four 
 selected genes.
 
-```{r, fig.height=6, fig.width=6}
-genes2plot <- rownames(correlationL)[1:4]
+```{r plotGenesFromCorr1, fig.height=6, fig.width=6}
+genes2plot <- rownames(correlationL)[1:3]
 
 plotGenesMat(mae1, geneNames = genes2plot,
-    fileName = NULL, text4Title = correlationL[rownames(correlationL), ""]
+    text4Title = correlationL[rownames(correlationL), ""],
+    saveToPDF = FALSE
 )
 ```
 
@@ -256,7 +270,7 @@ if all cells are TRUE, the result is assigned to \(L\); if any cell fails,
 it is assigned to \(L^c\).
 
 
-```{r}
+```{r setWeights}
 sampleSize <- dim(mae1[[2]])[2]
 numGenes <- dim(mae1[[2]])[1]
 
@@ -289,18 +303,20 @@ indicating whether the gene exhibits an L-shape based on our criteria,
 along with the *numerSc* score.
 
 
-```{r}
+```{r showTrueLs}
 knitr::kable(heurL)
 ```
 
 Next, we can visualize the scatterplots of the selected genes or save them
 on a PDF file.
 
-```{r, fig.height=6, fig.width=6}
-genes2plot2 <- rownames(mae1[[2]]) %in% rownames(heurL)[1:4]
+```{r plotTrueLs, fig.height=6, fig.width=6}
 
-plotGenesMat(mae1,
-    fileName = NULL, text4Title = heurL[genes2plot2, "numeriSc"]
+genes2plot2 <-   rownames(heurL)[1:4] #  
+
+plotGenesMat(mae1, geneNames = genes2plot2,
+    fileName = NULL, text4Title = heurL[genes2plot2, "numeriSc"],
+    saveToPDF = FALSE
 )
 
 ```
@@ -329,7 +345,7 @@ We may choose genes selected by two or more methods to ensure greater
 consistency in the selection.
 
 
-```{r}
+```{r checkCommon}
 inCommonL <- intersect(rownames(correlationL), 
     rownames(heurL))
 inCorrelationLOnly <- setdiff(rownames(correlationL),
@@ -341,7 +357,7 @@ inheurLLOnly <- setdiff(rownames(heurL), inCommonL)
 We can also plot selected genes.
 As an example we will plot the genes 1, 2, 3 and 5 by index.
 
-```{r, fig.height=6, fig.width=6}
+```{r plotSelected, fig.height=6, fig.width=6}
 par(mfrow = c(2, 2))
 myGene1 <- inCommonL[1]
 titleT <- paste(myGene1, "(May be GRM)")

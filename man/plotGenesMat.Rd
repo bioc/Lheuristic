@@ -7,7 +7,7 @@
 plotGenesMat(
   mae,
   geneNames = NULL,
-  fileName = NULL,
+  fileName = "Scatplot_Sel_Genes.pdf",
   text4Title = NULL,
   x1 = 1/3,
   x2 = 2/3,
@@ -17,7 +17,8 @@ plotGenesMat(
   percY2 = 2/3,
   plotGrid = TRUE,
   logicSc = NULL,
-  saveToPDF = FALSE
+  saveToPDF = FALSE,
+  plotsPerPage = 9
 )
 }
 \arguments{
@@ -62,6 +63,9 @@ Defaults to NULL.}
 \item{saveToPDF}{Logical, if TRUE, saves the plots to a PDF file 
 specified by fileName. If FALSE (default), plots are displayed 
 interactively without saving.}
+
+\item{plotsPerPage}{A numeric value indicating the number of plots
+to be printed in each page. Default set to 9.}
 }
 \value{
 a pdf with scatterplots for all genes
@@ -81,9 +85,8 @@ colnames(expresData) <- paste0("samp", 1:ncol(methylData))
 rownames(expresData) <- paste0("gene", 1:nrow(methylData))
 # ColData
 colDat <- data.frame(
-    sampleID = colnames(methylData),
-    name = letters[1:ncol(methylData)]
-)
+sampleID = colnames(methylData),
+name = letters[1:ncol(methylData)])
 
 rownames(colDat) <- colDat$sampleID
 mae <- MultiAssayExperiment::MultiAssayExperiment(
@@ -94,7 +97,8 @@ mae <- MultiAssayExperiment::MultiAssayExperiment(
     colData = colDat
 ) 
 selectedGenes <- c("gene1", "gene5")
-plotGenesMat(mae, geneNames = selectedGenes, saveToPDF = FALSE)
+plotGenesMat(mae, geneNames = selectedGenes,
+saveToPDF = FALSE)
 
 }
 \keyword{gene}

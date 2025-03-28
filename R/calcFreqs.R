@@ -72,11 +72,13 @@
 #' )
 calcFreqs <- function(mae, geneNum, x1, x2, y1 = NULL, y2 = NULL,
     percY1 = 1 / 3, percY2 = 2 / 3) {
-    # if (prod(names(mae@ExperimentList) == c('methylation' ,'expression'
-    # ))!=1) stop('Error: Names of layers must be 'methylation' and
-    # 'expression'')
-    mets <- MultiAssayExperiment::assay(mae, "methylation")
-    expres <- MultiAssayExperiment::assay(mae, "expression")
+    # Extract standardized assay names from mae
+    assayNames <- names(MultiAssayExperiment::experiments(mae))
+    xName <- assayNames[1]
+    yName <- assayNames[2]
+    # Extract methylation and expression data
+    mets <- MultiAssayExperiment::assay(mae, xName)
+    expres <- MultiAssayExperiment::assay(mae, yName)
     xMet <- mets[geneNum, ]
     yExp <- expres[geneNum, ]
     freqsMat <- matrix(0, nrow = 3, ncol = 3)
@@ -102,4 +104,5 @@ calcFreqs <- function(mae, geneNum, x1, x2, y1 = NULL, y2 = NULL,
         }
     }
     return(freqsMat)
+
 }

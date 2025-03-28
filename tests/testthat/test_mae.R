@@ -1,44 +1,62 @@
 library(MultiAssayExperiment)
+library(testthat)
 
-# Methylation data
+test_that("lhCreateMAE creates a valid MultiAssayExperiment", {
+  
+  # Create synthetic methylation and expression data
+  methylData <- matrix(runif(50), nrow = 10)
+  colnames(methylData) <- paste0("samp", 1:ncol(methylData))
+  rownames(methylData) <- paste0("gene", 1:nrow(methylData))
+  
+  expresData <- matrix(rnorm(50), nrow = 10)
+  colnames(expresData) <- colnames(methylData)
+  rownames(expresData) <- rownames(methylData)
+  
+  # Create sample metadata
+  colDat <- data.frame(sampleID = colnames(methylData),
+                       name = letters[1:ncol(methylData)])
+  rownames(colDat) <- colDat$sampleID
+  
+  # Call function
+  mae <- lhCreateMAE(methylData, expresData, colData = colDat)
+  
+  # Check that the output is a MultiAssayExperiment object
+  expect_s4_class(mae, "MultiAssayExperiment")
+  
+  # Check that dataset names match the expected ones
+  expect_equal(names(experiments(mae)), c("methylation", "expression"))
+  
+  # Check if colData was correctly assigned
+  expect_equal(rownames(colData(mae)), colDat$sampleID)
+  
+  # Check if experiments were correctly stored
+  expect_equal(dim(experiments(mae)[["methylation"]]), dim(methylData))
+  expect_equal(dim(experiments(mae)[["expression"]]), dim(expresData))
+})
 
-methylData <- matrix(runif(50), nrow = 10)
-colnames(methylData) <- paste0("samp", 1:ncol(methylData))
-rownames(methylData) <- paste0("gene", 1:nrow(methylData))
+test_that("lhCreateMAE works when row/column names match", {
+    methylData <- matrix(runif(50), nrow = 10)
+    colnames(methylData) <- paste0("samp", 1:ncol(methylData))
+    rownames(methylData) <- paste0("gene", 1:nrow(methylData))
+    expresData <- matrix(rnorm(50), nrow = 10)
+    colnames(expresData) <- colnames(methylData)  # Match column names
+    rownames(expresData) <- rownames(methylData)
 
+    # Suppress messages and ensure no error occurs
+    expect_silent(suppressMessages(lhCreateMAE(methylData, expresData)))
+    })
 
-# Expression data
-
-expresData <- matrix(rnorm(50), nrow = 10)
-colnames(expresData) <- paste0("samp", 1:ncol(methylData))
-rownames(expresData) <- paste0("gene", 1:nrow(methylData))
-
-# Information about samples goes to 'ColData'
-
-colDat <- data.frame(sampleID = colnames(methylData), name = letters[1:ncol(methylData)])
-rownames(colDat) <- colDat$sampleID
-
-# Information about features goes to 'RowData' It seems this property is
-# available in SummarizedExperiments, but not in MultiAssayExperiments
-
-# The main reason seems to be because `MultiAssayExperiment` requires the data
-# slots to have the same column numbers & names but allows for distinct rows
-# numbers/names Check QFeaturesClass
-
-# rowDat <- data.frame(featureID = rownames(methylData), isOncogene
-# =c(rep(1,3), rep(0,7)), known2Methylate =sample(x= c(0,1), size= 10,
-# rep=TRUE, prob=c(.8,.2))) rownames(rowDat)<- rowDat$featureID
-
-
-mae <- MultiAssayExperiment::MultiAssayExperiment(experiments = list(
-    methylation = methylData,
-    expression = expresData
-), colData = colDat)
-
-mae@colData
-mae@ExperimentList
-mae@sampleMap
-
-MultiAssayExperiment::experiments(mae)[[1]]
-mae@ExperimentList[[1]]
-MultiAssayExperiment::experiments(mae)[[2]]
+test_that("lhCreateMAE assigns default colData if missing", {
+  methylData <- matrix(runif(50), nrow = 10)
+  colnames(methylData) <- paste0("samp", 1:ncol(methylData))
+  rownames(methylData) <- paste0("gene", 1:nrow(methylData))
+  
+  expresData <- matrix(rnorm(50), nrow = 10)
+  colnames(expresData) <- colnames(methylData)
+  rownames(expresData) <- rownames(methylData)
+  
+  mae <- lhCreateMAE(methylData, expresData)  # No colData provided
+  
+  expect_s4_class(mae, "MultiAssayExperiment")
+  expect_equal(rownames(colData(mae)), colnames(methylData))
+})

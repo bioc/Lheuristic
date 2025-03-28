@@ -1,34 +1,37 @@
-## ----setup, include = FALSE---------------------------------------------------
+## ----setup, include = FALSE-----------------------------------
 options(rmarkdown.html_vignette.check_title = FALSE)
 knitr::opts_chunk$set(
     collapse = TRUE,
     comment = "#>"
 )
 
-## -----------------------------------------------------------------------------
+
+## ----loadLibs-------------------------------------------------
 library(Lheuristic)
 
 # library(kableExtra)
 # library(VennDiagram)
 
-data("TCGAexp")
-data("TCGAmet")
+data("TCGAexpression")
+data("TCGAmethylation")
 
-## -----------------------------------------------------------------------------
-dim(TCGAexp)
-ifelse(checkPairing(TCGAexp, TCGAmet),
-    "Match OK", "Check matching"
-)
 
-## ----warning=FALSE, message=FALSE---------------------------------------------
+## ----createMAE, warning=FALSE, message=FALSE------------------
 library(MultiAssayExperiment)
-doubleExp <- list(
-    "methylation" = TCGAmet,
-    "expression" = TCGAexp
-)
-mae1 <- MultiAssayExperiment(experiments = doubleExp)
 
-## -----------------------------------------------------------------------------
+colDat <- DataFrame(sampleID = colnames(TCGAmethylation))
+rownames(colDat) <- colDat$sampleID
+
+
+# Construct MultiAssayExperiment
+mae1 <- lhCreateMAE(xDat = TCGAmethylation, yDat = TCGAexpression,
+    xName = "methylation", yName = "expression", colData = colDat)
+
+# Display dataset names
+print(names(experiments(mae1)))
+
+
+## ----corMethod------------------------------------------------
 cl <- correlationSelection(mae1, type = "Spearman",
     pValCutoff = 0.25, rCutoff = -0.5, adj = TRUE)
 
@@ -43,7 +46,8 @@ message(
     "\n"
 )
 
-## ----fig.width = 6, fig.height=4----------------------------------------------
+
+## ----corrDistri,fig.width = 6, fig.height=4-------------------
 d <- density(correlationL[, 1])
 x2 <- data.frame(x = d$x, y = d$y)
 
@@ -57,17 +61,21 @@ ggplot(x2, aes(x,y)) + geom_line() +
     theme_minimal()
 
 
-## -----------------------------------------------------------------------------
+
+## ----showCorrs------------------------------------------------
 head(correlationL)
 
-## ----fig.height=6, fig.width=6------------------------------------------------
-genes2plot <- rownames(correlationL)[1:4]
+
+## ----plotGenesFromCorr1, fig.height=6, fig.width=6------------
+genes2plot <- rownames(correlationL)[1:3]
 
 plotGenesMat(mae1, geneNames = genes2plot,
-    fileName = NULL, text4Title = correlationL[rownames(correlationL), ""]
+    text4Title = correlationL[rownames(correlationL), ""],
+    saveToPDF = FALSE
 )
 
-## -----------------------------------------------------------------------------
+
+## ----setWeights-----------------------------------------------
 sampleSize <- dim(mae1[[2]])[2]
 numGenes <- dim(mae1[[2]])[1]
 
@@ -94,25 +102,31 @@ message("Number of L-shape scatterplots : ", sum(heur[, 1]), "\n")
 heurL <- heur[heur$logicSc, ]
 heurNoL <- heur[!heur$logicSc, ]
 
-## -----------------------------------------------------------------------------
+
+## ----showTrueLs-----------------------------------------------
 knitr::kable(heurL)
 
-## ----fig.height=6, fig.width=6------------------------------------------------
-genes2plot2 <- rownames(mae1[[2]]) %in% rownames(heurL)[1:4]
 
-plotGenesMat(mae1,
-    fileName = NULL, text4Title = heurL[genes2plot2, "numeriSc"]
+## ----plotTrueLs, fig.height=6, fig.width=6--------------------
+
+genes2plot2 <-   rownames(heurL)[1:4] #  
+
+plotGenesMat(mae1, geneNames = genes2plot2,
+    fileName = NULL, text4Title = heurL[genes2plot2, "numeriSc"],
+    saveToPDF = FALSE
 )
 
 
-## -----------------------------------------------------------------------------
+
+## ----checkCommon----------------------------------------------
 inCommonL <- intersect(rownames(correlationL), 
     rownames(heurL))
 inCorrelationLOnly <- setdiff(rownames(correlationL),
     inCommonL)
 inheurLLOnly <- setdiff(rownames(heurL), inCommonL)
 
-## ----fig.height=6, fig.width=6------------------------------------------------
+
+## ----plotSelected, fig.height=6, fig.width=6------------------
 par(mfrow = c(2, 2))
 myGene1 <- inCommonL[1]
 titleT <- paste(myGene1, "(May be GRM)")
@@ -139,6 +153,7 @@ plotGeneSel(mae1, myGene5,
     titleText = titleT,
     x1 = 1/3, x2 = 2/3)
 
-## -----------------------------------------------------------------------------
+
+## -------------------------------------------------------------
 sessionInfo()
 

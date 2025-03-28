@@ -70,12 +70,13 @@ scoreGenesMat <- function(mae, x1 = 1 / 3, x2 = 2 / 3, y1 = NULL, y2 = NULL,
         stopifnot(`Percentages must add up to 100` 
             = sum(aReqPercentsMat) == 100)
     }
-    stopifnot(prod(names(MultiAssayExperiment::experiments(mae)) == c(
-        "methylation",
-        "expression"
-    )) == 1)
-    mets <- MultiAssayExperiment::assay(mae, "methylation")
-    expres <- MultiAssayExperiment::assay(mae, "expression")
+    # Extract standardized assay names from mae
+    assayNames <- names(MultiAssayExperiment::experiments(mae))
+    xName <- assayNames[1]
+    yName <- assayNames[2]
+    # Extract methylation and expression data
+    mets <- MultiAssayExperiment::assay(mae, xName)
+    expres <- MultiAssayExperiment::assay(mae, yName)
     N <- ncol(mets)
     Ngenes <- nrow(mets)
     scores <- data.frame(logicSc = rep(FALSE, Ngenes),

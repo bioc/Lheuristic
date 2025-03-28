@@ -29,6 +29,8 @@
 #' whether to plot gridlines on the graph.
 #' @param logicSc A numeric score representing the L-shape score. 
 #' Defaults to NULL.
+#' @param plotsPerPage A numeric value indicating the number of plots
+#' to be printed in each page. Default set to 9.
 #' @param saveToPDF Logical, if TRUE, saves the plots to a PDF file 
 #' specified by fileName. If FALSE (default), plots are displayed 
 #' interactively without saving.
@@ -40,6 +42,7 @@
 #' @importFrom grDevices dev.off
 #' @importFrom MultiAssayExperiment assay
 #' @import ggplot2
+#' @import ggpubr
 #' @export plotGenesMat
 #' @examples
 #' # Methylation data
@@ -52,9 +55,8 @@
 #' rownames(expresData) <- paste0("gene", 1:nrow(methylData))
 #' # ColData
 #' colDat <- data.frame(
-#'     sampleID = colnames(methylData),
-#'     name = letters[1:ncol(methylData)]
-#' )
+#' sampleID = colnames(methylData),
+#' name = letters[1:ncol(methylData)])
 #'
 #' rownames(colDat) <- colDat$sampleID
 #' mae <- MultiAssayExperiment::MultiAssayExperiment(
@@ -66,56 +68,47 @@
 #' ) 
 #' selectedGenes <- c("gene1", "gene5")
 
-#' plotGenesMat(mae, geneNames = selectedGenes, saveToPDF = FALSE)
+#' plotGenesMat(mae, geneNames = selectedGenes,
+#' saveToPDF = FALSE)
 #'
 
+plotGenesMat <- function(mae, geneNames = NULL,
+    fileName = "Scatplot_Sel_Genes.pdf", 
+    text4Title = NULL, x1 = 1/3,x2 = 2/3, y1 = NULL, y2 = NULL,
+    percY1 = 1/3, percY2 = 2/3, plotGrid = TRUE,logicSc = NULL,
+    saveToPDF = FALSE, plotsPerPage = 9) {
 
-plotGenesMat <- function(mae, geneNames = NULL, fileName = NULL, 
-    text4Title = NULL, x1 = 1/3,
-    x2 = 2/3, y1 = NULL, y2 = NULL, percY1 = 1/3, 
-    percY2 = 2/3, 
-    plotGrid = TRUE,
-    logicSc = NULL, saveToPDF = FALSE) {
-
-    # Filter for selected gene names if provided
     if (!is.null(geneNames)) {
-        mae <- mae[geneNames, , ]
-    }
+    mae <- mae[geneNames, , ]}
 
-    # Open PDF device if saveToPDF is TRUE and fileName is provided
-    if (saveToPDF && !is.null(fileName)) {
-        grDevices::pdf(fileName)
-    }
-
-    # Set title text based on provided title or logic score
     if (!is.null(text4Title)) {
-        text4Title <- paste(rownames(assay(mae, "expression")), text4Title, 
-        sep = ", ")
-    } else {
-        if (is.null(logicSc)) {
-        text4Title <- rownames(assay(mae, "expression"))
-    } else {
-        text4Title <- paste(rownames(assay(mae, 
-        "expression")), "\nL-shaped = ", 
-        logicSc, sep = " ")
-        }
+    text4Title <- paste(rownames(assay(mae,"expression")),
+    text4Title, sep = ", ")} else {
+    text4Title <- if (is.null(logicSc)) {
+        rownames(assay(mae, "expression"))
+    } else {paste(rownames(assay(mae, "expression")),
+        "\nL-shaped = ", logicSc, sep = " ")}
     }
 
-    # Loop through each gene and plot
-    for (gene in seq_len(nrow(assay(mae, "expression")))) {
-        xVec <- as.numeric(assay(mae, "methylation")[gene, ])
-        yVec <- as.numeric(assay(mae, "expression")[gene, ])
-        plotGeneSel(
-        mae = mae,
-        genePos = gene,
-        titleText = text4Title[gene],
-        x1 = x1,
-        x2 = x2, percY1 = percY1, percY2 = percY2, plotGrid = plotGrid
-        )
+    plotList <- list()
+
+    for (gene in seq_len(nrow(assay(mae,"expression")))) {
+    plotList[[gene]] <- plotGeneSel(mae = mae,
+        genePos = gene, titleText = text4Title[gene],
+        x1 = x1,x2 = x2, percY1 = percY1, percY2 = percY2,
+        plotGrid = plotGrid)
     }
 
-    # Close PDF device if it was opened
-    if (saveToPDF && !is.null(fileName)) {
-        grDevices::dev.off()
-    }
+    if (saveToPDF) {
+        grDevices::pdf(fileName)
+    
+    for (i in seq(1, length(plotList),
+        by = plotsPerPage)) {
+        ggarrange(plotlist = plotList[i:min(i + plotsPerPage - 1,
+        length(plotList))], ncol = 3, 
+        nrow = ceiling(plotsPerPage / 3))}
+
+    grDevices::dev.off()} else {
+    return(ggarrange(plotlist = plotList, ncol = 3,
+        nrow = ceiling(length(plotList) / 3)))}
 }

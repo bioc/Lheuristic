@@ -4,12 +4,12 @@
 #'
 #' @docType data
 #'
-#' @usage data(TCGAexp)
+#' @usage data(TCGAexpression)
 #'
 #' @return data matrix with gene expression data
 #'
 #' @source \url{TCGA.org}
-"TCGAexp"
+"TCGAexpression"
 
 #' Methylation data matrix obtained from TCGA, TCGA-COAD dataset
 #'
@@ -17,9 +17,9 @@
 #'
 #' @docType data
 #'
-#' @usage data(TCGAmet)
+#' @usage data(TCGAmethylation)
 #'
 #' @return data matrix with gene methylation data
 #'
 #' @source \url{TCGA.org}
-"TCGAmet"
+"TCGAmethylation"
